@@ -1,0 +1,435 @@
+<head>
+  <script src="./app/index.js" type="text/javascript"></script>
+  <script src="./app/core/app.js" type="text/javascript"></script>
+  <script src="./app/core/scripts.js" type="text/javascript"></script>
+  <script src="./app/core/page-data.js" type="text/javascript"></script>
+  <script src="./app/db/connect.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="./app/public/css/popup.css">
+  <title>Hey</title>
+</head>
+
+<body>
+  <div id="slate-app" class="container">
+    <div style="width: 30%;height: 100%; background: #CFCED3; color: #000; right: 0; position: absolute;padding: 5% 16px;font-size:16px">
+      <div style="position:absolute;top:0;display:inline">
+        <h3 id="title">Select a file to upload</h3>
+      </div>
+      <div id="btn-create-slate" class="btn secondary full">+ Create new slate</div>
+      <br /><br />
+      <div style="width:100%;height:64%;overflow: scroll">
+        <div id="list-slates"></div>
+        <div class="api-group">
+          <div class="slate-name" style="background-color: #06396A !important;color:#fff"><b>Work slate</b></div>
+          <div class="slate-item" data-id="1" value="1">+ Books</div>
+          <div class="slate-item" data-id="2" value="1">+ Slate 1</div>
+          <div class="slate-item" data-id="3" value="1">+ Slate 2</div>
+        </div>
+        <br />
+        <div style="z-index:99999;border: 2px solid #D8D8D8;border-radius:4px;width:100%">
+          <div class="slate-name"><b>Personal slate</b></div>
+          <div class="slate-item" data-id="1" value="1">+ Books</div>
+          <div class="slate-item" data-id="2" value="1">+ Slate 1</div>
+          <div class="slate-item" data-id="3" value="1">+ Slate 2</div>
+          <div class="slate-item" data-id="4" value="1">+ Slate 3</div>
+          <div class="slate-item" data-id="5" value="1">+ Slate 4</div>
+          <div class="slate-item" data-id="6" value="1">+ Slate 5</div>
+        </div>
+      </div>
+      <br />
+      <div id="btn-upload" class="btn primary full">Upload files</div>
+      <br /><br />
+    </div>
+    <div class="main_popup">
+      <div style="position: absolute; display: flex;justify-content: center; left:0; top: -32px;color: #fff;font-size:18px">
+        <div style="margin-right:16px"><a class="header-link" href="#">Select all</a></div>
+        <div><a class="header-link" href="#">Filter</a></div>
+      </div>
+      <div id="page_images" style="overflow: scroll;height:100%">
+        <div class="masonry" id="image_grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <button onclick="StartSlate()">Start slate</button>
+  Land</h2>
+  <h3 class="align-left pb-4 mbr-fonts-style display-7">04 February 2020
+    | 18:00 - 23:00</h3>
+  <div class="icon-wrap">
+    <span class="mbr-iconfont mobi-mbri-map-pin mobi-mbri"></span>
+    <h6 class="location mbr-regular mbr-fonts-style display-7">Mediolanum
+      Forum, Italy</h6>
+  </div>
+
+  <span class="icon-big mbr-iconfont mobi-mbri-right mobi-mbri"></span>
+
+  </div>
+  </div>
+  </div>
+  <div id="tab4" class="tab-pane" role="tabpanel">
+    <div class="row">
+      <div class="col-md-12 col2 col-lg-6">
+
+        <img src="https://mobirise.com/extensions/audiom4/assets/images/background1.jpg" alt="Mobirise">
+
+
+      </div>
+
+      <div class="col-md-6 align-left content-col">
+        <h2 class="align-left mbr-bold mbr-fonts-style display-5">Cornelius -
+          Singha Light</h2>
+        <h3 class="align-left pb-4 mbr-fonts-style display-7">28 April 2020 |
+          18:00 - 23:00</h3>
+        <div class="icon-wrap">
+          <span class="mbr-iconfont mobi-mbri-map-pin mobi-mbri"></span>
+          <h6 class="location mbr-regular mbr-fonts-style display-7">Odyssey,
+            United Kingdom</h6>
+        </div>
+
+        <span class="icon-big mbr-iconfont mobi-mbri-right mobi-mbri"></span>
+
+      </div>
+    </div>
+  </div>
+  <div id="tab5" class="tab-pane" role="tabpanel">
+    <div class="row">
+      <div class="col-md-12 col2 col-lg-6">
+
+        <img src="https://mobirise.com/extensions/audiom4/assets/images/background3.jpg" alt="Mobirise">
+
+      </div>
+
+      <div class="col-md-6 align-left content-col">
+        <h2 class="align-left mbr-bold mbr-fonts-style display-5">Karma Kruise
+        </h2>
+        <h3 class="align-left pb-4 mbr-fonts-style display-7">22 May 2018 |
+          18:00 - 23:00</h3>
+        <div class="icon-wrap">
+          <span class="mbr-iconfont mobi-mbri-map-pin mobi-mbri"></span>
+          <h6 class="location mbr-regular mbr-fonts-style display-7">
+            <div><span style="color: inherit; font-size: 1.2rem;">AMI Stadium, New
+                Zealand&nbsp;</span><br></div>
+          </h6>
+        </div>
+        <span class="icon-big mbr-iconfont mobi-mbri-right mobi-mbri"></span>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  </div>
+  </div>
+  </div>
+  </section>
+
+  <section class="features5 cid-rJ1DhzNfh9" id="features5-3g">
+
+
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="mbr-black col-md-12 col-lg-10">
+          <div class="title-align align-center">
+            <h3 class="mbr-section-subtitle mbr-semibold align-center mbr-light mbr-fonts-style display-4">Latest</h3>
+          </div>
+          <h1 class="mbr-section-title align-center mbr-bold pb-5 mbr-fonts-style display-2">NEWS</h1>
+        </div>
+
+
+        <div class="card item features-image col-12 col-md-6 col-lg-4">
+          <div class="item-wrapper">
+            <div class="card-img">
+
+              <img src="https://mobirise.com/extensions/audiom4/assets/images/03.jpg" alt="Mobirise">
+            </div>
+            <div class="card-box pt-4">
+
+              <h4 class="card-title align-left pb-3 mbr-bold mbr-fonts-style display-5">Big Concert in the Largest
+                Club of the City</h4>
+              <p class="mbr-text align-left mbr-bold mbr-fonts-style display-4">
+                <a href="#" class="link text-warning"><strong>October 14, 2019</strong></a>
+              </p>
+
+            </div>
+          </div>
+        </div>
+        <div class="card item features-image col-12 col-md-6 col-lg-4">
+          <div class="item-wrapper">
+            <div class="card-img">
+
+              <img src="https://mobirise.com/extensions/audiom4/assets/images/01.jpg" alt="Mobirise">
+            </div>
+            <div class="card-box pt-4">
+
+              <h4 class="card-title align-left pb-3 mbr-bold mbr-fonts-style display-5">Acoustic Program as Part of a
+                Tour of Ten Cities</h4>
+              <p class="mbr-text align-left mbr-bold pb-3 mbr-fonts-style display-4">
+                <a href="#" class="link text-warning"><strong>November 24, 2019</strong></a>
+              </p>
+
+            </div>
+          </div>
+        </div>
+        <div class="card item features-image col-12 col-md-6 col-lg-4">
+          <div class="item-wrapper">
+            <div class="card-img">
+
+              <img src="https://mobirise.com/extensions/audiom4/assets/images/02.jpg" alt="Mobirise">
+            </div>
+            <div class="card-box pt-4">
+
+              <h4 class="card-title align-left pb-3 mbr-bold mbr-fonts-style display-5">Club Party in Partnership With
+                a Famous DJ</h4>
+              <p class="mbr-text align-left mbr-bold pb-3 mbr-fonts-style display-4">
+                <a href="#" class="link text-warning"><strong>December 23, 2019</strong></a>
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </section>
+
+  <section class="socials popup-btn-cards cid-rJ1BNDMVyO mbr-parallax-background" id="social1-34">
+
+
+
+    <div class="mbr-overlay" style="opacity: 0.3; background-color: rgb(0, 0, 0);">
+    </div>
+    <div class="container-fluid">
+
+      <div class="row main justify-content-center">
+        <div class="col-md-6 p-4 col-lg-3">
+          <div class="image-element card-wrapper">
+
+
+            <div class="wrapper">
+              <h3 class="card-title mbr-fonts-style align-left mbr-white display-5">
+                Youtube</h3>
+              <div class="collapsed-content">
+                <p class="mbr-text mbr-white mbr-fonts-style display-4">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus minima corrupti
+                  labore, aliquid est, pariatur natus.
+                </p>
+                <div class="mbr-section-btn"><a class="btn btn-md btn-white-outline display-4" href="https://mobirise.com">Subscribe</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 p-4 col-lg-3">
+          <div class="image-element card-wrapper">
+
+
+            <div class="wrapper">
+              <h3 class="card-title mbr-fonts-style align-left mbr-white display-5">
+                Facebook
+              </h3>
+              <div class="collapsed-content">
+                <p class="mbr-text mbr-white mbr-fonts-style display-4">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus minima corrupti
+                  labore, aliquid est, pariatur natus.
+                </p>
+                <div class="mbr-section-btn"><a class="btn btn-md btn-white-outline display-4" href="https://mobirise.com">Link Page</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 p-4">
+          <div class="image-element card-wrapper">
+
+
+            <div class="wrapper">
+              <h3 class="card-title mbr-fonts-style align-left mbr-white display-5">
+                Instagram
+              </h3>
+              <div class="collapsed-content">
+                <p class="mbr-text mbr-white mbr-fonts-style display-4">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus minima corrupti
+                  labore, aliquid est, pariatur natus.
+                </p>
+                <div class="mbr-section-btn"><a class="btn btn-md btn-white-outline display-4" href="https://mobirise.com">Follow</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 p-4">
+          <div class="image-element card-wrapper">
+
+            <div class="wrapper">
+              <h3 class="card-title mbr-fonts-style align-left mbr-white display-5">
+                Twitter
+              </h3>
+              <div class="collapsed-content">
+                <p class="mbr-text mbr-white mbr-fonts-style display-4">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus minima corrupti
+                  labore, aliquid est, pariatur natus.
+                </p>
+                <div class="mbr-section-btn"><a class="btn btn-md btn-white-outline display-4" href="https://mobirise.com">Follow</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="form cid-rJ1BK75N5w" id="form2-33">
+
+
+    <div class="container">
+
+      <div class="row">
+        <div class="mbr-black col-md-12 col-lg-12">
+          <div class="title-align align-center">
+            <h3 class="mbr-section-subtitle mbr-semibold align-center mbr-light mbr-fonts-style display-4">Write Us</h3>
+          </div>
+          <h1 class="mbr-section-title align-center mbr-bold pb-5 mbr-fonts-style display-2">CONTACTS</h1>
+        </div>
+      </div>
+
+      <div class="row row2">
+
+
+
+
+
+
+
+
+        <div class="col-md-12 align-left mbr-white col-lg-4">
+          <h2 class="mbr-bold pb-3 mbr-fonts-style display-5">Send us a message</h2>
+          <p class="mbr-text mbr-fonts-style display-7">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper neque dapibus ipsum
+            semper, sit amet luctus turpis porttitor. Ut libero ante, varius quis ligula in, aliquet consectetur
+            tortor.</p>
+
+        </div>
+
+
+        <div class="col-lg-7 col-md-12 my-auto mbr-form" data-form-type="formoid">
+          <!--Formbuilder Form-->
+          <form action="https://mobirise.com/" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true"
+              value="YzUm7KasZDN6Rc35zxYk3CDaqkFPXxwNJ4OtDir7LS5dFWSOI8LGxLyVbcZcJqD6PIcRgicrrP080aJ+5XOtQysCd0in6XDIBs4edcRXTgHSYHtTBRK3U23x69cXFFSc.y8YkMHrjobWPVURt4vucbUuK8kwRgeME5lOdTmjT7fZU/+IFmLmCK83oXxobgPd5jjv8NgMCEdFEVNVampHPdlCi97snOpLluWSTi9gfYXd8XvlukrX2FxQHUoYXQ50+">
+            <div class="form-row">
+              <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out
+                the form!</div>
+              <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">Oops...! some
+                problem!</div>
+            </div>
+            <div class="dragArea form-row">
+              <div class="col-lg-6 col-md-12 col-sm-12 form-group" data-for="name">
+                <input type="text" name="name" placeholder="Your Name" data-form-field="name" class="form-control display-7" value="" id="name-form2-33">
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12 form-group" data-for="email">
+                <input type="email" name="email" placeholder="Your Email" data-form-field="email" class="form-control display-7" value="" id="email-form2-33">
+              </div>
+              <div data-for="textarea" class="col-lg-12 col-md-12 col-sm-12 form-group">
+                <textarea name="textarea" placeholder="Message" data-form-field="textarea" class="form-control display-7" id="textarea-form2-33"></textarea>
+              </div>
+              <div class="col-lg-12 align-center col-md-12 col-sm-12"><button type="submit" class="btn btn-primary display-7">Submit</button></div>
+            </div>
+          </form>
+          <!--Formbuilder Form-->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section once="footers" class="cid-rJ1BFIMp3W" id="footer2-32" data-bg-video="https://www.youtube.com/watch?v=RwHn6lrilIY">
+
+
+
+    <div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(0, 0, 0);"></div>
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="150" style="">
+      <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="transparent" stroke="none" class="" style="">
+      </rect>
+      <g class="currentLayer" style="">
+        <rect fill="#4a90d6" stroke="none" stroke-width="2" stroke-linejoin="round" stroke-dashoffset="" fill-rule="nonzero" id="svg_3" x="-96.91189303632186" y="-155.65491664015033" width="2092.0544736385345" height="244.0790557861328"
+          style="color: rgb(0, 0, 0);" class="" transform="rotate(-3.0301618576049805 949.1153564453126,-33.61538314819269) "></rect>
+      </g>
+    </svg>
+
+
+
+    <div class="container">
+      <div class="media-container-row align-center mbr-white">
+        <div class="row title-row">
+
+          <h1 class="mbr-section-title align-center mbr-bold pb-1 mbr-fonts-style display-5">
+            Cover Band</h1>
+
+        </div>
+
+        <div class="row social-row">
+          <div class="social-list align-right pb-2">
+
+
+
+
+
+
+            <div class="soc-item">
+              <a href="https://twitter.com/mobirise" target="_blank">
+                <span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social"></span>
+              </a>
+            </div>
+            <div class="soc-item">
+              <a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
+                <span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social"></span>
+              </a>
+            </div>
+            <div class="soc-item">
+              <a href="https://www.youtube.com/c/mobirise" target="_blank">
+                <span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social"></span>
+              </a>
+            </div>
+            <div class="soc-item">
+              <a href="https://instagram.com/mobirise" target="_blank">
+                <span class="socicon-instagram socicon mbr-iconfont mbr-iconfont-social"></span>
+              </a>
+            </div>
+            <div class="soc-item">
+              <a href="https://plus.google.com/u/0/+Mobirise" target="_blank">
+                <span class="socicon-vimeo socicon mbr-iconfont mbr-iconfont-social"></span>
+              </a>
+            </div>
+            <div class="soc-item">
+              <a href="https://www.behance.net/Mobirise" target="_blank">
+                <span class="socicon-behance socicon mbr-iconfont mbr-iconfont-social"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row row-links">
+          <ul class="foot-menu">
+
+
+
+
+
+            <li class="foot-menu-item mbr-fonts-style display-4">Privacy policy</li>
+            <li class="foot-menu-item mbr-fonts-style display-4">Terms and conditions</li>
+            <li class="foot-menu-item mbr-fonts-style display-4">Contact</li>
+            <li class="foot-menu-item mbr-fonts-style display-4">Credits</li>
+          </ul>
+        </div>
+
+        <div class="row row-copirayt">
+          <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-4">
+            © Copyright 2019 Mobirise - All Rights Reserved
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
