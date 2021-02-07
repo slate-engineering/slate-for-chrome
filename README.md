@@ -1,0 +1,1 @@
+# slate-for-chrome-v2-prototype
