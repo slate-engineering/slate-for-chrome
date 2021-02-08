@@ -1,0 +1,50 @@
+{
+  "name": "Slate",
+  "description": "Upload images to Slate from anywhere on the web.",
+  "version": "1.0",
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "activeTab",
+    "storage",
+    "https://slate.host/",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "web_accessible_resources": [
+    "content-script.js", "app/pages/app.html", "app/core/page-data.js", "app/core/app.js", "app/public/css/popup.css", "background.js", "app/index.js", "app/core/jquery.min.js"
+  ],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "css": ["app/public/css/main.css", "app/public/css/popup.css", "app/public/css/ui.css"],
+    "js": ["content-script.js", "app/core/jquery.min.js", "app/index.js"]
+  }],
+  "commands": {
+    "screenshot": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Take a screenshot"
+    }
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "app/public/images/icon16.png",
+      "24": "app/public/images/icon48.png",
+      "32": "app/public/images/icon128.png"
+    },
+    "default_title": "Slate"
+  },
+  "manifest_version": 2,
+  "offline_enabled": true,
+  "icons": {
+    "16": "app/public/images/icon16.png",
+    "48": "app/public/images/icon48.png",
+    "128": "app/public/images/icon128.png"
+  }
+}

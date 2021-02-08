@@ -1,20 +1,14 @@
 @import "main.css";
 
-body {
-  background-color: var(--foreground);
-  color: var(--black);
-  font-family: var(--font);
-}
-
-.container {
+.slate-container {
   width: 100%;
   height: 100vh;
   position: fixed;
   font-family: 'Inter';
   backdrop-filter: blur(6px);
-  z-index: 9999999;
+  z-index: 9999999 !important;
   margin: -8px -8px;
-  display: none;
+  display: 'inline';
 }
 
 .slate-item, .slate-name {
@@ -84,12 +78,6 @@ input[type=checkbox]:checked {
   border-radius: 2px;
 }
 
-.grid {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-auto-rows: 200px;
-}
 
 .main_popup {
   width: 60%;
@@ -134,7 +122,7 @@ input[type=checkbox]:checked {
   z-index: 998;
 }
 
-.masonry {
+.slate-masonry {
   column-count: 6;
   column-gap: 1em;
 }
@@ -147,24 +135,24 @@ input[type=checkbox]:checked {
 }
 
 @media only screen and (min-width: 1024px) {
-  .masonry {
+  .slate-masonry {
     column-count: 4;
   }
 }
 
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
-  .masonry {
+  .slate-masonry {
     column-count: 3;
   }
 }
 
 @media only screen and (max-width: 767px) and (min-width: 540px) {
-  .masonry {
+  .slate-masonry {
     column-count: 1;
   }
 }
 
-.btn {
+.slate-btn {
   box-sizing: border-box;
   border-radius: 4px;
   outline: 0;
@@ -183,7 +171,7 @@ input[type=checkbox]:checked {
   font-weight: bold;
 }
 
-.btn:focus {
+.slate-btn:focus {
   outline: 0;
   border: 0;
 }
@@ -197,7 +185,7 @@ input[type=checkbox]:checked {
   background-color: #065ca8;
 }
 
-.secondary {
+.slate-secondary {
   color: var(--darkgrey);
   background-color: #fff;
 }

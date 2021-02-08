@@ -1,4 +1,4 @@
-const GetPageData = () => {
+const GetPageData2 = () => {
   const page = document;
   const site = window.location;
   const data = {
@@ -6,18 +6,17 @@ const GetPageData = () => {
     url: site.href,
     base_url: site.host
   }
-
   return data;
 };
 
-const GetPageFiles = () => {
+const GetPageFiles2 = () => {
   const all_files = document.querySelectorAll('img,audio,video')
   var all_files_array = [];
   var position = 0;
 
   for (var i = 0; i < all_files.length; i++) {
       position++;
-      var id = GenerateID();
+      var id = "123";
       var ext = all_files[i].currentSrc.split('.').pop()
       const type = GetFileType({ ext: ext});
 
@@ -31,5 +30,6 @@ const GetPageFiles = () => {
         height: Math.floor(Math.random() * 2000)
       });
   }
+  console.log('PAGE-DATE FILE:', all_files_array)
   return all_files_array;
 };
