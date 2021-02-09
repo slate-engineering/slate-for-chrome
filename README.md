@@ -10,11 +10,8 @@ Features:
 * Upload to multiple slates at once
 * Add all of your Slate accounts
 * Welcome screen after install
+* Full settings page
 
 ![Chrome Extension Homepage](https://i.ibb.co/Jy42Z8V/multi-file-upload.png)
 
-## How it works
-
-### manifest.json
-
-
+![Chrome Extension Welcome](https://i.ibb.co/W0PZ5QK/welcome-5.png)
