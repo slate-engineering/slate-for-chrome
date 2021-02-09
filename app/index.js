@@ -24,7 +24,6 @@ function GetPageFiles() {
       //var ext = all_files[i].src.split('.').pop()
       const type = 'img'
       //const type = GetFileType({ ext: ext});
-
       new_all_files.push({
         id: id,
         src: all_files[i].src,
@@ -32,6 +31,5 @@ function GetPageFiles() {
         page_position: position,
       });
   }
-  console.log('PAGE-DATE FILE:', new_all_files)
   return new_all_files;
 };

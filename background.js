@@ -18,9 +18,8 @@ const LoadApp = () => {
 //Wait for Slate Extension icon to be clicked
 chrome.browserAction.onClicked.addListener(function(tabs) {
   console.log(tabs)
-
   //inject all Slate scripts needed into the current tab
   var activeTab = tabs[0];
-  chrome.tabs.executeScript(activeTab, {file: "app/common/jquery.min.js"}, InsertJquery());
+  chrome.tabs.executeScript(activeTab, {file: "app/scripts/jquery.min.js"}, InsertJquery());
   chrome.tabs.executeScript(activeTab, {file: "content-script.js"}, LoadApp());
 });
