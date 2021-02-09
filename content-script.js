@@ -1,15 +1,8 @@
 function listFiles(files) {
   files.forEach(function(item) {
-    console.log('item')
     var div = document.createElement("div");
     div.className = "img_container item";
     var img = document.createElement("img");
-    if(item.type == 'audio'){
-      img.src = 'https://www.tgcstore.net/images/audio-thumbnail.jpg';
-    }
-    if(item.type == 'video'){
-      img.src = 'https://kucumberskinlounge.com/app/themes/kucumber-skin-lounge/dist/images/default-thumb.jpg';
-    }
     if(item.type == 'img'){
       img.src = item.src;
     }
@@ -23,13 +16,11 @@ function listFiles(files) {
     checkbox.className = "img_checkbox"
 
     img.onclick = function() {
-      console.log('ITEM IN IMG CLICK', item)
       SelectFile({ image: item });
       checkbox.checked = true;
     };
 
     checkbox.onclick = function() {
-      console.log('ITEM IN CB CLICK', item)
       SelectFile({ image: item });
     };
 
@@ -38,7 +29,6 @@ function listFiles(files) {
     document.getElementById("slate-image-grid").appendChild(div);
   });
 }
-
 
 function InsertHtml() {
   $.get(chrome.extension.getURL('./app/pages/app.html'), function(data) {
@@ -53,21 +43,16 @@ $(document).ready(function() {
   chrome.runtime.onMessage.addListener(
     async function(request, callback) {
       if (request.message == "clicked_browser_action"){
-        var filesHello = await GetPageFiles();
+        let allPageFiles = await GetPageFiles();
 
-        console.log(filesHello)
         var appMain = document.getElementById('slate-app')
         var changeThem = document.getElementById("slate-image-grid")
-        console.log('hello from content-script')
         var img_array = []
         //Required for arrays in Chrome Extensions
-        img_array = Array.from(filesHello);
+        img_array = Array.from(allPageFiles);
         var listThem = listFiles(img_array)
         appMain.style.display = 'inline'
-        console.log('IMG ARRAY::', img_array)
-        //document.getElementById("num_results").innerHTML = img_array.length;
       }
     }
   );
-
 });

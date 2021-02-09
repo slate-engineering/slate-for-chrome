@@ -26,13 +26,13 @@
 
   "content_scripts": [{
       "matches": ["https://*/*", "http://*/*"],
-      "js": ["app/common/jquery.min.js"],
+      "js": ["app/scripts/jquery.min.js"],
       "run_at": "document_start"
     },
     {
       "matches": ["https://*/*", "http://*/*"],
       "css": ["app/common/styles/main.css", "app/common/styles/popup.css"],
-      "js": ["app/common/jquery.min.js"],
+      "js": ["app/scripts/jquery.min.js"],
       "run_at": "document_idle"
     },
     {
