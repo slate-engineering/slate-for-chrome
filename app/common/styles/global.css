@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "inter-regular";
+  src: url("https://slate.textile.io/ipfs/bafkreic3hkcuwvrmf6trweqcjp62valsfjh3zvwacikoreynakgw67wrvy");
+}
+
+@font-face {
+  font-family: "inter-semi-bold";
+  src: url("https://slate.textile.io/ipfs/bafkreiaezvuz6wawoqyntfl4gbprol3e7majovgof3uxvhilvd2pgk4w54");
+}
+
+@font-face {
+  font-family: "inter-medium";
+  src: url("https://slate.textile.io/ipfs/bafkreiapyxmqjwoowqpek2cjocouzxoalwlzwwbv3dscug3e5l2ok7xmqe");
+}
+
+@font-face {
+  font-family: "inter-bold";
+  src: url("https://slate.textile.io/ipfs/bafkreidfoszxf46lxxojv4fc6qgixz5zdjiess2zyhennjd62lnjwa5dda");
+}
+
+@font-face {
+  font-family: "jet-brains-regular";
+  src: url("https://slate.textile.io/ipfs/bafkreiabqv4534pnjhohcc2aclsgbp2twugldrlzg6wqdehajerrcwgu7e");
+}
+
+@font-face {
+  font-family: "jet-brains-bold";
+  src: url("https://slate.textile.io/ipfs/bafkreiejfxvbejf4a56x5tdo6w3n2kkrynwniv65rkkmrozxujroq6v4am");
+}
+
+html,
+body {
+  background: var(--color-white);
+  color: var(--color-textBlack);
+  font-size: var(--typescale-lvl1);
+  font-family: var(--font-family-text);
+  line-height: 1.5;
+  scrollbar-width: none;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  width: 100%;
+  margin: 0;
+}

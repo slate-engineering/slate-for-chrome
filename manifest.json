@@ -1,7 +1,7 @@
 {
   "name": "Slate",
   "description": "Upload images to Slate from anywhere on the web.",
-  "version": "1.0",
+  "version": "2.1",
   "permissions": [
     "contextMenus",
     "tabs",
@@ -20,19 +20,19 @@
     "app/pages/app.html",
     "background.js",
     "app/index.js",
-    "app/core/jquery.min.js",
+    "app/scripts/jquery.min.js",
     "app/public/fonts/Inter-Medium.ttf"
   ],
 
   "content_scripts": [{
       "matches": ["https://*/*", "http://*/*"],
-      "js": ["app/core/jquery.min.js"],
+      "js": ["app/common/jquery.min.js"],
       "run_at": "document_start"
     },
     {
       "matches": ["https://*/*", "http://*/*"],
-      "css": ["app/public/css/main.css", "app/public/css/popup.css"],
-      "js": ["app/core/jquery.min.js"],
+      "css": ["app/common/styles/main.css", "app/common/styles/popup.css"],
+      "js": ["app/common/jquery.min.js"],
       "run_at": "document_idle"
     },
     {
@@ -41,11 +41,6 @@
       "run_at": "document_end"
     }
   ],
-
-
-
-
-
 
   "commands": {
     "screenshot": {
@@ -58,17 +53,17 @@
   },
   "browser_action": {
     "default_icon": {
-      "16": "app/public/images/icon16.png",
-      "24": "app/public/images/icon48.png",
-      "32": "app/public/images/icon128.png"
+      "16": "app/public/static/icon16.png",
+      "24": "app/public/static/icon48.png",
+      "32": "app/public/static/icon128.png"
     },
     "default_title": "Slate"
   },
   "manifest_version": 2,
   "offline_enabled": true,
   "icons": {
-    "16": "app/public/images/icon16.png",
-    "48": "app/public/images/icon48.png",
-    "128": "app/public/images/icon128.png"
+    "16": "app/public/static/icon16.png",
+    "48": "app/public/static/icon48.png",
+    "128": "app/public/static/icon128.png"
   }
 }
