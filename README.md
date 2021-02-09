@@ -11,8 +11,10 @@ Features:
 * Add all of your Slate accounts
 * Welcome screen after install
 
- 
-## Version 1.0
-[Install on the Chrome Store](https://chrome.google.com/webstore/detail/slate/gloembacbehhbfbkcfjmloikeeaebnoc) \
-[Github repo](https://github.com/jasonleyser/slate-for-chrome)
+![Chrome Extension Homepage](https://i.ibb.co/Jy42Z8V/multi-file-upload.png)
+
+## How it works
+
+### manifest.json
+
 
