@@ -16,14 +16,36 @@
     ]
   },
   "web_accessible_resources": [
-    "content-script.js", "app/pages/app.html", "app/core/page-data.js", "app/core/app.js", "app/public/css/popup.css", "background.js", "app/index.js", "app/core/jquery.min.js"
+    "content-script.js",
+    "app/pages/app.html",
+    "background.js",
+    "app/index.js",
+    "app/core/jquery.min.js"
   ],
+
   "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "css": ["app/public/css/main.css", "app/public/css/popup.css", "app/public/css/ui.css"],
-    "js": ["content-script.js", "app/core/jquery.min.js", "app/index.js"],
-    "run_at": "document_idle"
-  }],
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["app/core/jquery.min.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "css": ["app/public/css/main.css", "app/public/css/popup.css"],
+      "js": ["app/core/jquery.min.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content-script.js", "app/index.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+
+
+
+
+
   "commands": {
     "screenshot": {
       "suggested_key": {

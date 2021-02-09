@@ -1,4 +1,4 @@
-<div id="slate-app" class="slate-container" style="z-index: 999999999999 !important">
+<div id="slate-app" class="slate-container" style="z-index: 999999999999 !important; display: none">
   <div style="width: 30%;height: 100%; background: #CFCED3; color: #000; right: 0; position: absolute;padding: 5% 16px;font-size:16px">
     <div style="position:absolute;top:0;display:inline">
       <h3 id="slate-popup-title">Select a file to upload</h3>
@@ -33,8 +33,9 @@
       <div style="margin-right:16px"><a class="header-link" href="#">Select all</a></div>
       <div><a class="header-link" href="#">Filter</a></div>
     </div>
-    <div id="page_images" style="overflow: scroll;height:100%">
-      <div class="slate-masonry" id="image_grid"></div>
+    <div id="slate-page-images" style="overflow: scroll;height:100%">
+      <div class="slate-masonry" id="slate-image-grid">
+      </div>
     </div>
   </div>
 </div>
