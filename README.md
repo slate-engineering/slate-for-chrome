@@ -14,4 +14,4 @@ Features:
 
 ![Chrome Extension Homepage](https://i.ibb.co/Jy42Z8V/multi-file-upload.png)
 
-![Chrome Extension Welcome](https://i.ibb.co/W0PZ5QK/welcome-5.png)
+![Chrome Extension Welcome](https://i.ibb.co/kJ9jBpc/welcome-5.png)
