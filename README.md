@@ -6,6 +6,6 @@ The official Slate Chrome Store install will be updated at a later version.
 ## Version 2.1
 Features:
 * Mass upload images from any website
-* Upload to multiple slates
-* Add multiple Slate accounts
+* Upload to multiple slates at once
+* Add all of your Slate accounts
 * Welcome screen after install
