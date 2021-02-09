@@ -1,7 +1,3 @@
-async function GetPageFiles() {
-  Array.prototype.map.call(document.images, function (i) { return i.src; });
-};
-
 function listFiles(files) {
   files.forEach(function(item) {
     console.log('item')

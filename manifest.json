@@ -20,7 +20,8 @@
     "app/pages/app.html",
     "background.js",
     "app/index.js",
-    "app/core/jquery.min.js"
+    "app/core/jquery.min.js",
+    "app/public/fonts/Inter-Medium.ttf"
   ],
 
   "content_scripts": [{
