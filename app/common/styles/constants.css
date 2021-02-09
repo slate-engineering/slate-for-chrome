@@ -1,0 +1,49 @@
+:root {
+  --typescale-lvlN1: 0.75rem;
+  --typescale-lvl0: 0.875rem;
+  --typescale-lvl1: 1rem;
+  --typescale-lvl2: 1.25rem;
+  --typescale-lvl3: 1.563rem;
+  --typescale-lvl4: 1.953rem;
+  --typescale-lvl5: 2.441rem;
+  --typescale-lvl6: 3.052rem;
+  --typescale-lvl7: 3.815rem;
+  --typescale-lvl8: 4.768rem;
+
+  --color-blue: #0061bb;
+  --color-green: #006837;
+  --color-gray80: #4b4a4d;
+  --color-gray70: #868688;
+  --color-gray50: #c3c3c4;
+  --color-gray40: #e5e5e5;
+  --color-gray30: #ebebeb;
+  --color-gray20: #f2f2f2;
+  --color-gray10: #f8f8f8;
+  --color-white: #ffffff;
+  --color-darkGray: #b2b2b2;
+  --color-grayBlack: #666666;
+  --color-textGray: #878688;
+  --color-textGrayLight: #c3c3c4;
+  --color-textGrayDark: #4b4a4d;
+  --color-textBlack: #0f0e12;
+  --color-bgGrayLight: #f8f8f8;
+  --color-bgGray: #f2f2f2;
+  --color-bgBlurGrayBlack: rgba(15, 14, 18, 0.8);
+  --color-bgBlurBlack: rgba(15, 14, 18, 0.9);
+
+  --shadow-light: 0 3px 6px 0 rgba(178, 178, 178, 0.15);
+  --shadow-medium: 0 8px 24px 0 rgba(178, 178, 178, 0.2);
+  --shadow-large: 0 12px 48px 0 rgba(178, 178, 178, 0.3);
+  --shadow-subtle: 0 1px 0 0 rgba(15, 14, 18, 0.04);
+
+  --size--desktop: 1024;
+  --size-tablet: 960;
+  --size-mobile: 768;
+
+  --font-family-text: "inter-regular", -apple-system, BlinkMacSystemFont, arial, sans-serif;
+  --font-family-semiBold: "inter-semiBold", -apple-system, BlinkMacSystemFont, arial, sans-serif;
+  --font-family-medium: "inter-medium", -apple-system, BlinkMacSystemFont, arial, sans-serif;
+  --font-family-bold: "inter-bold", -apple-system, BlinkMacSystemFont, arial, sans-serif;
+  --font-family-code: "jet-brains-regular", mono, monospace;
+  --font-family-codeBold: "jet-brains-bold", mono, monospace;
+}

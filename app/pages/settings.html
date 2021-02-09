@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Settings</title>
+    <link rel="stylesheet" href="../public/css/global.css" />
+    <link rel="stylesheet" href="../public/css/constants.css" />
+    <link rel="stylesheet" href="../public/css/settings.css" />
+    <meta charset="utf-8">
+  </head>
+  
+  <body>
+    <div class="page-wrapper">
+      <div class="title">Settings</div>
+      <div class="subtitle">You can add or update your API keys, configure the file types and sizes you want to capture.</div>
+      <div class="setting-module">
+        <div class="module-header">File types</div>
+        <div class="module-subheader">Select the types of files you want to retrieve.</div>
+        <label class="checkbox">
+          <span>Image</span>
+          <input class="checkbox-input" type="checkbox"></input>
+          <span class="checkbox-custom-input">
+            <span class="checkbox-custom-input selected"></span>
+          </span>
+        </label>
+        <label class="checkbox">
+          <span>Audios</span>
+          <input class="checkbox-input" type="checkbox"></input>
+          <span class="checkbox-custom-input">
+            <span class="checkbox-custom-input selected"></span>
+          </span>
+        </label>
+        <label class="checkbox">
+          <span>Videos</span>
+          <input class="checkbox-input" type="checkbox"></input>
+          <span class="checkbox-custom-input">
+            <span class="checkbox-custom-input selected"></span>
+          </span>
+        </label>
+      </div>
+      <div class="setting-module">
+        <div class="module-header">Image sizes</div>
+        <div class="module-subheader">Select the sizes of images you want to retrieve.</div>
+        <label class="checkbox">
+          <span>Icon</span>
+          <input class="checkbox-input" type="checkbox"></input>
+          <span class="checkbox-custom-input">
+            <span class="checkbox-custom-input selected"></span>
+          </span>
+        </label>
+        <label class="checkbox">
+          <span>Small</span>
+          <input class="checkbox-input" type="checkbox"></input>
+          <span class="checkbox-custom-input">
+            <span class="checkbox-custom-input selected"></span>
+          </span>
+        </label>
+        <label class="checkbox">
+          <span>Medium</span>
+          <input class="checkbox-input" type="checkbox"></input>
+          <span class="checkbox-custom-input">
+            <span class="checkbox-custom-input selected"></span>
+          </span>
+        </label>
+        <label class="checkbox">
+          <span>Large</span>
+          <input class="checkbox-input" type="checkbox"></input>
+          <span class="checkbox-custom-input">
+            <span class="checkbox-custom-input selected"></span>
+          </span>
+        </label>
+      </div>
+      <div class="setting-module">
+        <div class="module-header">API keys</div>
+        <div class="module-subheader">You can add multiple API keys from Slate. You can also arrange the order in which multiple APIs appear on your upload menu.</div>
+        <div id="api-keys">
+          <div class="api-key">
+            <input class="input name" placeholder="Name" />
+            <input class="input key" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" />
+            <button class="icon-button" onclick="delete_APIKey()">x</button>
+          </div>
+          <button class="icon-button" onclick="add_APIKey()">+</button>
+        </div>
+      </div>
+    </div>
+    
+    <script src="../core/settings.js"></script>
+    <script src="../core/svg.js"></script>
+  </body>
+</html>
