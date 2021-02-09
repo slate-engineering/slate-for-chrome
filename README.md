@@ -11,7 +11,8 @@ Features:
 * Add all of your Slate accounts
 * Welcome screen after install
 
+ 
 ## Version 1.0
-[Install from the Chrome Store](https://chrome.google.com/webstore/detail/slate/gloembacbehhbfbkcfjmloikeeaebnoc)
+[Install on the Chrome Store](https://chrome.google.com/webstore/detail/slate/gloembacbehhbfbkcfjmloikeeaebnoc) \
 [Github repo](https://github.com/jasonleyser/slate-for-chrome)
 
