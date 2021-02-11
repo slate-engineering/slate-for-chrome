@@ -11,6 +11,7 @@
   position: fixed;
   font-family: 'Inter';
   backdrop-filter: blur(6px);
+  background-color: RGBA(255, 255, 255, 0.8);
   z-index: 9999999 !important;
   display: 'inline';
 }
@@ -22,12 +23,12 @@
 }
 
 .slate-item-checked {
-  background-color: #666;
+  background-color: #f2f2f2 !important;
 }
 
 .slate-name {
-  background-color: #8F6A92 !important;
-  color: #fff;
+  background-color: #e5e5e5 !important;
+  color: #000;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px
 }
@@ -38,15 +39,15 @@
 
 .slate-item:hover {
   transition: 0.2s;
-  background-color: var(--foreground);
+  background-color: #f8f8f8;
   cursor: pointer;
 }
 
 .list_img {
-  width: 100%;
+  margin: auto;
+  max-width: 100%;
+  text-align: center;
   height: auto;
-  object-fit: cover;
-  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -86,18 +87,35 @@ input[type=checkbox]:checked {
   border-radius: 2px;
 }
 
+.search-box {
+  letter-spacing: -0.011rem;
+  -webkit-appearance: none;
+  height: 100%;
+  background: #ebebeb;
+  color: #0f0e12;
+  outline: 0;
+  border: 0;
+  box-sizing: border-box;
+  transition: 200ms ease all;
+  padding: 0 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 4px;
+  margin-right: 8px;
+  width: 100%;
+  margin-bottom: 24px;
+  padding: 16px 8px;
+}
+
 
 .main_popup {
   width: 60%;
-  height: 60%;
-  background: #fff;
+  height: 80%;
+  background: transparent;
   color: #000;
-  margin-left: 5%;
-  margin-top: 5%;
   position: absolute;
-  border-radius: 4px;
-  padding: 16px 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 0;
+  margin: 2% 5%;
 }
 
 .upload_bar {
@@ -117,19 +135,6 @@ input[type=checkbox]:checked {
   z-index: 999;
 }
 
-.blur {
-  position: absolute;
-  z-index: -1;
-  width: 150%;
-  height: 150%;
-  backdrop-filter: blur(6px);
-  bottom: 0;
-  left: -20;
-  right: 0;
-  margin: auto;
-  z-index: 998;
-}
-
 .slate-masonry {
   column-count: 6;
   column-gap: 1em;
@@ -139,7 +144,11 @@ input[type=checkbox]:checked {
   background-color: #eee;
   display: inline-block;
   margin: 0 0 1em;
-  width: 100%;
+  min-height: 100px;
+  min-width: 100%;
+  border-radius: 4px;
+  background-color: #e5e5e5;
+  border: 1px solid #b2b2b2;
 }
 
 @media only screen and (min-width: 1024px) {

@@ -1,3 +1,23 @@
+var upload_queue = [];
+
+const SelectFile = ({ image }) => {
+  console.log('IMAGE::::', image)
+  const app = document;
+  app.getElementById("img-" + image.id).addClass = "selected";
+  upload_queue.push({
+    id: image.id,
+    src: image.src,
+    title: image.alt || 'none'
+  });
+  if(upload_queue.length == 1) {
+    app.getElementById('slate-popup-title').innerHTML = 'Add ' + upload_queue.length + ' file to slate';
+  }else{
+    app.getElementById('slate-popup-title').innerHTML = 'Add ' + upload_queue.length + ' files to slate';
+  }
+  console.log(upload_queue);
+  return upload_queue;
+}
+
 function listFiles(files) {
   files.forEach(function(item) {
     var div = document.createElement("div");
@@ -6,6 +26,7 @@ function listFiles(files) {
     if(item.type == 'img'){
       img.src = item.src;
     }
+
     img.className = "list_img";
     img.id = "img-" + item.id;
 
@@ -30,14 +51,14 @@ function listFiles(files) {
   });
 }
 
-function InsertHtml() {
+const OpenSlateApp = () => {
   $.get(chrome.extension.getURL('./app/pages/app.html'), function(data) {
     $(data).prependTo('body');
   });
 }
 
 $(document).ready(function() {
-  InsertHtml();
+  OpenSlateApp()
   //Wait for message from 'background.js'
   //When message is recieved, inject the Slate App into the current tab
   chrome.runtime.onMessage.addListener(
@@ -52,7 +73,18 @@ $(document).ready(function() {
         img_array = Array.from(allPageFiles);
         var listThem = listFiles(img_array)
         appMain.style.display = 'inline'
+
+        document.getElementById("slate2").addEventListener("click", function() {
+          document.getElementById("slate2").classList.add("slate-item-checked");
+        });
+        document.getElementById("slate3").addEventListener("click", function() {
+          document.getElementById("slate3").classList.add("slate-item-checked");
+        });
+        document.getElementById("slate4").addEventListener("click", function() {
+          document.getElementById("slate4").classList.add("slate-item-checked");
+        });
       }
     }
   );
+
 });

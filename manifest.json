@@ -8,7 +8,8 @@
     "activeTab",
     "storage",
     "https://slate.host/",
-    "<all_urls>"
+    "<all_urls>",
+    "unlimitedStorage"
   ],
   "background": {
     "scripts": [
@@ -18,6 +19,7 @@
   "web_accessible_resources": [
     "content-script.js",
     "app/pages/app.html",
+    "app/pages/",
     "background.js",
     "app/index.js",
     "app/scripts/jquery.min.js",
