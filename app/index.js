@@ -12,6 +12,7 @@ function GetPageData() {
 function GetPageFiles() {
   var all_files = [];
   var new_all_files = [];
+
   Array.prototype.map.call(document.images, function (i) {
     all_files.push(i)
   });
@@ -24,12 +25,19 @@ function GetPageFiles() {
       //var ext = all_files[i].src.split('.').pop()
       const type = 'img'
       //const type = GetFileType({ ext: ext});
-      new_all_files.push({
-        id: id,
-        src: all_files[i].src,
-        type: type,
-        page_position: position,
-      });
+
+      if(all_files[i].naturalWidth > 100) {
+        new_all_files.push({
+          id: id,
+          src: all_files[i].src,
+          altTitle: all_files[i].alt || null,
+          type: type,
+          page_position: position,
+          width: all_files[i].naturalwidth,
+          height: all_files[i].naturalHeight
+        });
+      }
   }
+  console.log('NEW:',new_all_files)
   return new_all_files;
 };

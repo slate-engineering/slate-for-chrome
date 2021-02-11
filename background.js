@@ -15,6 +15,11 @@ const LoadApp = () => {
    console.log('message sent')
 }
 
+chrome.runtime.onInstalled.addListener(function (tab) {
+  //on new install, open the settings page
+  chrome.tabs.create({url: chrome.extension.getURL('app/pages/settings.html')});
+});
+
 //Wait for Slate Extension icon to be clicked
 chrome.browserAction.onClicked.addListener(function(tabs) {
   console.log(tabs)
