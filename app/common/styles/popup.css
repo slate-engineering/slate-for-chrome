@@ -75,19 +75,7 @@ input[type=checkbox]:checked {
   border: 2px solid #563;
 }
 
-.upload_btn {
-  color: #fff;
-  padding: 8px 8px;
-  text-decoration: none;
-}
-
-.upload_btn:hover {
-  background-color: #5d5c5e;
-  color: #fff;
-  border-radius: 2px;
-}
-
-.search-box {
+.slate-result-search-input {
   letter-spacing: -0.011rem;
   -webkit-appearance: none;
   height: 100%;
@@ -108,7 +96,7 @@ input[type=checkbox]:checked {
 }
 
 
-.main_popup {
+.slate-main-popup {
   width: 60%;
   height: 80%;
   background: transparent;
@@ -118,29 +106,12 @@ input[type=checkbox]:checked {
   margin: 2% 5%;
 }
 
-.upload_bar {
-  position: relative;
-  width: 70%;
-  height: 56px;
-  line-height: 56px;
-  padding-left: 56px;
-  background-color: #4B4A4D;
-  color: #fff;
-  top: 64px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border-radius: 2px;
-  z-index: 999;
-}
-
 .slate-masonry {
   column-count: 6;
   column-gap: 1em;
 }
 
-.item {
+.slate-masonry-item {
   background-color: #eee;
   display: inline-block;
   margin: 0 0 1em;
@@ -193,12 +164,12 @@ input[type=checkbox]:checked {
   border: 0;
 }
 
-.primary {
+.slate-primary {
   color: #fff;
   background-color: #0666BB;
 }
 
-.primary:hover {
+.slate-primary:hover {
   background-color: #065ca8;
 }
 
@@ -207,7 +178,7 @@ input[type=checkbox]:checked {
   background-color: #fff;
 }
 
-.secondary:hover {
+.slate-secondary:hover {
   color: var(--black);
   background-color: var(--foreground);
 }
@@ -216,69 +187,11 @@ input[type=checkbox]:checked {
   box-sizing: border-box;
 }
 
-.content {
-  position: absolute;
-  top: 100%;
-  opacity: 0;
-  left: 0;
-  background: #333;
-  color: white;
-  padding: 16px;
-}
-
-.content ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.content a {
-  color: white;
-  display: block;
-  white-space: nowrap;
-  text-decoration: none;
-  border-bottom: 1px solid #999;
-  padding: 5px;
-}
-
-[type="radio"]:checked~label {
-  z-index: 2;
-}
-
-[type="radio"]:checked~label~.content {
-  z-index: 1;
-  opacity: 1;
-}
-
-.close-tab {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.close-tab label {
-  background: #333;
-  color: white;
-}
-
-[type="radio"]:checked~label~.close-tab {
-  z-index: 3;
-}
-
-.header-link {
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.full {
+.slate-full {
   width: 100%;
 }
 
-.api-group {
+.slate-api-group {
   z-index: 99999;
   border: 2px solid #D8D8D8;
   border-radius: 4px !important;
