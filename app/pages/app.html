@@ -6,7 +6,7 @@
     <br />
     <div style="width:100%;height:64%;overflow: scroll">
       <div id="list-slates"></div>
-      <div class="api-group">
+      <div class="slate-api-group">
         <div class="slate-name">
           <img
             width="26px"
@@ -17,9 +17,11 @@
             Space stuff
           </b>
         </div>
-        <div id="slate1" class="slate-item" data-id="1" value="1">+ Design</div>
-        <div id="slate2" class="slate-item" data-id="2" value="1">+ Cool houses</div>
-        <div id="slate3" class="slate-item" data-id="3" value="1">+ Modern</div>
+        <div style="display: none">
+          <div id="slate1" class="slate-item" data-id="1" value="1">+ Design</div>
+          <div id="slate2" class="slate-item" data-id="2" value="1">+ Cool houses</div>
+          <div id="slate3" class="slate-item" data-id="3" value="1">+ Modern</div>
+        </div>
       </div>
       <br />
       <div class="slate-name">
@@ -32,20 +34,21 @@
           Work
         </b>
       </div>
-      <div class="slate-item" data-id="1" value="1">+ Ideas</div>
-      <div id="slate4" class="slate-item" data-id="2" value="1">+ Work stuff</div>
-      <div class="slate-item" data-id="3" value="1">+ Other</div>
-      <div class="slate-item" data-id="3" value="1">+ Other</div>
-      <div class="slate-item" data-id="3" value="1">+ Other</div>
-
+      <div style="display: inline">
+        <div class="slate-item" data-id="1" value="1">+ Ideas</div>
+        <div id="slate4" class="slate-item" data-id="2" value="1">+ Work stuff</div>
+        <div class="slate-item" data-id="3" value="1">+ Other</div>
+        <div class="slate-item" data-id="3" value="1">+ Other</div>
+        <div class="slate-item" data-id="3" value="1">+ Other</div>
+      </div>
     </div>
     <br />
-    <div id="btn-upload" class="slate-btn primary full">Upload files</div>
+    <div id="btn-upload" class="slate-btn slate-primary slate-full">Upload files</div>
     <br /><br />
   </div>
-  <div class="main_popup">
+  <div class="slate-main-popup">
     <div style="display: flex; justify-content: center; color: #fff;font-size:18px">
-      <input type="text" class="search-box" placeholder="Search file metadata (filename, source, title)" />
+      <input type="text" class="slate-result-search-input" placeholder="Search file metadata (filename, title)" />
     </div>
     <div id="slate-page-images" style="overflow: scroll;height:100%">
       <div class="slate-masonry" id="slate-image-grid">
