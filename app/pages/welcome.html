@@ -2,30 +2,17 @@
 <html lang="en-US">
   <head>
     <title>Welcome to Slate for Chrome</title>
-    <link rel="stylesheet" href="../public/css/global.css" />
-    <link rel="stylesheet" href="../public/css/constants.css" />
-    <link rel="stylesheet" href="../public/css/welcome.css" />
+    <link rel="stylesheet" href="../common/styles/global.css" />
+    <link rel="stylesheet" href="../common/styles/constants.css" />
+    <link rel="stylesheet" href="../common/styles/welcome.css" />
     <meta charset="utf-8">
   </head>
   
   <body>
     <div class="scroll-container">
-      <!-- <div class="hero-backdrop"> -->
-        <div class="section-wrapper">
-          <div class="title">Welcome to Slate for Chrome</div>
-          <div class="subtitle">Easily upload any files to Slate from anywhere on the Internet</div>
-          <div class="column">
-            <div class="media-type images"><div class="explainer">Images</div></div>
-            <div class="media-type videos"><div class="explainer">Videos</div></div>
-            <div class="media-type audios"><div class="explainer">Audios</div></div>
-            <div class="media-type more"><div class="explainer">And more soon</div></div>
-          </div>
-        </div>
-      <!-- </div> -->
-
       <div class="section-wrapper">
-        <div class="title">Quick set up</div>
-        <div class="subtitle">Enter your API key below</div>
+        <div class="title">Welcome to Slate for Chrome</div>
+        <div class="subtitle">To set up, enter your API key below</div>
         <button class="helper-button">How to find my API key?</button>
         <div class="helper-info">Go to <a href="https://slate.host/" target="_blank">slate.host</a> and log in. From the main menu, select API. Make the API key visible before you copy.</div>
         <input class="input" type="text" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" />
@@ -34,15 +21,15 @@
       </div>
 
       <div class="section-wrapper last">
-        <div class="title">Try Slate for Chrome</div>
+        <div class="title">How it works</div>
         <div class="subtitle">Let’s quickly test drive Slate</div>
         <div class="column">
-          <div class="test-platform unsplash">
+          <a class="test-platform unsplash" href="https://unsplash.com/t/nature/?slatetour">
             <div class="explainer">
               <div>Upload images from <br/> <span style="font-family: var(--font-family-bold);">Unsplash</span></div>
               <div><img src="https://slate.textile.io/ipfs/bafkreie3wqqi4arrwoyq7wu56elwlz2zh3g6b46htpelqafua5femaspli" width="48px"></div>
             </div>
-          </div>
+          </a>
           <div class="test-platform youtube">
             <div class="explainer">
               <div>Upload videos from <br/> <span style="font-family: var(--font-family-bold);">Youtube</span></div>
@@ -57,26 +44,9 @@
           </div>
         </div>
       </div>
-
-      <div class="section-wrapper">
-        <div class="title">Product tour components</div>
-        <div class="subtitle">Putting stuff here for now</div>
-        <div class="product-tour-module">
-          <div class="module-header">Single file collection</div>
-          <div class="module-subheader">Right click on the image for direct upload to Slate.</div>
-          <div class="image"></div>
-          <div class="action-line">
-            <div class="progress-indicators">
-              <span class="progress-indicator selected"></span>
-              <span class="progress-indicator"></span>
-            </div>
-            <button class="secondary-button">Next</button>
-          </div>
-        </div>
-      </div>
-
     </div>
-    <script src="../core/welcome.js"></script>
-    <script src="../core/svg.js"></script>
+    <script src="../common/welcome.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <!-- <script src="../core/svg.js"></script> -->
   </body>
 </html>
