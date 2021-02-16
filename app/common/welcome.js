@@ -1,3 +1,8 @@
+document.addEventListener("DOMContentLoaded", () => {
+  let helperButton = document.getElementsByClassName("helper-button");
+  helperButton[0].addEventListener("click", () => _handleExpand(helperButton[0]));
+});
+
 _handleExpand = (props) => {
   props.classList.toggle("active");
   let helperInfo = props.nextElementSibling;
@@ -7,8 +12,3 @@ _handleExpand = (props) => {
     helperInfo.classList.add("active");
   }
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-  let helperButton = document.getElementsByClassName("helper-button");
-  helperButton[0].addEventListener("click", () => _handleExpand(helperButton[0]));
-});

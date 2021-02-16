@@ -9,7 +9,8 @@
     "storage",
     "https://slate.host/",
     "<all_urls>",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "webNavigation"
   ],
   "background": {
     "scripts": [
@@ -20,6 +21,11 @@
     "content-script.js",
     "app/pages/app.html",
     "app/pages/",
+    "app/pages/product-tour.js",
+    "app/pages/product-tour.html",
+    "app/common/styles/constants.css",
+    "app/common/styles/global.css",
+    "app/common/styles/product-tour.css",
     "background.js",
     "app/index.js",
     "app/scripts/jquery.min.js",
@@ -41,6 +47,12 @@
       "matches": ["https://*/*", "http://*/*"],
       "js": ["content-script.js", "app/index.js"],
       "run_at": "document_end"
+    },
+    {
+      "matches": ["https://unsplash.com/t/nature/?slatetour"],
+      "css": ["app/common/styles/constants.css", "app/common/styles/global.css","app/common/styles/product-tour.css"],
+      "js": ["app/common/product-tour.js"],
+      "run_at": "document_start"
     }
   ],
 

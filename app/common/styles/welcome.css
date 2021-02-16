@@ -19,20 +19,13 @@
   }
 }
 
-.hero-backdrop {
-  background: linear-gradient(180deg, rgba(0, 97, 187, 1) 0%, rgba(196, 196, 196, 0) 100%);
-  margin: 0;
-  max-width: none;
-  color: var(--color-white);
-}
-
 .section-wrapper.last {
   height: 100vh;
 }
 
 .title {
   font-family: var(--font-family-semiBold);
-  font-size: var(--typescale-lvl6);
+  font-size: var(--typescale-lvl5);
   font-weight: 400;
   letter-spacing: -0.022rem;
 }
@@ -48,39 +41,6 @@
   font-size: var(--typescale-lvl1);
   font-weight: 400;
   letter-spacing: -0.011rem;
-}
-
-.primary-button,
-.secondary-button {
-  font-family: var(--font-family-semiBold);
-  font-size: var(--typescale-lvl0);
-  letter-spacing: -0.011rem;
-  box-sizing: border-box;
-  border-radius: 4px;
-  outline: 0;
-  border: 0;
-  min-height: 40px;
-  padding: 4px 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  letter-spacing: 0.2px;
-  transition: 200ms ease all;
-  overflow-wrap: break-word;
-  user-select: none;
-  cursor: pointer;
-}
-
-.primary-button {
-  background-color: var(--color-blue);
-  color: var(--color-white);
-  margin: 0 16px 16px 0;
-}
-
-.secondary-button {
-  background-color: var(--color-bgGray);
-  color: var(--color-textBlack);
 }
 
 .input {
@@ -104,6 +64,10 @@
   white-space: nowrap;
   border-radius: 4px;
   margin-bottom: 24px;
+}
+
+.input:focus {
+  background: var(--color-bgGray);
 }
 
 .input::placeholder {
@@ -257,64 +221,4 @@ a {
 .explainer:hover {
   max-height: 100%;
   transition: max-height 0.2s ease-in-out;
-}
-
-.product-tour-module {
-  width: 480px;
-  height: 320px;
-  box-sizing: border-box;
-  box-shadow: 0px 12px 48px 0px rgba(178, 178, 178, 0.3);
-  background-color: var(--color-white);
-  border-radius: 4px;
-  border: 1px solid var(--color-bgGray);
-  padding: 24px;
-}
-
-.product-tour-module .module-header {
-  font-family: var(--font-family-semiBold);
-  font-size: var(--typescale-lvl2);
-  color: var(--color-textBlack);
-}
-
-.product-tour-module .module-subheader {
-  font-family: var(--font-family-text);
-  font-size: var(--typescale-lvl1);
-  color: var(--color-textGray);
-  margin-bottom: 20px;
-}
-
-.product-tour-module .image {
-  background-size: cover;
-  background-color: transparent;
-  background-position: center;
-  width: 100%;
-  height: 50%;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  background-image: url("https://slate.textile.io/ipfs/bafybeie4qvsyjvdtg5wjpxiekb7m7iufb4sahfupzcoq3v6gxkrjwpuycq");
-}
-
-.product-tour-module .action-line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.product-tour-module .action-line .progress-indicators {
-  width: 50%;
-  height: 100%;
-}
-
-.product-tour-module .action-line .progress-indicators .progress-indicator {
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-bgGray);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 4px;
-}
-
-.product-tour-module .action-line .progress-indicators .progress-indicator.selected {
-  background-color: var(--color-gray80);
 }
