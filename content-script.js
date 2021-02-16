@@ -11,10 +11,10 @@ $(document).ready(function() {
         let allPageFiles = await GetPageFiles();
         var appMain = document.getElementById('slate-app')
         var imageGrid = document.getElementById("slate-image-grid")
-        var img_array = []
+        var imageArray = []
         //Required format for arrays in Chrome Extensions
-        img_array = Array.from(allPageFiles);
-        var imageGrid = ListFiles(img_array)
+        imageArray = Array.from(allPageFiles);
+        var imageGrid = ListFiles(imageArray)
         appMain.style.display = 'inline'
 
       }
