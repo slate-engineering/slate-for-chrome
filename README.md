@@ -12,6 +12,8 @@ Features:
 * Welcome screen after install
 * Full settings page
 
+![Chrome Extension Homepage Gif](https://i.ibb.co/4TBFvNd/ezgif-com-gif-maker.gif)
+
 ![Chrome Extension Homepage](https://i.ibb.co/Jy42Z8V/multi-file-upload.png)
 
 ![Chrome Extension Welcome](https://i.ibb.co/kJ9jBpc/welcome-5.png)
