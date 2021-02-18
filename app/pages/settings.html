@@ -74,16 +74,38 @@
         <div class="module-subheader">You can add multiple API keys from Slate. You can also arrange the order in which multiple APIs appear on your upload menu.</div>
         <div id="api-keys">
           <div class="api-key">
-            <input class="input name" placeholder="Name" />
-            <input class="input key" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" />
-            <button class="icon-button" onclick="delete_APIKey()">x</button>
+            <div class="account name">Name</div>
+            <div class="account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div>
+            <button class="icon-button show active"><object class="icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button>
+            <button class="icon-button hide"><object class="icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button>
+            <button class="icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>
           </div>
-          <button class="icon-button" onclick="add_APIKey()">+</button>
+          <div class="api-key">
+            <input class="input name" placeholder="Name" />
+            <input class="input key" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" />
+            <button class="icon-button validate" disabled><object class="icon" type="image/svg+xml" data="../common/svg/arrow-right-circle.svg"></object></button>
+            <button class="icon-button show active"><object class="icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button>
+            <button class="icon-button hide"><object class="icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button>
+            <button class="icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>
+          </div>
+        </div>
+        <button id="add-api-key" class="icon-button" onclick="_handleAdd()"><object class="icon" type="image/svg+xml" data="../common/svg/plus.svg"></object>
+      </div>
+      <div class="setting-module">
+        <div class="module-header">Upload history</div>
+        <div class="module-subheader">Configure the time range for the upload history you would like to keep.</div>
+        <div class="time-range-dropdown">
+          <div class="dropdown-title">Select a time range<object id="dropdown-icon" class="icon" type="image/svg+xml" data="../common/svg/chevron-down.svg"></object></div>
+          <div class="dropdown-options hide">
+            <div id="last-24-hours" class="option">Last 24 hours</div>
+            <div id="last-3-days" class="option">Last 3 days</div>
+            <div id="last-7-days" class="option">Last 7 days</div>
+            <div id="last-4-weeks" class="option">Last 4 weeks</div>
+            <div id="last-3-months" class="option">Last 3 months</div>
+          </div>
         </div>
       </div>
     </div>
-    
     <script src="../common/settings.js"></script>
-    <script src="../core/svg.js"></script>
   </body>
 </html>

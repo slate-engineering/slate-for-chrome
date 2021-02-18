@@ -97,6 +97,10 @@
   height: 20px;
 }
 
+.icon-wrapper > * {
+  pointer-events: none;
+}
+
 .input:focus {
   background: var(--color-bgGray);
 }
