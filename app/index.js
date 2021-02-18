@@ -1,4 +1,4 @@
-var upload_queue = [];
+var uploadQueue = [];
 
 function GetPageData() {
   const page = document;
@@ -11,7 +11,7 @@ function GetPageData() {
   return data;
 };
 
-function GetPageFiles() {
+const GetPageFiles = () => {
   var all_files = [];
   var new_all_files = [];
 
@@ -39,13 +39,15 @@ function GetPageFiles() {
         });
       }
   }
+  console.log(new_all_files)
+
   return new_all_files;
 };
 
 const ListFiles = (files) => {
   files.forEach(function(item) {
     var div = document.createElement("div");
-    div.className = "img_container item";
+    div.className = "img_container slate-masonry-item";
     var img = document.createElement("img");
     img.className = "list_img";
     img.id = "img-" + item.id;
@@ -61,7 +63,11 @@ const ListFiles = (files) => {
 
     img.onclick = function() {
       let imgClick = SelectFile({ image: item });
-      checkbox.checked = true;
+      if(!checkbox.checked) {
+        checkbox.checked = true
+      }else{
+        checkbox.checked = false
+      }
     };
 
     checkbox.onclick = function() {
@@ -72,4 +78,70 @@ const ListFiles = (files) => {
     div.appendChild(img);
     document.getElementById("slate-image-grid").appendChild(div);
   });
+
+  document.getElementById("slate2").addEventListener("click", function() {
+    this.classList.toggle("slate-item-checked");
+  });
+
+  document.getElementById("slate1").addEventListener("click", function() {
+    this.classList.toggle("slate-item-checked");
+  });
+
+  document.getElementById("slate5").addEventListener("click", function() {
+    this.classList.toggle("slate-item-checked");
+  });
+
+  document.getElementById("slate-upload-btn").addEventListener("click", function() {
+    chrome.runtime.sendMessage({ message: "upload_to_slate" }, function(response) {
+      console.log(response);
+    });
+  });
+
+  document.getElementById('slate-file-search').addEventListener("input", () => {
+
+    files.forEach(function(entry) {
+      console.log('from search', entry);
+    });
+    //console.log('from search', results)
+
+    //ListFiles()
+  });
+
+}
+
+const ShowSlatesList = ({ slates }) => {
+  const list = document.getElementById("list-slates");
+  slates.forEach(slate => function() {
+    console.log('name', slate.name);
+    var div = document.createElement("div");
+    div.className = 'api-group';
+
+    var div2 = document.createElement('div');
+    div2.className = 'slate-item'
+    div2.innerHTML = slate.name
+
+    div.append(div2);
+    list.append(div);
+  });
+}
+
+const SelectFile = ({ image }) => {
+  alert(uploadQueue.length)
+  document.getElementById("img-" + image.id).addClass = "selected";
+  uploadQueue.push({
+    id: image.id,
+    src: image.src,
+    title: image.alt || null
+  });
+
+  if(uploadQueue.length == 0) {
+    return
+  }else if(uploadQueue.length == 1){
+    document.getElementById('slate-popup-title-name').innerHTML = 'Add ' + uploadQueue.length + ' file to slate';
+  }else{
+    document.getElementById('slate-popup-title-name').innerHTML = 'Add ' + uploadQueue.length + ' files to slate';
+  }
+
+  console.log(uploadQueue)
+  return uploadQueue;
 }
