@@ -43,18 +43,21 @@
   letter-spacing: -0.011rem;
 }
 
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
 .input {
   font-family: var(--font-family-medium);
   font-size: var(--typescale-lvl0);
   letter-spacing: -0.011rem;
   -webkit-appearance: none;
-  width: 416px;
+  width: 456px;
   height: 56px;
   background: var(--color-bgGrayLight);
   color: var(--color-textBlack);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   outline: 0;
   border: 0;
   box-sizing: border-box;
@@ -63,7 +66,35 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   border-radius: 4px;
-  margin-bottom: 24px;
+}
+
+.icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  position: relative;
+  margin-left: -48px;
+  display: none;
+}
+
+.icon-wrapper.active:hover {
+  cursor: pointer;
+  background-color: var(--color-bgGray);
+  transition: background-color 200ms ease-in-out;
+}
+
+.icon-wrapper.active {
+  display: block;
+}
+
+.icon-wrapper .icon-eye-off,
+.icon-wrapper .icon-eye {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
 }
 
 .input:focus {
