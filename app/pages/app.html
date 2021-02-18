@@ -1,7 +1,7 @@
 <div id="slate-app" class="slate-container" style="z-index: 999999999999 !important; display: none">
   <div style="width: 30%;height: 100%; background: #c3c3c4; color: #000; right: 0; position: absolute;padding: 5% 16px;font-size:16px">
     <div style="position:absolute;top:0;padding-top:16px;display:inline">
-      <h3 id="slate-popup-title">Select a file to upload</h3>
+      <h3 class="slate-title-main" id="slate-popup-title-name">Select a file to upload</h3>
     </div>
     <br />
     <div style="width:100%;height:64%;overflow: scroll">
@@ -43,12 +43,12 @@
       </div>
     </div>
     <br />
-    <div id="btn-upload" class="slate-btn slate-primary slate-full">Upload files</div>
+    <div id="slate-upload-btn" class="slate-btn slate-primary slate-full">Upload files</div>
     <br /><br />
   </div>
   <div class="slate-main-popup">
     <div style="display: flex; justify-content: center; color: #fff;font-size:18px">
-      <input type="text" class="slate-result-search-input" placeholder="Search file metadata (filename, title)" />
+      <input id="slate-file-search" type="text" class="slate-result-search-input" placeholder="Search file metadata (filename, title)" />
     </div>
     <div id="slate-page-images" style="overflow: scroll;height:100%">
       <div class="slate-masonry" id="slate-image-grid">

@@ -37,3 +37,18 @@ chrome.webNavigation.onCompleted.addListener(function (tabs) {
     }
   });
 });
+
+//
+//
+//Upload in to Slate in the backgrouind
+const Upload = async () => {
+  console.log('message recieved in upload')
+}
+
+chrome.runtime.onMessage.addListener(
+  async function(request, callback) {
+    if (request.message == "upload_to_slate"){
+      Upload()
+    }
+  }
+);

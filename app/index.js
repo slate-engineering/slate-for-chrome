@@ -24,9 +24,8 @@ const GetPageFiles = () => {
 
   for (var i = 0; i < all_files.length; i++) {
       position++;
-      var id = "123";
+      var id = position;
       const type = 'img'
-
       if(all_files[i].naturalWidth > 100) {
         new_all_files.push({
           id: id,
@@ -43,13 +42,15 @@ const GetPageFiles = () => {
   return new_all_files;
 };
 
-const ListFiles = (files) => {
+let ListFiles = async (files) => {
+  let idArray = []
   files.forEach(function(item) {
     var div = document.createElement("div");
-    div.className = "img_container slate-masonry-item";
+    div.className = "slate-img-container slate-masonry-item";
     var img = document.createElement("img");
     img.className = "list_img";
     img.id = "img-" + item.id;
+    idArray.push({ id: img.id })
     if(item.type == 'img'){
       img.src = item.src;
     }
@@ -58,42 +59,14 @@ const ListFiles = (files) => {
     checkbox.setAttribute("type", "checkbox");
     checkbox.value = item.src;
     checkbox.id = "check-" + item.id;
-    checkbox.className = "img_checkbox"
-
-    img.onclick = function() {
-      let imgClick = SelectFile({ image: item });
-      if(!checkbox.checked) {
-        checkbox.checked = true
-      }else{
-        checkbox.checked = false
-      }
-    };
-
-    checkbox.onclick = function() {
-      let checkClick = SelectFile({ image: item });
-    };
+    checkbox.className = "slate-img-checkbox"
 
     div.appendChild(checkbox);
     div.appendChild(img);
     document.getElementById("slate-image-grid").appendChild(div);
   });
 
-  document.getElementById("slate-upload-btn").addEventListener("click", function() {
-    chrome.runtime.sendMessage({ message: "upload_to_slate" }, function(response) {
-      console.log(response);
-    });
-  });
-
-  document.getElementById('slate-file-search').addEventListener("input", () => {
-
-    files.forEach(function(entry) {
-      console.log('from search', entry);
-    });
-    //console.log('from search', results)
-
-    //ListFiles()
-  });
-
+  return idArray;
 }
 
 const ShowSlatesList = ({ slates }) => {
@@ -112,9 +85,7 @@ const ShowSlatesList = ({ slates }) => {
   });
 }
 
-const SelectFile = ({ image }) => {
-  alert(uploadQueue.length)
-  document.getElementById("img-" + image.id).addClass = "selected";
+SelectFile = async ({ image }) => {
   uploadQueue.push({
     id: image.id,
     src: image.src,
@@ -122,9 +93,9 @@ const SelectFile = ({ image }) => {
   });
 
   if(uploadQueue.length == 0) {
-    return
+    document.getElementById('slate-popup-title-name').style.display = 'inline'
   }else if(uploadQueue.length == 1){
-    document.getElementById('slate-popup-title-name').innerHTML = 'Add ' + uploadQueue.length + ' file to slate';
+    document.getElementsByClassName("slate-title-main").innerHTML = 'Add file to slate';
   }else{
     document.getElementById('slate-popup-title-name').innerHTML = 'Add ' + uploadQueue.length + ' files to slate';
   }
