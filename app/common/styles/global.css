@@ -68,6 +68,11 @@ button {
   margin: 0 16px 16px 0;
 }
 
+.primary-button.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .secondary-button {
   background-color: var(--color-bgGrayLight);
   font-family: var(--font-family-semiBold);
@@ -78,4 +83,20 @@ button {
 .secondary-button:hover {
   background-color: var(--color-bgGray);
   transition: background-color 200ms ease-in-out;
+}
+
+.loaderspinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-blue);
+  border-radius: 50%;
+  border-top-color: var(--color-bgGrayLight);
+  animation: slate-client-animation-spin 1s ease-in-out infinite;
+}
+
+@keyframes slate-client-animation-spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }

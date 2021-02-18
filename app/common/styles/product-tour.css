@@ -16,7 +16,7 @@
 .product-tour.active {
   display: block;
   background-color: rgba(0, 0, 0, 0.3);
-  animation: background-fade 1200ms ease-in;
+  animation: background-fade 800ms ease-in;
 }
 
 @keyframes background-fade {
@@ -42,7 +42,7 @@
 
 .product-tour-module.active {
   opacity: 1;
-  transition: opacity 700ms ease-in;
+  transition: opacity 300ms ease-in;
 }
 
 .product-tour-module.single {
@@ -62,11 +62,14 @@
 }
 
 .product-tour-module .cancel-button {
-  border: none;
-  height: 20px;
-  width: 20px;
-  background: transparent;
+  color: var(--color-gray50);
+  transition: color 200ms ease-in-out;
+}
+
+.product-tour-module .cancel-button:hover {
+  color: var(--color-gray80);
   cursor: pointer;
+  transition: color 200ms ease-in-out;
 }
 
 .product-tour-module .module-header {
