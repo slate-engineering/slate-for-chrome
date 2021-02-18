@@ -40,7 +40,6 @@ const GetPageFiles = () => {
       }
   }
   console.log(new_all_files)
-
   return new_all_files;
 };
 
@@ -77,18 +76,6 @@ const ListFiles = (files) => {
     div.appendChild(checkbox);
     div.appendChild(img);
     document.getElementById("slate-image-grid").appendChild(div);
-  });
-
-  document.getElementById("slate2").addEventListener("click", function() {
-    this.classList.toggle("slate-item-checked");
-  });
-
-  document.getElementById("slate1").addEventListener("click", function() {
-    this.classList.toggle("slate-item-checked");
-  });
-
-  document.getElementById("slate5").addEventListener("click", function() {
-    this.classList.toggle("slate-item-checked");
   });
 
   document.getElementById("slate-upload-btn").addEventListener("click", function() {
