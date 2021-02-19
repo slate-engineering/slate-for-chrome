@@ -26,6 +26,7 @@
     "app/common/styles/constants.css",
     "app/common/styles/global.css",
     "app/common/styles/product-tour.css",
+    "app/common/svg",
     "background.js",
     "app/index.js",
     "app/scripts/jquery.min.js",
@@ -39,7 +40,7 @@
     },
     {
       "matches": ["https://*/*", "http://*/*"],
-      "css": ["app/common/styles/main.css", "app/common/styles/popup.css"],
+      "css": ["app/common/styles/main.css", "app/common/styles/popup.css", "app/common/styles/constants.css", "app/common/styles/global.css"],
       "js": ["app/scripts/jquery.min.js"],
       "run_at": "document_idle"
     },
@@ -50,7 +51,7 @@
     },
     {
       "matches": ["https://unsplash.com/t/nature/?slatetour"],
-      "css": ["app/common/styles/constants.css", "app/common/styles/global.css","app/common/styles/product-tour.css"],
+      "css": ["app/common/styles/product-tour.css"],
       "js": ["app/common/product-tour.js"],
       "run_at": "document_start"
     }
