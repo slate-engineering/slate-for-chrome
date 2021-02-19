@@ -12,34 +12,31 @@ function GetPageData() {
 };
 
 const GetPageFiles = () => {
-  var all_files = [];
-  var new_all_files = [];
-
-  var images = $("body").find("img").map(function() { return this; }).get();
-  Array.prototype.map.call(images, function (i) {
-    all_files.push(i)
+  var allFiles = [];
+  var filesArray = [];
+  var fetchImages = $("body").find("img").map(function() { return this; }).get();
+  Array.prototype.map.call(fetchImages, function (i) {
+    allFiles.push(i)
   });
   var position = 0;
-  console.log(all_files)
-
-  for (var i = 0; i < all_files.length; i++) {
+  for (var i = 0; i < allFiles.length; i++) {
       position++;
-      var id = position;
+      const id = position;
       const type = 'img'
-      if(all_files[i].naturalWidth > 100) {
-        new_all_files.push({
+      if(allFiles[i].naturalWidth > 100) {
+        filesArray.push({
           id: id,
-          src: all_files[i].src,
-          altTitle: all_files[i].alt || null,
+          src: allFiles[i].src,
+          altTitle: allFiles[i].alt || null,
           type: type,
           page_position: position,
-          width: all_files[i].naturalwidth,
-          height: all_files[i].naturalHeight
+          width: allFiles[i].naturalwidth,
+          height: allFiles[i].naturalHeight
         });
       }
   }
-  console.log(new_all_files)
-  return new_all_files;
+  console.log('Page files: ',filesArray)
+  return filesArray;
 };
 
 let ListFiles = async (files) => {
