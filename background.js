@@ -25,7 +25,6 @@ chrome.browserAction.onClicked.addListener(function (tabs) {
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" }, InsertJquery());
   chrome.tabs.executeScript(activeTab, { file: "content-script.js" }, LoadApp());
 });
-
 //Inject product tour when the updated tab url has query param /?slatetour
 chrome.webNavigation.onCompleted.addListener(function (tabs) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -37,7 +36,6 @@ chrome.webNavigation.onCompleted.addListener(function (tabs) {
     }
   });
 });
-
 //
 //
 //Upload in to Slate in the backgrouind
@@ -48,7 +46,7 @@ const Upload = async () => {
 chrome.runtime.onMessage.addListener(
   async function(request, callback) {
     if (request.message == "upload_to_slate"){
-      Upload()
+      console.log('in background upload')
     }
   }
 );

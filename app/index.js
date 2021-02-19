@@ -52,11 +52,25 @@ let ListFiles = async (files) => {
       img.src = item.src;
     }
 
+    img.onclick = async () => {
+      if(!checkbox.checked) {
+        checkbox.checked = true
+      }else{
+        checkbox.checked = false
+      }
+      //return SelectFile({ image: item });
+      let imgClick = await SelectFile({ image: item });
+    }
+
     var checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.value = item.src;
     checkbox.id = "check-" + item.id;
     checkbox.className = "slate-img-checkbox"
+
+    checkbox.onclick = async function() {
+      let checkClick = await SelectFile({ image: item });
+    };
 
     div.appendChild(checkbox);
     div.appendChild(img);
@@ -88,15 +102,5 @@ SelectFile = async ({ image }) => {
     src: image.src,
     title: image.alt || null
   });
-
-  if(uploadQueue.length == 0) {
-    document.getElementById('slate-popup-title-name').style.display = 'inline'
-  }else if(uploadQueue.length == 1){
-    document.getElementsByClassName("slate-title-main").innerHTML = 'Add file to slate';
-  }else{
-    document.getElementById('slate-popup-title-name').innerHTML = 'Add ' + uploadQueue.length + ' files to slate';
-  }
-
-  console.log(uploadQueue)
   return uploadQueue;
 }
