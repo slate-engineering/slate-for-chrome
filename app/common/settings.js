@@ -55,8 +55,9 @@ _handleVisibility = (hideButtons, showButtons, keys) => {
 _handleAdd = () => {
   let APIInput = document.getElementById("api-keys");
   let newAPIInput = document.createElement("div");
+  newAPIInput.className = "api-key";
   newAPIInput.innerHTML =
-    '<div class="api-key"><input class="input name" placeholder="Name" /><input class="input key" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" /><button class="icon-button validate" disabled><object class="icon" type="image/svg+xml" data="../common/svg/arrow-right-circle.svg"></object></button><button class="icon-button show active"><object class="icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="icon-button hide"><object class="icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button></div>';
+    '<input class="input name" placeholder="Name" /><input class="input key" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" /><button class="icon-button validate" disabled><object class="icon" type="image/svg+xml" data="../common/svg/arrow-right-circle.svg"></object></button><button class="icon-button show active"><object class="icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="icon-button hide"><object class="icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
   APIInput.append(newAPIInput);
 };
 
