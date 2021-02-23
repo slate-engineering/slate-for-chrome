@@ -41,7 +41,7 @@ $(document).ready(function () {
         //TODO (JASON) Clear arrays onclose
         document.getElementById("slate-app").style.display = "none";
       });
-
+      
       var elements = document.getElementsByClassName("slate-img-container");
       var number = 0;
       var myFunction = () => {
@@ -85,7 +85,7 @@ SearchFiles = async (files) => {
         '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
       checkbox.onclick = async function () {
-        await SelectFile({ image: item });
+        await SelectFile(item);
       };
 
       div.onclick = async () => {
