@@ -311,7 +311,7 @@
   width: 100%;
 }
 
-.slate-main-popup .file-gallery {
+.slate-main-popup .slate-file-gallery {
   overflow: scroll;
   height: calc(100vh - 240px);
   padding-bottom: 120px;
