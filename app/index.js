@@ -67,7 +67,7 @@ ListFiles = async (files) => {
       '<svg class="custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
     checkbox.onclick = async function () {
-      await SelectFile({ image: item });
+      await SelectFile(item);
     };
 
     div.onclick = async () => {
@@ -85,7 +85,7 @@ ListFiles = async (files) => {
         img.classList.remove("selected");
         div.classList.remove("selected");
       }
-      await SelectFile({ image: item });
+      await SelectFile(item);
     };
 
     div.appendChild(checkbox);
@@ -96,7 +96,7 @@ ListFiles = async (files) => {
   return;
 };
 
-ShowSlatesList = ({ slates }) => {
+ShowSlatesList = (slates) => {
   const list = document.getElementById("list-slates");
   slates.forEach(
     (slate) =>
@@ -115,7 +115,7 @@ ShowSlatesList = ({ slates }) => {
   );
 };
 
-SelectFile = async ({ image }) => {
+SelectFile = async (image) => {
   uploadQueue.push({
     id: image.id,
     src: image.src,

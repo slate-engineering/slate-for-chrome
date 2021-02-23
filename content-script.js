@@ -45,7 +45,7 @@ $(document).ready(function () {
 
       document
         .getElementById("slate-close-icon")
-        .addEventListener("click", async () => {
+        .addEventListener("click", function () {
           //TODO (JASON) Clear arrays onclose
           document.getElementById("slate-app").style.display = "none";
         });
@@ -95,7 +95,7 @@ SearchFiles = async (files) => {
         '<svg class="custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
       checkbox.onclick = async function () {
-        await SelectFile({ image: item });
+        await SelectFile(item);
       };
 
       div.onclick = async () => {
