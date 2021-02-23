@@ -30,7 +30,7 @@
     "background.js",
     "app/index.js",
     "app/scripts/jquery.min.js",
-    "app/public/fonts/Inter-Medium.ttf"
+    "app/public/fonts/*.woff"
   ],
 
   "content_scripts": [{
@@ -40,7 +40,7 @@
     },
     {
       "matches": ["https://*/*", "http://*/*"],
-      "css": ["app/common/styles/main.css", "app/common/styles/popup.css", "app/common/styles/constants.css", "app/common/styles/global.css"],
+      "css": ["app/common/styles/popup.css", "app/common/styles/constants.css", "app/common/styles/global.css"],
       "js": ["app/scripts/jquery.min.js"],
       "run_at": "document_idle"
     },

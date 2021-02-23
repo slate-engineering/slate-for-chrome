@@ -49,7 +49,7 @@ ListFiles = async (files) => {
     var div = document.createElement("div");
     div.className = "slate-img-container slate-masonry-item";
     var img = document.createElement("img");
-    img.className = "list_img";
+    img.className = "slate-list_img";
     img.id = "img-" + item.id;
     if (item.type == "img") {
       img.src = item.src;
@@ -62,9 +62,9 @@ ListFiles = async (files) => {
     checkbox.className = "slate-img-checkbox";
 
     let customCheckbox = document.createElement("div");
-    customCheckbox.className = "custom-checkbox";
+    customCheckbox.className = "slate-custom-checkbox";
     customCheckbox.innerHTML =
-      '<svg class="custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
     checkbox.onclick = async function () {
       await SelectFile({ image: item });
@@ -74,13 +74,13 @@ ListFiles = async (files) => {
       let customCheckIcon = customCheckbox.childNodes[0];
       if (!checkbox.checked) {
         checkbox.checked = true;
-        customCheckbox.className = "custom-checkbox checked";
+        customCheckbox.className = "slate-custom-checkbox checked";
         customCheckIcon.classList.add("checked");
         img.classList.add("selected");
         div.classList.add("selected");
       } else {
         checkbox.checked = false;
-        customCheckbox.className = "custom-checkbox";
+        customCheckbox.className = "slate-custom-checkbox";
         customCheckIcon.classList.remove("checked");
         img.classList.remove("selected");
         div.classList.remove("selected");
@@ -103,7 +103,7 @@ ShowSlatesList = ({ slates }) => {
       function () {
         console.log("name", slate.name);
         var div = document.createElement("div");
-        div.className = "api-group";
+        div.className = "slate-api-group";
 
         var div2 = document.createElement("div");
         div2.className = "slate-item";
