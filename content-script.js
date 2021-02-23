@@ -14,52 +14,42 @@ $(document).ready(function () {
       await ListFiles(imageArray);
       appMain.style.display = "inline";
 
-      document
-        .getElementById("slate-file-search")
-        .addEventListener("input", async () => {
-          let search = [];
-          let term = document.getElementById("slate-file-search").value;
-          imageArray.filter(function (img) {
-            if (img.altTitle) {
-              if (img.altTitle.includes(term)) {
-                search.push({ e });
-              } else {
-              }
+      document.getElementById("slate-file-search").addEventListener("input", async () => {
+        let search = [];
+        let term = document.getElementById("slate-file-search").value;
+        imageArray.filter(function (img) {
+          if (img.altTitle) {
+            if (img.altTitle.includes(term)) {
+              search.push({ e });
             } else {
-              console.log("empty");
             }
-          });
-          await SearchFiles(search);
+          } else {
+            console.log("empty");
+          }
         });
+        await SearchFiles(search);
+      });
 
-      document
-        .getElementById("slate-upload-btn")
-        .addEventListener("click", async () => {
-          document.getElementById("slate-app").style.display = "none";
-          chrome.runtime.sendMessage({ message: "upload_to_slate" }, function (
-            response
-          ) {
-            console.log(response);
-          });
+      document.getElementById("slate-upload-btn").addEventListener("click", async () => {
+        document.getElementById("slate-app").style.display = "none";
+        chrome.runtime.sendMessage({ message: "upload_to_slate" }, function (response) {
+          console.log(response);
         });
+      });
 
-      document
-        .getElementById("slate-close-icon")
-        .addEventListener("click", function () {
-          //TODO (JASON) Clear arrays onclose
-          document.getElementById("slate-app").style.display = "none";
-        });
-
+      document.getElementById("slate-close-icon").addEventListener("click", async () => {
+        //TODO (JASON) Clear arrays onclose
+        document.getElementById("slate-app").style.display = "none";
+      });
+      
       var elements = document.getElementsByClassName("slate-img-container");
       var number = 0;
       var myFunction = () => {
         number++;
         if (number == 1) {
-          document.getElementById("slate-popup-title-name").innerHTML =
-            "Upload 1 image to Slate";
+          document.getElementById("slate-popup-title-name").innerHTML = "Upload 1 image to Slate";
         } else {
-          document.getElementById("slate-popup-title-name").innerHTML =
-            "Upload " + number + " images to Slate";
+          document.getElementById("slate-popup-title-name").innerHTML = "Upload " + number + " images to Slate";
         }
       };
 
@@ -78,8 +68,8 @@ SearchFiles = async (files) => {
     files.forEach(function (item) {
       let div = document.createElement("div");
       div.className = "slate-img-container slate-masonry-item";
-      let img = document.createElement("img");
-      img.className = "list_img";
+      var img = document.createElement("img");
+      img.className = "slate-list_img";
       img.id = "img-" + item.id;
       img.src = item.e.src;
 
@@ -90,9 +80,9 @@ SearchFiles = async (files) => {
       checkbox.className = "slate-img-checkbox";
 
       let customCheckbox = document.createElement("div");
-      customCheckbox.className = "custom-checkbox";
+      customCheckbox.className = "slate-custom-checkbox";
       customCheckbox.innerHTML =
-        '<svg class="custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
       checkbox.onclick = async function () {
         await SelectFile(item);
@@ -102,13 +92,13 @@ SearchFiles = async (files) => {
         let customCheckIcon = customCheckbox.childNodes[0];
         if (!checkbox.checked) {
           checkbox.checked = true;
-          customCheckbox.className = "custom-checkbox checked";
+          customCheckbox.className = "slate-custom-checkbox checked";
           customCheckIcon.classList.add("checked");
           img.classList.add("selected");
           div.classList.add("selected");
         } else {
           checkbox.checked = false;
-          customCheckbox.className = "custom-checkbox";
+          customCheckbox.className = "slate-custom-checkbox";
           customCheckIcon.classList.remove("checked");
           img.classList.remove("selected");
           div.classList.remove("selected");

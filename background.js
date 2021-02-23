@@ -24,30 +24,14 @@ chrome.browserAction.onClicked.addListener(function (tabs) {
   console.log(tabs);
   //inject all Slate scripts needed into the current tab
   let activeTab = tabs[0];
-  chrome.tabs.executeScript(
-    activeTab,
-    { file: "app/scripts/jquery.min.js" },
-    InsertJquery()
-  );
-  chrome.tabs.executeScript(
-    activeTab,
-    { file: "content-script.js" },
-    LoadApp()
-  );
+  chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" }, InsertJquery());
+  chrome.tabs.executeScript(activeTab, { file: "content-script.js" }, LoadApp());
 });
-//Inject product tour when the updated tab url has query param /?slatetour
-chrome.webNavigation.onCompleted.addListener(function (tabs) {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    let tabURL = tabs[0].url;
-    if (/^https:\/\/unsplash\.com\/t\/nature\/\?slatetour/.test(tabURL)) {
-      chrome.tabs.insertCSS(null, {
-        file: "app/common/styles/product-tour.css",
-      });
-      chrome.tabs.insertCSS(null, { file: "app/common/styles/global.css" });
-      chrome.tabs.insertCSS(null, { file: "app/common/styles/constants.css" });
-    }
-  });
-});
+
+//Upload in to Slate in the backgrouind
+const Upload = async () => {
+  console.log("message recieved in upload");
+};
 
 chrome.runtime.onMessage.addListener(async function (request, callback) {
   if (request.message == "upload_to_slate") {

@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   //enable validation button when input event fires
-  let inputKeys = document.getElementsByClassName("input key");
-  let validateKeyButtons = document.getElementsByClassName("icon-button validate");
+  let inputKeys = document.getElementsByClassName("slate-input key");
+  let validateKeyButtons = document.getElementsByClassName("slate-icon-button validate");
   _handleValidation(inputKeys, validateKeyButtons);
 
   //toggle api key visibility
-  let keys = document.getElementsByClassName("key");
-  let showButtons = document.getElementsByClassName("icon-button show");
-  let hideButtons = document.getElementsByClassName("icon-button hide");
+  let keys = document.getElementsByClassName("slate-key");
+  let showButtons = document.getElementsByClassName("slate-icon-button show");
+  let hideButtons = document.getElementsByClassName("slate-icon-button hide");
   _handleVisibility(hideButtons, showButtons, keys);
 
   //dropdown menu for selecting upload history time range
-  let dropdownButton = document.getElementsByClassName("dropdown-title")[0];
-  let dropdownMenu = document.getElementsByClassName("dropdown-options")[0];
-  let dropdownOptions = document.getElementsByClassName("option");
+  let dropdownButton = document.getElementsByClassName("slate-dropdown-title")[0];
+  let dropdownMenu = document.getElementsByClassName("slate-dropdown-options")[0];
+  let dropdownOptions = document.getElementsByClassName("slate-option");
   _handleTimeSelection(dropdownButton, dropdownMenu, dropdownOptions);
 
   //checking for DOM update with mutation observer api
@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let callback = () => {
     _handleValidation(inputKeys, validateKeyButtons);
     keys = document.getElementsByClassName("key");
-    showButtons = document.getElementsByClassName("icon-button show");
-    hideButtons = document.getElementsByClassName("icon-button hide");
+    showButtons = document.getElementsByClassName("slate-icon-button show");
+    hideButtons = document.getElementsByClassName("slate-icon-button hide");
     _handleVisibility(hideButtons, showButtons, keys);
   };
   let observer = new MutationObserver(callback);
@@ -55,9 +55,9 @@ _handleVisibility = (hideButtons, showButtons, keys) => {
 _handleAdd = () => {
   let APIInput = document.getElementById("api-keys");
   let newAPIInput = document.createElement("div");
-  newAPIInput.className = "api-key";
+  newAPIInput.className = "slate-api-key";
   newAPIInput.innerHTML =
-    '<input class="input name" placeholder="Name" /><input class="input key" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" /><button class="icon-button validate" disabled><object class="icon" type="image/svg+xml" data="../common/svg/arrow-right-circle.svg"></object></button><button class="icon-button show active"><object class="icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="icon-button hide"><object class="icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
+    '<input class="slate-input name" placeholder="Name" /><input class="slate-input key" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" /><button class="slate-icon-button validate" disabled><object class="slate-icon" type="image/svg+xml" data="../common/svg/arrow-right-circle.svg"></object></button><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
   APIInput.append(newAPIInput);
 };
 
@@ -84,7 +84,7 @@ _handleOptionSelection = (dropdownOptions, selection) => {
       dropdownOptions[i].classList.add("selected");
     }
   }
-  let dropdownTitle = document.getElementsByClassName("dropdown-title")[0];
+  let dropdownTitle = document.getElementsByClassName("slate-dropdown-title")[0];
   let dropdownIcon = document.getElementById("dropdown-icon");
   dropdownTitle.textContent = dropdownOptions[selection].textContent;
   dropdownTitle.append(dropdownIcon);

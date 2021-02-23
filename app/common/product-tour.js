@@ -9,35 +9,35 @@ $(document).ready(() => {
 
 _handleNavigation = () => {
   console.log("handlenavigation executed");
-  let tourWrapper = document.getElementsByClassName("product-tour");
+  let tourWrapper = document.getElementsByClassName("slate-product-tour");
   console.log("tourrapper", tourWrapper[0]);
   tourWrapper[0].classList.add("active");
   tourWrapper[0].onanimationend = () => {
     tourWrapper[0].classList.remove("active");
   };
-  let productTours = document.getElementsByClassName("product-tour-module");
+  let productTours = document.getElementsByClassName("slate-product-tour-module");
   productTours[0].classList.add("active");
-  let nextTourButtons = document.getElementsByClassName("secondary-button next");
+  let nextTourButtons = document.getElementsByClassName("slate-secondary-button next");
   for (let i = 0; i < nextTourButtons.length; i++) {
     nextTourButtons[i].addEventListener("click", () => changeStep(tourWrapper, productTours, i, nextTourButtons[i]));
   }
 
-  let prevTourButtons = document.getElementsByClassName("secondary-button previous");
+  let prevTourButtons = document.getElementsByClassName("slate-secondary-button previous");
   for (let i = 0; i < prevTourButtons.length; i++) {
     prevTourButtons[i].addEventListener("click", () =>
       changeStep(tourWrapper, productTours, i + 1, prevTourButtons[i])
     );
   }
 
-  let cancelTourButtons = document.getElementsByClassName("cancel-button");
+  let cancelTourButtons = document.getElementsByClassName("slate-cancel-button");
   for (let i = 0; i < cancelTourButtons.length; i++) {
     cancelTourButtons[i].addEventListener("click", () => closeTour());
   }
 
-  let finishTourButton = document.getElementsByClassName("secondary-button finish");
+  let finishTourButton = document.getElementsByClassName("slate-secondary-button finish");
   finishTourButton[0].addEventListener("click", () => closeTour());
 
-  let progressIndicators = document.getElementsByClassName("progress-indicator inactive");
+  let progressIndicators = document.getElementsByClassName("slate-progress-indicator inactive");
   for (let i = 0; i < progressIndicators.length; i++) {
     progressIndicators[i].addEventListener("click", () =>
       switchStep(tourWrapper, productTours, progressIndicators.length - 1 - i)

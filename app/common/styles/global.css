@@ -1,136 +1,34 @@
 @font-face {
   font-family: "inter-regular";
-  src: url("https://slate.textile.io/ipfs/bafkreic3hkcuwvrmf6trweqcjp62valsfjh3zvwacikoreynakgw67wrvy");
+  src: url("chrome-extension://__MSG_@@extension_id__/app/public/fonts/Inter-Regular.woff");
 }
 
 @font-face {
   font-family: "inter-semi-bold";
-  src: url("https://slate.textile.io/ipfs/bafkreiaezvuz6wawoqyntfl4gbprol3e7majovgof3uxvhilvd2pgk4w54");
+  src: url("chrome-extension://__MSG_@@extension_id__/app/public/fonts/Inter-SemiBold.woff");
 }
 
 @font-face {
   font-family: "inter-medium";
-  src: url("https://slate.textile.io/ipfs/bafkreiapyxmqjwoowqpek2cjocouzxoalwlzwwbv3dscug3e5l2ok7xmqe");
+  src: url("chrome-extension://__MSG_@@extension_id__/app/public/fonts/Inter-Medium.woff");
 }
 
 @font-face {
   font-family: "inter-bold";
-  src: url("https://slate.textile.io/ipfs/bafkreidfoszxf46lxxojv4fc6qgixz5zdjiess2zyhennjd62lnjwa5dda");
+  src: url("chrome-extension://__MSG_@@extension_id__/app/public/fonts/Inter-Bold.woff");
 }
 
 @font-face {
   font-family: "jet-brains-regular";
-  src: url("https://slate.textile.io/ipfs/bafkreiabqv4534pnjhohcc2aclsgbp2twugldrlzg6wqdehajerrcwgu7e");
+  src: url("chrome-extension://__MSG_@@extension_id__/app/public/fonts/JetBrainsMono-Regular.woff");
 }
 
 @font-face {
   font-family: "jet-brains-bold";
-  src: url("https://slate.textile.io/ipfs/bafkreiejfxvbejf4a56x5tdo6w3n2kkrynwniv65rkkmrozxujroq6v4am");
+  src: url("chrome-extension://__MSG_@@extension_id__/app/public/fonts/JetBrainsMono-Bold.woff");
 }
 
-html,
-body {
-  background: var(--color-white);
-  color: var(--color-textBlack);
-  font-size: var(--typescale-lvl1);
-  font-family: var(--font-family-text);
-  font-weight: 400;
-  line-height: 1.5;
-  scrollbar-width: none;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  width: 100%;
-  margin: 0;
-}
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-  vertical-align: baseline;
-}
-
-button {
+.slate-primary-button {
   font-size: var(--typescale-lvl0);
   letter-spacing: -0.011rem;
   box-sizing: border-box;
@@ -148,41 +46,55 @@ button {
   overflow-wrap: break-word;
   user-select: none;
   cursor: pointer;
-}
-
-.primary-button {
   background-color: var(--color-blue);
   font-family: var(--font-family-semiBold);
   color: var(--color-white);
   margin: 0 16px 16px 0;
 }
 
-.primary-button.full {
+.slate-primary-button.full {
   width: 100%;
 }
 
-.primary-button:hover {
+.slate-primary-button:hover {
   background-color: var(--color-deepblue);
 }
 
-.primary-button.disabled {
+.slate-primary-button.disabled {
   opacity: 0.5;
   cursor: default;
 }
 
-.secondary-button {
+.slate-secondary-button {
+  font-size: var(--typescale-lvl0);
+  letter-spacing: -0.011rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  outline: 0;
+  border: 0;
+  min-height: 40px;
+  padding: 4px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  transition: 200ms ease all;
+  overflow-wrap: break-word;
+  user-select: none;
+  cursor: pointer;
   background-color: var(--color-bgGrayLight);
   font-family: var(--font-family-semiBold);
   color: var(--color-textBlack);
   transition: background-color 200ms ease-in-out;
 }
 
-.secondary-button:hover {
+.slate-secondary-button:hover {
   background-color: var(--color-bgGray);
   transition: background-color 200ms ease-in-out;
 }
 
-.loaderspinner {
+.slate-loaderspinner {
   display: inline-block;
   width: 24px;
   height: 24px;

@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  let helperButton = document.getElementsByClassName("helper-button");
+  let helperButton = document.getElementsByClassName("slate-helper-button");
   helperButton[0].addEventListener("click", () => _handleExpand(helperButton[0]));
 
-  let visibilityButton = document.getElementsByClassName("icon-wrapper visibility");
+  let visibilityButton = document.getElementsByClassName("slate-icon-wrapper visibility");
   let input = document.getElementById("api-key");
   visibilityButton[0].addEventListener("click", () => _handleVisibility(visibilityButton, input, false));
   visibilityButton[1].addEventListener("click", () => _handleVisibility(visibilityButton, input, true));
