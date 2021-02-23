@@ -8,100 +8,100 @@
     <meta charset="utf-8">
   </head>
   
-  <body>
-    <div class="page-wrapper">
-      <div class="title">Settings</div>
-      <div class="subtitle">You can add or update your API keys, configure the file types and sizes you want to capture.</div>
-      <div class="setting-module">
-        <div class="module-header">File types</div>
-        <div class="module-subheader">Select the types of files you want to retrieve.</div>
-        <label class="checkbox">
+  <body class="slate-page">
+    <div class="slate-page-wrapper">
+      <div class="slate-title">Settings</div>
+      <div class="slate-subtitle">You can add or update your API keys, configure the file types and sizes you want to capture.</div>
+      <div class="slate-setting-module">
+        <div class="slate-module-header">File types</div>
+        <div class="slate-module-subheader">Select the types of files you want to retrieve.</div>
+        <label class="slate-checkbox">
           <span>Image</span>
-          <input class="checkbox-input" type="checkbox"></input>
-          <span class="checkbox-custom-input">
-            <span class="checkbox-custom-input selected"></span>
+          <input class="slate-checkbox-input" type="checkbox"></input>
+          <span class="slate-checkbox-custom-input">
+            <span class="slate-checkbox-custom-input selected"></span>
           </span>
         </label>
-        <label class="checkbox">
+        <label class="slate-checkbox">
           <span>Audios</span>
-          <input class="checkbox-input" type="checkbox"></input>
-          <span class="checkbox-custom-input">
-            <span class="checkbox-custom-input selected"></span>
+          <input class="slate-checkbox-input" type="checkbox"></input>
+          <span class="slate-checkbox-custom-input">
+            <span class="slate-checkbox-custom-input selected"></span>
           </span>
         </label>
-        <label class="checkbox">
+        <label class="slate-checkbox">
           <span>Videos</span>
-          <input class="checkbox-input" type="checkbox"></input>
-          <span class="checkbox-custom-input">
-            <span class="checkbox-custom-input selected"></span>
+          <input class="slate-checkbox-input" type="checkbox"></input>
+          <span class="slate-checkbox-custom-input">
+            <span class="slate-checkbox-custom-input selected"></span>
           </span>
         </label>
       </div>
-      <div class="setting-module">
-        <div class="module-header">Image sizes</div>
-        <div class="module-subheader">Select the sizes of images you want to retrieve.</div>
-        <label class="checkbox">
+      <div class="slate-setting-module">
+        <div class="slate-module-header">Image sizes</div>
+        <div class="slate-module-subheader">Select the sizes of images you want to retrieve.</div>
+        <label class="slate-checkbox">
           <span>Icon</span>
-          <input class="checkbox-input" type="checkbox"></input>
-          <span class="checkbox-custom-input">
-            <span class="checkbox-custom-input selected"></span>
+          <input class="slate-checkbox-input" type="checkbox"></input>
+          <span class="slate-checkbox-custom-input">
+            <span class="slate-checkbox-custom-input selected"></span>
           </span>
         </label>
-        <label class="checkbox">
+        <label class="slate-checkbox">
           <span>Small</span>
-          <input class="checkbox-input" type="checkbox"></input>
-          <span class="checkbox-custom-input">
-            <span class="checkbox-custom-input selected"></span>
+          <input class="slate-checkbox-input" type="checkbox"></input>
+          <span class="slate-checkbox-custom-input">
+            <span class="slate-checkbox-custom-input selected"></span>
           </span>
         </label>
-        <label class="checkbox">
+        <label class="slate-checkbox">
           <span>Medium</span>
-          <input class="checkbox-input" type="checkbox"></input>
-          <span class="checkbox-custom-input">
-            <span class="checkbox-custom-input selected"></span>
+          <input class="slate-checkbox-input" type="checkbox"></input>
+          <span class="slate-checkbox-custom-input">
+            <span class="slate-checkbox-custom-input selected"></span>
           </span>
         </label>
-        <label class="checkbox">
+        <label class="slate-checkbox">
           <span>Large</span>
-          <input class="checkbox-input" type="checkbox"></input>
-          <span class="checkbox-custom-input">
-            <span class="checkbox-custom-input selected"></span>
+          <input class="slate-checkbox-input" type="checkbox"></input>
+          <span class="slate-checkbox-custom-input">
+            <span class="slate-checkbox-custom-input selected"></span>
           </span>
         </label>
       </div>
-      <div class="setting-module">
-        <div class="module-header">API keys</div>
-        <div class="module-subheader">You can add multiple API keys from Slate. You can also arrange the order in which multiple APIs appear on your upload menu.</div>
+      <div class="slate-setting-module">
+        <div class="slate-module-header">API keys</div>
+        <div class="slate-module-subheader">You can add multiple API keys from Slate. You can also arrange the order in which multiple APIs appear on your upload menu.</div>
         <div id="api-keys">
-          <div class="api-key">
-            <div class="account name">Name</div>
-            <div class="account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div>
-            <button class="icon-button show active"><object class="icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button>
-            <button class="icon-button hide"><object class="icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button>
-            <button class="icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>
+          <div class="slate-api-key">
+            <div class="slate-account name">Name</div>
+            <div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div>
+            <button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button>
+            <button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button>
+            <button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>
           </div>
-          <div class="api-key">
-            <input class="input name" placeholder="Name" />
-            <input class="input key" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" />
-            <button class="icon-button validate" disabled><object class="icon" type="image/svg+xml" data="../common/svg/arrow-right-circle.svg"></object></button>
-            <button class="icon-button show active"><object class="icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button>
-            <button class="icon-button hide"><object class="icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button>
-            <button class="icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>
+          <div class="slate-api-key">
+            <input class="slate-input name" placeholder="Name" />
+            <input class="slate-input key" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" />
+            <button class="slate-icon-button validate" disabled><object class="slate-icon" type="image/svg+xml" data="../common/svg/arrow-right-circle.svg"></object></button>
+            <button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button>
+            <button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button>
+            <button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>
           </div>
         </div>
-        <button id="add-api-key" class="icon-button" onclick="_handleAdd()"><object class="icon" type="image/svg+xml" data="../common/svg/plus.svg"></object>
+        <button id="add-api-key" class="slate-icon-button" onclick="_handleAdd()"><object class="slate-icon" type="image/svg+xml" data="../common/svg/plus.svg"></object>
       </div>
-      <div class="setting-module">
-        <div class="module-header">Upload history</div>
-        <div class="module-subheader">Configure the time range for the upload history you would like to keep.</div>
-        <div class="time-range-dropdown">
-          <div class="dropdown-title">Select a time range<object id="dropdown-icon" class="icon" type="image/svg+xml" data="../common/svg/chevron-down.svg"></object></div>
-          <div class="dropdown-options hide">
-            <div id="last-24-hours" class="option">Last 24 hours</div>
-            <div id="last-3-days" class="option">Last 3 days</div>
-            <div id="last-7-days" class="option">Last 7 days</div>
-            <div id="last-4-weeks" class="option">Last 4 weeks</div>
-            <div id="last-3-months" class="option">Last 3 months</div>
+      <div class="slate-setting-module">
+        <div class="slate-module-header">Upload history</div>
+        <div class="slate-module-subheader">Configure the time range for the upload history you would like to keep.</div>
+        <div class="slate-time-range-dropdown">
+          <div class="slate-dropdown-title">Select a time range<object id="dropdown-icon" class="slate-icon" type="image/svg+xml" data="../common/svg/chevron-down.svg"></object></div>
+          <div class="slate-dropdown-options hide">
+            <div id="last-24-hours" class="slate-option">Last 24 hours</div>
+            <div id="last-3-days" class="slate-option">Last 3 days</div>
+            <div id="last-7-days" class="slate-option">Last 7 days</div>
+            <div id="last-4-weeks" class="slate-option">Last 4 weeks</div>
+            <div id="last-3-months" class="slate-option">Last 3 months</div>
           </div>
         </div>
       </div>
