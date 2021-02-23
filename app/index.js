@@ -44,15 +44,13 @@ const GetPageFiles = () => {
   return filesArray;
 };
 
-let ListFiles = async (files) => {
-  let idArray = [];
+ListFiles = async (files) => {
   files.forEach(function (item) {
     var div = document.createElement("div");
     div.className = "slate-img-container slate-masonry-item";
     var img = document.createElement("img");
     img.className = "list_img";
     img.id = "img-" + item.id;
-    idArray.push({ id: img.id });
     if (item.type == "img") {
       img.src = item.src;
     }
@@ -69,7 +67,7 @@ let ListFiles = async (files) => {
       '<svg class="custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
     checkbox.onclick = async function () {
-      let checkClick = await SelectFile({ image: item });
+      await SelectFile({ image: item });
     };
 
     div.onclick = async () => {
@@ -87,8 +85,7 @@ let ListFiles = async (files) => {
         img.classList.remove("selected");
         div.classList.remove("selected");
       }
-      //return SelectFile({ image: item });
-      let imgClick = await SelectFile({ image: item });
+      await SelectFile({ image: item });
     };
 
     div.appendChild(checkbox);
@@ -96,11 +93,10 @@ let ListFiles = async (files) => {
     div.appendChild(customCheckbox);
     document.getElementById("slate-image-grid").appendChild(div);
   });
-
-  return idArray;
+  return;
 };
 
-const ShowSlatesList = ({ slates }) => {
+ShowSlatesList = ({ slates }) => {
   const list = document.getElementById("list-slates");
   slates.forEach(
     (slate) =>
