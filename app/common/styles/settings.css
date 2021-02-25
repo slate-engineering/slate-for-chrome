@@ -115,7 +115,10 @@
   left: 0;
 }
 
-.slate-checkbox input[type="checkbox"]:checked ~ .slate-checkbox-custom-input .slate-checkbox-custom-input.selected {
+.slate-checkbox
+  input[type="checkbox"]:checked
+  ~ .slate-checkbox-custom-input
+  .slate-checkbox-custom-input.selected {
   opacity: 1;
   width: 16px;
   height: 16px;
@@ -181,6 +184,7 @@
   white-space: nowrap;
   border-radius: 4px;
   margin-right: 8px;
+  display: inline;
 }
 
 .slate-icon-button {
@@ -193,7 +197,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 8px;
+  margin-right: 7px;
   cursor: pointer;
 }
 
@@ -285,4 +289,87 @@
 .slate-time-range-dropdown .slate-dropdown-options .slate-option:hover,
 .slate-time-range-dropdown .slate-dropdown-title:hover {
   background-color: var(--color-bgGray);
+}
+
+.slate-error {
+  fill: red !important;
+  color: red !important;
+}
+
+.slate-avatar {
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+#noti {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #006837; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: left; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  right: 16px; /* Center the snackbar */
+  top: 32px; /* 30px from the bottom */
+  border-radius: 4px;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#noti.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 32px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 32px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    top: 32px;
+    opacity: 1;
+  }
+  to {
+    top: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    top: 32px;
+    opacity: 1;
+  }
+  to {
+    top: 0;
+    opacity: 0;
+  }
 }
