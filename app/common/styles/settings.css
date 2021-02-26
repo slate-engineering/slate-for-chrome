@@ -65,6 +65,7 @@
   align-items: center;
   justify-content: space-between;
   font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl1);
   cursor: pointer;
   background-color: var(--color-white);
 }
@@ -115,10 +116,7 @@
   left: 0;
 }
 
-.slate-checkbox
-  input[type="checkbox"]:checked
-  ~ .slate-checkbox-custom-input
-  .slate-checkbox-custom-input.selected {
+.slate-checkbox input[type="checkbox"]:checked ~ .slate-checkbox-custom-input .slate-checkbox-custom-input.selected {
   opacity: 1;
   width: 16px;
   height: 16px;
@@ -184,7 +182,11 @@
   white-space: nowrap;
   border-radius: 4px;
   margin-right: 8px;
-  display: inline;
+}
+
+.slate-account {
+  display: flex;
+  align-items: center;
 }
 
 .slate-icon-button {
@@ -245,6 +247,7 @@
   background-color: var(--color-bgGrayLight);
   width: 30%;
   font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl1);
   border-radius: 4px;
 }
 
@@ -297,9 +300,8 @@
 }
 
 .slate-avatar {
-  vertical-align: middle;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   margin-right: 8px;
 }
