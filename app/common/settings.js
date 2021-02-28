@@ -35,7 +35,9 @@ var Settings = (function () {
       slatenames = props.slates.map(({ slatename }) => slatename);
       let newapi = {
         //TODO (@tara) need to add id and apikey to api output from slate end
-        user: props.user,
+        username: props.user.username,
+        key: props.keyValue,
+        data: props.user.data,
         slates: slatenames,
       };
       apis.push(newapi);
@@ -88,10 +90,10 @@ var Settings = (function () {
     newAPIInput.className = "slate-api-key";
     newAPIInput.innerHTML =
       '<div class="slate-account name"><img class="slate-avatar" width="20px" src="' +
-      api.user.data.photo +
+      api.data.photo +
       '"/>' +
       "<div>" +
-      api.user.data.name +
+      api.data.name +
       "</div>" +
       '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
     APIInput.append(newAPIInput);
@@ -250,7 +252,7 @@ document.getElementById("slate-validate-btn").addEventListener("click", async ()
     btn.disabled = true;
     document.getElementById("slate-api-input").value = "";
     document.getElementById("slate-name-input").value = "";
-    settings.saveApiKey(validate);
+    settings.saveApiKey(validate, keyValue);
     let photo = validate.user.data.photo;
     let slates = validate.slates.length;
     let name;

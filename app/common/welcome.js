@@ -48,14 +48,11 @@ _handleVisibility = (visibilityButton, input, visible) => {
 createAPIs = (keyValue) => {
   let apis = [];
   let apiKey = {
-    user: {
-      id: "18271053495871435",
-      username: "tara",
-      key: keyValue,
-      data: {
-        photo: "https://unsplash.com/photos/lvh5L46VWuA",
-        name: "tlin",
-      },
+    username: "tara",
+    key: keyValue,
+    data: {
+      photo: "https://unsplash.com/photos/lvh5L46VWuA",
+      name: "tlin",
     },
     slates: ["perfect-blue", "memory palace"],
   };
@@ -73,17 +70,18 @@ createSettings = () => {
 
 createUploads = () => {
   let uploads = [];
-  //NOTE (Tara): this can be deleted later
+  //TODO (@Tara/@Jason): this can be deleted later
   let upload = {
+    name: "jim-dark-secrets.png",
+    type: "image/jpeg",
     source: "https://www.criterion.com/shop/collection/169-wes-anderson",
-    source_title: "Wes Anderson | The Criterion Collection",
     cid: "a238149phsdfaklsjdfhlqw48rlfsad",
-    created_at: "2020-10-13T19:49:41.036Z",
-    active: false,
+    date: "2020-10-13T19:49:41.036Z",
     url: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
+    uploading: false,
   };
   uploads.push(upload);
-  chrome.storage.local.set({ uploads }, () => console.log("initialize Uploads"));
+  chrome.storage.local.set({ uploads });
   chrome.storage.local.get(["uploads"], (result) => {
     console.log("uploads", result);
   });
