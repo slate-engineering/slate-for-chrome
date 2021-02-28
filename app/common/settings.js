@@ -13,18 +13,16 @@ var Settings = (function () {
       for (let api of result.apis) keys.push(api);
     });
 
-    // let keys = {
-    //   user: {
-    //     id: "18271053495871435",
-    //     username: "tara",
-    //     key: "asdfajwheflqwkejhqwejbrlqwejb",
-    //     data: {
-    //       photo: "https://www.scalevp.com/sites/default/files/designbig.jpg",
-    //       name: "tlin",
-    //     },
+    // let key = {
+    //   username: "tara",
+    //   key: "SLA82d4505d-8e3d-4846-ac6c-c72de45523eeTE",
+    //   data: {
+    //     photo: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
+    //     name: "tlin",
     //   },
     //   slates: ["perfect-blue", "memory palace"],
     // };
+    // keys.push(key);
     return keys;
   };
 
@@ -35,7 +33,9 @@ var Settings = (function () {
       slatenames = props.slates.map(({ slatename }) => slatename);
       let newapi = {
         //TODO (@tara) need to add id and apikey to api output from slate end
-        user: props.user,
+        username: props.user.username,
+        key: props.keyValue,
+        data: props.user.data,
         slates: slatenames,
       };
       apis.push(newapi);
@@ -88,10 +88,10 @@ var Settings = (function () {
     newAPIInput.className = "slate-api-key";
     newAPIInput.innerHTML =
       '<div class="slate-account name"><img class="slate-avatar" width="20px" src="' +
-      api.user.data.photo +
+      api.data.photo +
       '"/>' +
       "<div>" +
-      api.user.data.name +
+      api.data.name +
       "</div>" +
       '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
     APIInput.append(newAPIInput);
@@ -250,20 +250,21 @@ document.getElementById("slate-validate-btn").addEventListener("click", async ()
     btn.disabled = true;
     document.getElementById("slate-api-input").value = "";
     document.getElementById("slate-name-input").value = "";
-    settings.saveApiKey(validate);
-    let photo = validate.user.data.photo;
+    settings.saveApiKey(validate, keyValue);
+    let photo = validate.data.photo;
     let slates = validate.slates.length;
     let name;
     if (nameValue) {
       name = nameValue;
     } else {
-      name = validate.user.username;
+      name = validate.data.name;
     }
     let api = {
-      name: name,
-      photo: photo,
       key: keyValue,
       slates: slates,
+      username: validate.username,
+      key: props.keyValue,
+      data: { name: name, photo: photo },
     };
     settings.createApiKey(api);
     let type = "success";
