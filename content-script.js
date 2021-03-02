@@ -32,7 +32,39 @@ var SlateApp = (function () {
     }
   };
 
-  SlateApp.prototype.index = async (files) => {
+  SlateApp.prototype.getPageFiles = async () => {
+    var allFiles = [];
+    var filesArray = [];
+    var fetchImages = $("body")
+      .find("img")
+      .map(function () {
+        return this;
+      })
+      .get();
+    Array.prototype.map.call(fetchImages, function (i) {
+      allFiles.push(i);
+    });
+    var position = 0;
+    for (var i = 0; i < allFiles.length; i++) {
+      position++;
+      const id = position;
+      const type = "img";
+      if (allFiles[i].naturalWidth > 100) {
+        filesArray.push({
+          id: id,
+          src: allFiles[i].src,
+          altTitle: allFiles[i].alt || null,
+          type: type,
+          page_position: position,
+          width: allFiles[i].naturalwidth,
+          height: allFiles[i].naturalHeight,
+        });
+      }
+    }
+    return filesArray;
+  };
+
+  SlateApp.prototype.listFiles = async (files) => {
     try {
       $.getScript(chrome.extension.getURL("./app/index.js"), function (data) {
         $(data).append("body");
@@ -96,38 +128,6 @@ var SlateApp = (function () {
     }
   };
 
-  SlateApp.prototype.getPageFiles = async () => {
-    var allFiles = [];
-    var filesArray = [];
-    var fetchImages = $("body")
-      .find("img")
-      .map(function () {
-        return this;
-      })
-      .get();
-    Array.prototype.map.call(fetchImages, function (i) {
-      allFiles.push(i);
-    });
-    var position = 0;
-    for (var i = 0; i < allFiles.length; i++) {
-      position++;
-      const id = position;
-      const type = "img";
-      if (allFiles[i].naturalWidth > 100) {
-        filesArray.push({
-          id: id,
-          src: allFiles[i].src,
-          altTitle: allFiles[i].alt || null,
-          type: type,
-          page_position: position,
-          width: allFiles[i].naturalwidth,
-          height: allFiles[i].naturalHeight,
-        });
-      }
-    }
-    return filesArray;
-  };
-
   SlateApp.prototype.getApiKeys = async () => {
     // Add chrome local storage get for all api keys
     let keys = [];
@@ -146,6 +146,6 @@ chrome.runtime.onMessage.addListener(async function (request, callback) {
   if (request.message == "openSlateApp") {
     let initApp = await app.init();
     let allPageFiles = await app.getPageFiles();
-    let initIndex = await app.index(allPageFiles);
+    let initIndex = await app.listFiles(allPageFiles);
   }
 });
