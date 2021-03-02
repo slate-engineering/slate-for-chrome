@@ -1,6 +1,8 @@
 var SlateApp = (function () {
-  this.uploadQueueArray = [];
   //set default variables
+  this.uploadQueue = [];
+  this.uploadQueueSlates = [];
+
   function SlateApp() {
     //add variables
   }
@@ -11,6 +13,9 @@ var SlateApp = (function () {
         $(data).prependTo("body");
       })
         .done(function () {
+          //
+          //
+          //Initilize app event listeners
           document
             .getElementById("slate-upload-btn")
             .addEventListener("click", function () {
@@ -22,6 +27,9 @@ var SlateApp = (function () {
               location.reload();
             });
           return true;
+          //
+          //
+          //End Init app listeners
         })
         .fail(function () {
           return false;
@@ -93,8 +101,8 @@ var SlateApp = (function () {
               '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
             div.onclick = async () => {
-              this.uploadQueueArray.push({ item });
-              console.log("Img added: ", this.uploadQueueArray);
+              this.uploadQueue.push({ item });
+              console.log("Img added: ", this.uploadQueue);
               let customCheckIcon = customCheckbox.childNodes[0];
               if (!checkbox.checked) {
                 checkbox.checked = true;
@@ -129,19 +137,26 @@ var SlateApp = (function () {
   };
 
   SlateApp.prototype.getApiKeys = async () => {
-    // Add chrome local storage get for all api keys
-    let keys = [];
-    chrome.storage.local.get(["apis"], (result) => {
-      for (let api of result.apis) keys.push(api);
-    });
-    return keys;
+    //
+    //
+    //TODO: @tara add local storage to get all api keys
+  };
+
+  SlateApp.prototype.listApiKeys = async (apiKeys) => {
+    //
+    //
+    //TODO: (@jason) add ui functions to list slates
+    console.log(apiKeys);
+    return true;
   };
 
   return SlateApp;
 })();
+//
+//
+//Event listeners
 
 var app = new SlateApp();
-
 chrome.runtime.onMessage.addListener(async function (request, callback) {
   if (request.message == "openSlateApp") {
     let initApp = await app.init();
