@@ -46,7 +46,7 @@
     },
     {
       "matches": ["https://*/*", "http://*/*"],
-      "js": ["content-script.js", "app/index.js"],
+      "js": ["content-script.js"],
       "run_at": "document_end"
     },
     {

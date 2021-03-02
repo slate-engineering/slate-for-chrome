@@ -29,6 +29,6 @@ chrome.browserAction.onClicked.addListener(function (tabs) {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.uploadData == "slate") {
-    alert("im in the script");
+    alert("im in the background");
   }
 });

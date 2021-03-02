@@ -3,7 +3,6 @@
   height: 100vh;
   position: fixed;
   z-index: 999999999999 !important;
-  display: none;
 }
 
 .slate-upload-drawer {
@@ -235,7 +234,12 @@
   height: 100vh;
   padding: 56px 120px 48px 120px;
   position: absolute;
-  background: linear-gradient(180deg, var(--color-white) 0%, var(--color-white) 46.31%, rgba(255, 255, 255, 0.3) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-white) 46.31%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
   backdrop-filter: blur(20px);
 }
 
