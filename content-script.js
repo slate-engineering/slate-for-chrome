@@ -1,10 +1,18 @@
+//
+//
+//App functions
 var SlateApp = (function () {
   //set default variables
   this.uploadQueue = [];
   this.uploadQueueSlates = [];
 
+  this.pageData = {
+    title: "none",
+    source: "none",
+  };
+
   function SlateApp() {
-    //add variables
+    //Create app
   }
 
   SlateApp.prototype.init = async () => {
@@ -41,9 +49,9 @@ var SlateApp = (function () {
   };
 
   SlateApp.prototype.getPageFiles = async () => {
-    var allFiles = [];
-    var filesArray = [];
-    var fetchImages = $("body")
+    let allFiles = [];
+    let filesArray = [];
+    let fetchImages = $("body")
       .find("img")
       .map(function () {
         return this;
@@ -52,8 +60,8 @@ var SlateApp = (function () {
     Array.prototype.map.call(fetchImages, function (i) {
       allFiles.push(i);
     });
-    var position = 0;
-    for (var i = 0; i < allFiles.length; i++) {
+    let position = 0;
+    for (let i = 0; i < allFiles.length; i++) {
       position++;
       const id = position;
       const type = "img";
@@ -72,6 +80,12 @@ var SlateApp = (function () {
     return filesArray;
   };
 
+  SlateApp.prototype.getPageData = async (files) => {
+    this.pageData.title = document.title;
+    this.pageData.source = window.location.href;
+    console.log("Page data:", this.pageData);
+  };
+
   SlateApp.prototype.listFiles = async (files) => {
     try {
       $.getScript(chrome.extension.getURL("./app/index.js"), function (data) {
@@ -80,16 +94,16 @@ var SlateApp = (function () {
         .done(function () {
           console.log("index added");
           files.forEach(function (item) {
-            var div = document.createElement("div");
+            let div = document.createElement("div");
             div.className = "slate-img-container slate-masonry-item";
-            var img = document.createElement("img");
+            let img = document.createElement("img");
             img.className = "slate-list_img";
             img.id = "img-" + item.id;
             if (item.type == "img") {
               img.src = item.src;
             }
 
-            var checkbox = document.createElement("input");
+            let checkbox = document.createElement("input");
             checkbox.setAttribute("type", "checkbox");
             checkbox.value = item.src;
             checkbox.id = "check-" + item.id;
@@ -152,15 +166,16 @@ var SlateApp = (function () {
 
   return SlateApp;
 })();
-//
-//
-//Event listeners
 
+//
+//
+//App event listeners
 var app = new SlateApp();
 chrome.runtime.onMessage.addListener(async function (request, callback) {
   if (request.message == "openSlateApp") {
-    let initApp = await app.init();
+    await app.init();
+    await app.getPageData();
     let allPageFiles = await app.getPageFiles();
-    let initIndex = await app.listFiles(allPageFiles);
+    await app.listFiles(allPageFiles);
   }
 });

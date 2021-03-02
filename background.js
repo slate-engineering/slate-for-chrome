@@ -1,13 +1,29 @@
-LoadApp = () => {
-  //Send message to app/index.js that Slate is loaded
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    let activeTab = tabs[0];
-    chrome.tabs.sendMessage(activeTab.id, {
-      message: "openSlateApp",
-    });
-  });
-};
+//
+//
+//Background functions
+var SlateBackground = (function () {
+  function SlateBackground() {
+    //Create app
+  }
 
+  SlateBackground.prototype.init = async () => {
+    console.log("Initilize slate");
+  };
+
+  SlateBackground.prototype.loadApp = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      let activeTab = tabs[0];
+      chrome.tabs.sendMessage(activeTab.id, {
+        message: "openSlateApp",
+      });
+    });
+  };
+
+  return SlateBackground;
+})();
+//
+//
+//Background event listeners
 chrome.runtime.onInstalled.addListener(function (tab) {
   //on new install, open the welcome page
   chrome.tabs.create({
@@ -16,14 +32,16 @@ chrome.runtime.onInstalled.addListener(function (tab) {
 });
 
 //Wait for Slate Extension icon to be clicked
-chrome.browserAction.onClicked.addListener(function (tabs) {
+chrome.browserAction.onClicked.addListener(async function (tabs) {
+  let slateBg = new SlateBackground();
+  await slateBg.init();
   //inject all Slate scripts needed into the current tab
   let activeTab = tabs[0];
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
   chrome.tabs.executeScript(
     activeTab,
     { file: "content-script.js" },
-    LoadApp()
+    slateBg.loadApp()
   );
 });
 
