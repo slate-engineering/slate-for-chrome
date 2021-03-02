@@ -33,6 +33,8 @@
   --color-bgGray: #f2f2f2;
   --color-bgBlurGrayBlack: rgba(15, 14, 18, 0.8);
   --color-bgBlurBlack: rgba(15, 14, 18, 0.9);
+  --color-foreground: #f8f8f8;
+  --color-lightBorder: #ececec;
 
   --shadow-light: 0 3px 6px 0 rgba(178, 178, 178, 0.15);
   --shadow-medium: 0 8px 24px 0 rgba(178, 178, 178, 0.2);
@@ -49,4 +51,12 @@
   --font-family-bold: "inter-bold", -apple-system, BlinkMacSystemFont, arial, sans-serif;
   --font-family-code: "jet-brains-regular", mono, monospace;
   --font-family-codeBold: "jet-brains-bold", mono, monospace;
+
+  --zindex-navigation: 1;
+  --zindex-body: 2;
+  --zindex-alert: 3;
+  --zindex-header: 4;
+  --zindex-sidebar: 5;
+  --zindex-modal: 6;
+  --zindex-tooltip: 7;
 }

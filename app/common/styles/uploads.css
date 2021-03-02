@@ -1,0 +1,112 @@
+.slate-page {
+  background-color: var(--color-bgGrayLight);
+}
+
+.slate-page-wrapper {
+  box-sizing: border-box;
+  padding: 120px 72px 320px 72px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.slate-title {
+  font-family: var(--font-family-semiBold);
+  font-size: var(--typescale-lvl5);
+  font-weight: 400;
+  letter-spacing: -0.022rem;
+  line-height: 1.5;
+}
+
+.slate-subtitle {
+  font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl2);
+  font-weight: 400;
+  letter-spacing: -0.019rem;
+  margin-bottom: 64px;
+  line-height: 1.5;
+}
+
+.slate-table-container {
+  border: 1px solid var(--color-lightBorder);
+  box-shadow: var(--shadow-medium);
+  font-size: var(--typescale-lvl1);
+  background-color: var(--color-white);
+}
+
+.slate-table-top-row {
+  box-sizing: border-box;
+  font-family: var(--font-family-medium);
+  width: 100%;
+  border-bottom: 1px solid var(--color-lightBorder);
+  display: flex;
+  align-items: center;
+  padding: 16px 56px;
+}
+
+.slate-table-row {
+  box-sizing: border-box;
+  font-family: var(--font-family-text);
+  width: 100%;
+  border-bottom: 1px solid var(--color-lightBorder);
+  display: flex;
+  align-items: center;
+  padding: 16px 56px;
+}
+
+.slate-table-row:last-child {
+  border-bottom: none;
+}
+
+.slate-table-container .slate-column-width {
+  width: 33.333%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.slate-table-container .slate-link-column {
+  width: 33.333%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slate-table-container .slate-link-info {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-textGrayLight);
+}
+
+.slate-table-container .slate-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.slate-popover {
+  z-index: var(--zindex-tooltip);
+  box-sizing: border-box;
+  width: 200px;
+  border-radius: 4px;
+  user-select: none;
+  position: absolute;
+  background-color: var(--color-white);
+  color: var(--color-textBlack);
+  box-shadow: var(--shadow-medium);
+  padding: 16px 24px;
+  font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl0);
+}
+
+.slate-popover-item {
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
