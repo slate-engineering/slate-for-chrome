@@ -37,7 +37,7 @@ var SlateApp = (function () {
           return true;
           //
           //
-          //End Init app listeners
+          //End app listeners
         })
         .fail(function () {
           return false;
@@ -80,33 +80,33 @@ var SlateApp = (function () {
     return filesArray;
   };
 
-  SlateApp.prototype.getPageData = async (files) => {
+  SlateApp.prototype.getPageData = async () => {
     this.pageData.title = document.title;
     this.pageData.source = window.location.href;
     console.log("Page data:", this.pageData);
   };
 
-  SlateApp.prototype.listFiles = async (files) => {
+  SlateApp.prototype.listFiles = async (props) => {
     try {
       $.getScript(chrome.extension.getURL("./app/index.js"), function (data) {
         $(data).append("body");
       })
         .done(function () {
           console.log("index added");
-          files.forEach(function (item) {
+          props.forEach(function (file) {
             let div = document.createElement("div");
             div.className = "slate-img-container slate-masonry-item";
             let img = document.createElement("img");
             img.className = "slate-list_img";
-            img.id = "img-" + item.id;
-            if (item.type == "img") {
-              img.src = item.src;
+            img.id = "img-" + file.id;
+            if (file.type == "img") {
+              img.src = file.src;
             }
 
             let checkbox = document.createElement("input");
             checkbox.setAttribute("type", "checkbox");
-            checkbox.value = item.src;
-            checkbox.id = "check-" + item.id;
+            checkbox.value = file.src;
+            checkbox.id = "check-" + file.id;
             checkbox.className = "slate-img-checkbox";
 
             let customCheckbox = document.createElement("div");
@@ -115,7 +115,7 @@ var SlateApp = (function () {
               '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
             div.onclick = async () => {
-              this.uploadQueue.push({ item });
+              this.uploadQueue.push({ file });
               console.log("Img added: ", this.uploadQueue);
               let customCheckIcon = customCheckbox.childNodes[0];
               if (!checkbox.checked) {
@@ -150,17 +150,13 @@ var SlateApp = (function () {
     }
   };
 
-  SlateApp.prototype.getApiKeys = async () => {
-    //
-    //
+  SlateApp.prototype.getApiKeys = async (props) => {
     //TODO: @tara add local storage to get all api keys
   };
 
-  SlateApp.prototype.listApiKeys = async (apiKeys) => {
-    //
-    //
+  SlateApp.prototype.listApiKeys = async (props) => {
     //TODO: (@jason) add ui functions to list slates
-    console.log(apiKeys);
+    console.log(props);
     return true;
   };
 
@@ -173,9 +169,11 @@ var SlateApp = (function () {
 var app = new SlateApp();
 chrome.runtime.onMessage.addListener(async function (request, callback) {
   if (request.message == "openSlateApp") {
+    //required order
     await app.init();
     await app.getPageData();
     let allPageFiles = await app.getPageFiles();
     await app.listFiles(allPageFiles);
+    //Add below:
   }
 });

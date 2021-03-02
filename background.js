@@ -19,6 +19,12 @@ var SlateBackground = (function () {
     });
   };
 
+  SlateBackground.prototype.addHistory = (props) => {
+    //TODO: (@tara) add data from upload to history
+    console.log(props);
+    return true;
+  };
+
   return SlateBackground;
 })();
 //
@@ -46,6 +52,7 @@ chrome.browserAction.onClicked.addListener(async function (tabs) {
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log(request.uploadData);
   if (request.uploadData == "slate") {
     alert("im in the background");
   }
