@@ -2,81 +2,61 @@
 <html lang="en-US">
   <head>
     <title>Welcome to Slate for Chrome</title>
-    <link rel="stylesheet" href="../public/css/global.css" />
-    <link rel="stylesheet" href="../public/css/constants.css" />
-    <link rel="stylesheet" href="../public/css/welcome.css" />
+    <link rel="stylesheet" href="../common/styles/global.css" />
+    <link rel="stylesheet" href="../common/styles/constants.css" />
+    <link rel="stylesheet" href="../common/styles/welcome.css" />
     <meta charset="utf-8">
   </head>
   
   <body>
-    <div class="scroll-container">
-      <!-- <div class="hero-backdrop"> -->
-        <div class="section-wrapper">
-          <div class="title">Welcome to Slate for Chrome</div>
-          <div class="subtitle">Easily upload any files to Slate from anywhere on the Internet</div>
-          <div class="column">
-            <div class="media-type images"><div class="explainer">Images</div></div>
-            <div class="media-type videos"><div class="explainer">Videos</div></div>
-            <div class="media-type audios"><div class="explainer">Audios</div></div>
-            <div class="media-type more"><div class="explainer">And more soon</div></div>
+    <div class="slate-scroll-container">
+      <div class="slate-section-wrapper">
+        <div class="slate-title">Welcome to Slate for Chrome</div>
+        <div class="slate-subtitle">To set up, enter your API key below</div>
+        <button class="slate-helper-button">
+          <svg class="slate-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          How to find my API key?
+        </button>
+        <div class="slate-helper-info">Go to <a class="slate-link" href="https://slate.host/_" target="_blank">slate.host</a> and log in. From the main menu, select API. Make the API key visible before you copy.</div>
+        <div class="slate-input-wrapper">
+          <input id="slate-api-input" class="slate-input" type="password" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" value="" autofocus></input>
+          <div class="slate-icon-wrapper visibility hide">
+            <svg class="slate-icon-eye-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
           </div>
-        </div>
-      <!-- </div> -->
-
-      <div class="section-wrapper">
-        <div class="title">Quick set up</div>
-        <div class="subtitle">Enter your API key below</div>
-        <button class="helper-button">How to find my API key?</button>
-        <div class="helper-info">Go to <a href="https://slate.host/" target="_blank">slate.host</a> and log in. From the main menu, select API. Make the API key visible before you copy.</div>
-        <input class="input" type="text" placeholder="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" />
-        <button class="primary-button">Get started</button>
-        <a href="https://slate.host/_" target="_blank">Sign up for Slate</a>
+          <div class="slate-icon-wrapper visibility show active">
+            <svg class="slate-icon-eye" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          </div>
+        <button id="get-started" class="slate-primary-button disabled">Get started</button>
+        <a class="slate-link" href="https://slate.host/_" target="_blank">Sign up for Slate</a>
       </div>
 
-      <div class="section-wrapper last">
-        <div class="title">Try Slate for Chrome</div>
-        <div class="subtitle">Let’s quickly test drive Slate</div>
-        <div class="column">
-          <div class="test-platform unsplash">
-            <div class="explainer">
+      <div class="slate-section-wrapper last">
+        <div class="slate-title">How it works</div>
+        <div class="slate-subtitle">Let’s quickly test drive Slate</div>
+        <div class="slate-column">
+          <a class="slate-test-platform unsplash" href="https://unsplash.com/t/nature/?slatetour">
+            <div class="slate-explainer">
               <div>Upload images from <br/> <span style="font-family: var(--font-family-bold);">Unsplash</span></div>
               <div><img src="https://slate.textile.io/ipfs/bafkreie3wqqi4arrwoyq7wu56elwlz2zh3g6b46htpelqafua5femaspli" width="48px"></div>
             </div>
-          </div>
-          <div class="test-platform youtube">
-            <div class="explainer">
+          </a>
+          <div class="slate-test-platform youtube">
+            <div class="slate-explainer">
               <div>Upload videos from <br/> <span style="font-family: var(--font-family-bold);">Youtube</span></div>
               <div><img src="https://slate.textile.io/ipfs/bafkreieb7zmiss2rlnlhhkwbgxlc7szmzsq3yars7ujjflhwq6it2low5m" width="48px"></div>
             </div>
           </div>
-          <div class="test-platform soundcloud">
-            <div class="explainer">
+          <div class="slate-test-platform soundcloud">
+            <div class="slate-explainer">
               <div>Upload audios from <br/> <span style="font-family: var(--font-family-bold);">Soundcloud</span></div>
               <div><img src="https://slate.textile.io/ipfs/bafkreig6vbqgunqmja4vt6rrpojbtf24dnkgt2lxcvpl4x7gtnn7rqbp4a" width="48px"></div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="section-wrapper">
-        <div class="title">Product tour components</div>
-        <div class="subtitle">Putting stuff here for now</div>
-        <div class="product-tour-module">
-          <div class="module-header">Single file collection</div>
-          <div class="module-subheader">Right click on the image for direct upload to Slate.</div>
-          <div class="image"></div>
-          <div class="action-line">
-            <div class="progress-indicators">
-              <span class="progress-indicator selected"></span>
-              <span class="progress-indicator"></span>
-            </div>
-            <button class="secondary-button">Next</button>
-          </div>
-        </div>
-      </div>
-
     </div>
-    <script src="../core/welcome.js"></script>
-    <script src="../core/svg.js"></script>
+    <script src="../common/welcome.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
   </body>
 </html>

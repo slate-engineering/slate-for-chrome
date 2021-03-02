@@ -1,32 +1,33 @@
-body {
-  background-color: var(--color-bgGray);
-  min-height: 100vh;
+.slate-page {
+  background-color: var(--color-bgGrayLight);
 }
 
-.page-wrapper {
+.slate-page-wrapper {
   box-sizing: border-box;
-  padding: 120px 72px;
+  padding: 120px 72px 320px 72px;
   margin: 0 auto;
   width: 100%;
   max-width: 1440px;
 }
 
-.title {
+.slate-title {
   font-family: var(--font-family-semiBold);
   font-size: var(--typescale-lvl5);
   font-weight: 400;
   letter-spacing: -0.022rem;
+  line-height: 1.5;
 }
 
-.subtitle {
+.slate-subtitle {
   font-family: var(--font-family-medium);
   font-size: var(--typescale-lvl2);
   font-weight: 400;
   letter-spacing: -0.019rem;
   margin-bottom: 64px;
+  line-height: 1.5;
 }
 
-.setting-module {
+.slate-setting-module {
   width: 100%;
   box-sizing: border-box;
   background-color: var(--color-white);
@@ -36,22 +37,26 @@ body {
   margin-bottom: 24px;
 }
 
-.setting-module .module-header {
+.slate-setting-module .slate-module-header {
   font-family: var(--font-family-semiBold);
   font-size: var(--typescale-lvl2);
   color: var(--color-textBlack);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-.setting-module .module-subheader {
+.slate-setting-module .slate-module-subheader {
   font-family: var(--font-family-text);
   font-size: var(--typescale-lvl1);
   color: var(--color-textGray);
   margin-bottom: 20px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-.checkbox {
+.slate-checkbox {
   width: 100%;
-  padding: 8px 12px;
+  padding: 8px 20px;
   box-sizing: border-box;
   margin-bottom: 8px;
   border-radius: 4px;
@@ -60,16 +65,17 @@ body {
   align-items: center;
   justify-content: space-between;
   font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl1);
   cursor: pointer;
   background-color: var(--color-white);
 }
 
-.checkbox:hover {
+.slate-checkbox:hover {
   background-color: var(--color-bgGrayLight);
   transition: all 200ms ease-in-out;
 }
 
-.checkbox-custom-input {
+.slate-checkbox-custom-input {
   width: 24px;
   height: 24px;
   border-radius: 4px;
@@ -82,7 +88,7 @@ body {
   flex-shrink: 0;
 }
 
-.checkbox-custom-input.selected {
+.slate-checkbox-custom-input.selected {
   width: 0px;
   height: 0px;
   border-radius: 2px;
@@ -98,7 +104,7 @@ body {
   transition: all 100ms ease-in-out;
 }
 
-.checkbox-input {
+.slate-checkbox-input {
   box-sizing: 0;
   opacity: 0;
   pointer-events: none;
@@ -110,22 +116,22 @@ body {
   left: 0;
 }
 
-.checkbox input[type="checkbox"]:checked ~ .checkbox-custom-input .checkbox-custom-input.selected {
+.slate-checkbox input[type="checkbox"]:checked ~ .slate-checkbox-custom-input .slate-checkbox-custom-input.selected {
   opacity: 1;
   width: 16px;
   height: 16px;
 }
 
-.api-key {
+.slate-api-key {
   display: flex;
   width: 100%;
   height: 48px;
   margin-bottom: 8px;
 }
 
-.api-key .input {
+.slate-api-key .slate-input {
   font-family: var(--font-family-medium);
-  font-size: var(--typescale-lvl0);
+  font-size: var(--typescale-lvl1);
   letter-spacing: -0.011rem;
   -webkit-appearance: none;
   height: 100%;
@@ -135,41 +141,237 @@ body {
   border: 0;
   box-sizing: border-box;
   transition: 200ms ease all;
-  padding: 0 24px;
+  padding: 0 48px 0 24px;
   text-overflow: ellipsis;
   white-space: nowrap;
   border-radius: 4px;
   margin-right: 8px;
 }
 
-.api-key .input::placeholder {
+.slate-api-key .slate-input:focus {
+  background: var(--color-bgGray);
+}
+
+.slate-api-key .slate-input::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: var(--color-textGrayLight);
   opacity: 1; /* Firefox */
 }
 
-.api-key .input.name {
+.slate-api-key .name {
   width: 30%;
 }
 
-.api-key .input.key {
+.slate-api-key .key {
   width: 60%;
 }
 
-.icon-button {
+.slate-api-key .slate-account {
+  font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl1);
+  letter-spacing: -0.011rem;
+  height: 100%;
+  background: transparent;
+  color: var(--color-textBlack);
+  outline: 0;
+  border: 0;
+  box-sizing: border-box;
+  transition: 200ms ease all;
+  padding: 16px 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.slate-account {
+  display: flex;
+  align-items: center;
+}
+
+.slate-icon-button {
   width: 48px;
   height: 48px;
   background-color: var(--color-bgGrayLight);
   border: none;
   border-radius: 4px;
   text-decoration: none;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 7px;
+  cursor: pointer;
 }
 
-.icon-button:hover {
+.slate-icon {
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  transform: rotate(0);
+  transition: transform 300ms;
+}
+
+.slate-icon.rotate {
+  transform: rotate(180deg);
+  transition: transform 300ms;
+}
+
+.slate-icon-button.validate {
+  margin-left: -56px;
+  opacity: 1;
+  background-color: transparent;
+}
+
+.slate-icon-button.validate:disabled {
+  opacity: 0.1;
+  cursor: default;
+}
+
+.slate-icon-button.show,
+.slate-icon-button.hide {
+  display: none;
+  pointer-events: none;
+}
+
+.slate-icon-button:hover {
   background-color: var(--color-bgGray);
 }
 
-.icon-button:active {
-  border: none;
+.slate-icon-button.show.active,
+.slate-icon-button.hide.active {
+  display: flex;
+  pointer-events: auto;
+}
+
+.slate-time-range-dropdown {
+  background-color: var(--color-bgGrayLight);
+  width: 30%;
+  font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl1);
+  border-radius: 4px;
+}
+
+.slate-time-range-dropdown .slate-dropdown-title {
+  padding: 16px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.slate-time-range-dropdown .slate-dropdown-options.hide {
+  max-height: 0;
+  opacity: 0;
+  transition: all 300ms ease-in-out;
+}
+
+.slate-time-range-dropdown .slate-dropdown-options.hide .slate-option {
+  display: none;
+}
+
+.slate-time-range-dropdown .slate-dropdown-options {
+  max-height: 100%;
+  opacity: 1;
+  transition: all 300ms ease-in-out;
+}
+
+.slate-time-range-dropdown .slate-dropdown-options .slate-option {
+  padding: 16px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.slate-time-range-dropdown .slate-dropdown-options .slate-option.selected {
+  color: var(--color-blue);
+  background-color: var(--color-bgGray);
+}
+
+.slate-time-range-dropdown .slate-dropdown-options .slate-option:hover,
+.slate-time-range-dropdown .slate-dropdown-title:hover {
+  background-color: var(--color-bgGray);
+}
+
+.slate-error {
+  fill: red !important;
+  color: red !important;
+}
+
+.slate-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+#noti {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #006837; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: left; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  right: 16px; /* Center the snackbar */
+  top: 32px; /* 30px from the bottom */
+  border-radius: 4px;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#noti.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 32px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 32px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    top: 32px;
+    opacity: 1;
+  }
+  to {
+    top: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    top: 32px;
+    opacity: 1;
+  }
+  to {
+    top: 0;
+    opacity: 0;
+  }
 }

@@ -10,9 +10,10 @@ Features:
 * Upload to multiple slates at once
 * Add all of your Slate accounts
 * Welcome screen after install
+* Full settings page
 
- 
-## Version 1.0
-[Install on the Chrome Store](https://chrome.google.com/webstore/detail/slate/gloembacbehhbfbkcfjmloikeeaebnoc) \
-[Github repo](https://github.com/jasonleyser/slate-for-chrome)
+![Chrome Extension Homepage Gif](https://i.ibb.co/4TBFvNd/ezgif-com-gif-maker.gif)
 
+![Chrome Extension Homepage](https://i.ibb.co/Jy42Z8V/multi-file-upload.png)
+
+![Chrome Extension Welcome](https://i.ibb.co/kJ9jBpc/welcome-5.png)
