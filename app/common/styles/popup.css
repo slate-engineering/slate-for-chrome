@@ -195,7 +195,6 @@
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(20px);
   border: 1px solid var(--color-gray50);
-  pointer-events: none;
 }
 
 .slate-custom-checkbox.checked {
@@ -206,8 +205,6 @@
 .slate-custom-checkbox-icon {
   color: var(--color-white);
   pointer-events: none;
-  height: 20px;
-  width: 20px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -234,12 +231,7 @@
   height: 100vh;
   padding: 56px 120px 48px 120px;
   position: absolute;
-  background: linear-gradient(
-    180deg,
-    var(--color-white) 0%,
-    var(--color-white) 46.31%,
-    rgba(255, 255, 255, 0.3) 100%
-  );
+  background: linear-gradient(180deg, var(--color-white) 0%, var(--color-white) 46.31%, rgba(255, 255, 255, 0.3) 100%);
   backdrop-filter: blur(20px);
 }
 
@@ -295,7 +287,9 @@
 
 .slate-secondary-filter {
   display: flex;
+  align-items: center;
   font-family: var(--font-family-medium);
+  position: relative;
 }
 
 .slate-secondary-filter .slate-dropdown {
@@ -308,6 +302,56 @@
   background-color: var(--color-bgGrayLight);
   margin-right: 12px;
   cursor: pointer;
+}
+
+.slate-secondary-filter .slate-select-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  right: 0;
+}
+
+.slate-select-all-checkbox {
+  box-sizing: 0;
+  opacity: 0;
+  visibility: hidden;
+  width: 1px;
+  height: 1px;
+}
+
+.slate-select-all-custom-checkbox {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--color-gray50);
+}
+
+.slate-select-all-custom-checkbox.checked {
+  background: var(--color-blue);
+  border: none;
+}
+
+.slate-select-all-custom-checkbox-icon {
+  color: var(--color-white);
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+}
+
+.slate-select-all-custom-checkbox.checked {
+  opacity: 1;
+  width: 16px;
+  height: 16px;
+  transition: all 200ms ease-in-out;
 }
 
 .slate-api-group {
