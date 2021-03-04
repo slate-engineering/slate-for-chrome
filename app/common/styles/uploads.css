@@ -52,6 +52,7 @@
   display: flex;
   align-items: center;
   padding: 16px 56px;
+  position: relative;
 }
 
 .slate-table-row:last-child {
@@ -106,6 +107,9 @@
 }
 
 .slate-table-container .slate-popover {
+  margin-top: 56px;
+  top: 0;
+  right: 0;
   z-index: var(--zindex-tooltip);
   box-sizing: border-box;
   width: 200px;
@@ -118,6 +122,7 @@
   padding: 16px 24px;
   font-family: var(--font-family-medium);
   font-size: var(--typescale-lvl0);
+  display: none;
 }
 
 .slate-table-container .slate-popover-item {

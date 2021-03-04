@@ -14,7 +14,9 @@ Uploads.prototype.showUploads = (upload, filetype) => {
   let uploadTable = document.getElementById("slate-uploads");
   let uploadEntries = document.createElement("div");
   let fileTypeIcon = document.createElement("div");
-  fileTypeIcon.className = "slate-icon";
+  let popOver = document.createElement("div");
+  popOver.innerHTML =
+    '<div class="slate-popover"><div class="slate-popover-item">View file on Slate</div><div class="slate-popover-item">Copy file URL</div><div class="slate-popover-item">Remove from history</div></div>';
   if (filetype.startsWith("image/")) {
     fileTypeIcon.innerHTML =
       '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/image.svg"></object>';
@@ -41,22 +43,35 @@ Uploads.prototype.showUploads = (upload, filetype) => {
           : '<div class="slate-column-width">' + uploadInfo + "</div>"
       )
       .join("") +
-    '<div id="slate-dropdown-btn" class="slate-dropdown"><object class="slate-icon-large" type="image/svg+xml" data="../common/svg/more-horizontal.svg"></object></div>';
+    '<div class="slate-dropdown"><object class="slate-icon-large" type="image/svg+xml" data="../common/svg/more-horizontal.svg"></object></div>' +
+    popOver.innerHTML;
+
   uploadTable.appendChild(uploadEntries);
 };
 
-Uploads.prototype._handleRemoveUpload = () => {
+Uploads.prototype.removeUpload = () => {
   //TODO (@Tara/@Jason): remove single file upload data
 };
-Uploads.prototype._handleRemoveUploads = () => {
+Uploads.prototype.removeUploads = () => {
   //TODO (@Tara/@Jason): remove all upload data
 };
-Uploads.prototype._handleCopyFileUrl = () => {
+Uploads.prototype.copyFileUrl = () => {
   //TODO (@Tara/@Jason): copy file url
 };
 
-Uploads.prototype._handleDropdownDisplay = () => {
-  let dropdownBtn = document.getElementById("slate-dropdown-btn");
+Uploads.prototype.toggleDropdownDisplay = () => {
+  let dropdownBtns = document.getElementsByClassName("slate-dropdown");
+  console.log(dropdownBtns);
+  for (let dropdownBtn of dropdownBtns) {
+    console.log(dropdownBtn);
+    dropdownBtn.onclick = () => {
+      if (dropdownBtn.nextElementSibling.style.display === "block") {
+        dropdownBtn.nextElementSibling.style.display = "none";
+      } else {
+        dropdownBtn.nextElementSibling.style.display = "block";
+      }
+    };
+  }
 };
 
 var uploads = new Uploads();
@@ -101,4 +116,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     uploadInfo = [upload.name, upload.date, upload.source];
     uploads.showUploads(uploadInfo, upload.type);
   });
+
+  uploads.toggleDropdownDisplay();
 });
