@@ -6,8 +6,8 @@ Uploads.prototype.getUploads = () => {
   chrome.storage.local.get(["uploads"], function (result) {
     this.uploads.uploadData = result.uploads;
     console.log(this.uploads.uploadData);
+    return this.uploads.uploadData;
   });
-  return this.uploads.uploadData;
 };
 
 Uploads.prototype.showUploads = (upload, filetype) => {
@@ -61,9 +61,7 @@ Uploads.prototype.copyFileUrl = () => {
 
 Uploads.prototype.toggleDropdownDisplay = () => {
   let dropdownBtns = document.getElementsByClassName("slate-dropdown");
-  console.log(dropdownBtns);
   for (let dropdownBtn of dropdownBtns) {
-    console.log(dropdownBtn);
     dropdownBtn.onclick = () => {
       if (dropdownBtn.nextElementSibling.style.display === "block") {
         dropdownBtn.nextElementSibling.style.display = "none";
@@ -77,6 +75,7 @@ Uploads.prototype.toggleDropdownDisplay = () => {
 var uploads = new Uploads();
 
 document.addEventListener("DOMContentLoaded", async () => {
+  //TODO (@Tara/@Jason) bug: nothing gets returned here
   let existingUploads = await uploads.getUploads();
   console.log(existingUploads);
 
@@ -112,7 +111,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   ];
 
   fakeUploads.forEach((upload) => {
-    console.log(upload);
     uploadInfo = [upload.name, upload.date, upload.source];
     uploads.showUploads(uploadInfo, upload.type);
   });
