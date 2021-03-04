@@ -16,25 +16,47 @@ Uploads.prototype.showUploads = (upload, filetype) => {
   let fileTypeIcon = document.createElement("div");
   fileTypeIcon.className = "slate-icon";
   if (filetype.startsWith("image/")) {
-    fileTypeIcon.innerHTML = '<object class="slate-icon" type="image/svg+xml" data="../common/svg/image.svg"></object>';
+    fileTypeIcon.innerHTML =
+      '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/image.svg"></object>';
   }
-  console.log(fileTypeIcon);
   uploadEntries.className = "slate-table-row";
-  uploadEntries.innerHTML = upload
-    .map((uploadInfo, i) =>
-      i === 0
-        ? '<div class="slate-link-column">' + fileTypeIcon + "<div>" + uploadInfo + "</div>" + "</div>"
-        : i === 2
-        ? '<div class="slate-link-column">' +
-          '<object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object>' +
-          '<div class="slate-link-info">' +
-          uploadInfo +
-          "</div>" +
-          "</div>"
-        : '<div class="slate-column-width">' + uploadInfo + "</div>"
-    )
-    .join("");
+  uploadEntries.innerHTML =
+    upload
+      .map((uploadInfo, i) =>
+        i === 0
+          ? '<div class="slate-icon-column"><div class="slate-file-icon">' +
+            fileTypeIcon.innerHTML +
+            "</div>" +
+            "<div>" +
+            uploadInfo +
+            "</div>" +
+            "</div>"
+          : i === 2
+          ? '<div class="slate-icon-column">' +
+            '<div class="slate-link-info">' +
+            uploadInfo +
+            "</div>" +
+            '<object class="slate-icon" type="image/svg+xml" data="../common/svg/external-link.svg"></object>' +
+            "</div>"
+          : '<div class="slate-column-width">' + uploadInfo + "</div>"
+      )
+      .join("") +
+    '<div id="slate-dropdown-btn" class="slate-dropdown"><object class="slate-icon-large" type="image/svg+xml" data="../common/svg/more-horizontal.svg"></object></div>';
   uploadTable.appendChild(uploadEntries);
+};
+
+Uploads.prototype._handleRemoveUpload = () => {
+  //TODO (@Tara/@Jason): remove single file upload data
+};
+Uploads.prototype._handleRemoveUploads = () => {
+  //TODO (@Tara/@Jason): remove all upload data
+};
+Uploads.prototype._handleCopyFileUrl = () => {
+  //TODO (@Tara/@Jason): copy file url
+};
+
+Uploads.prototype._handleDropdownDisplay = () => {
+  let dropdownBtn = document.getElementById("slate-dropdown-btn");
 };
 
 var uploads = new Uploads();
