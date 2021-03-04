@@ -380,6 +380,22 @@
   overflow: hidden;
 }
 
+.slate-alert {
+  box-sizing: border-box;
+  padding: 12px 24px;
+  background-color: rgba(0, 97, 187, 0.1);
+  color: var(--color-blue);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: calc(100% + 48px);
+  font-family: var(--font-family-medium);
+  font-size: var(--typescale-lvl1);
+  font-weight: 400;
+  cursor: pointer;
+  margin: 0 -24px 24px -24px;
+}
+
 @media only screen and (min-width: 1024px) {
   .slate-masonry {
     column-count: 4;
