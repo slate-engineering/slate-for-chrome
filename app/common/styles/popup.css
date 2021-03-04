@@ -5,7 +5,7 @@
   z-index: 999999999999 !important;
 }
 
-.slate-upload-drawer {
+.slate-drawer {
   width: 416px;
   height: 100vh;
   color: var(--color-textBlack);
@@ -44,6 +44,15 @@
   width: 16px;
   height: 16px;
   color: var(--color-gray80);
+}
+
+.slate-drawer-content {
+  height: calc(100% - 80px);
+  display: none;
+}
+
+.slate-drawer-content.active {
+  display: block;
 }
 
 .slate-header {
@@ -411,12 +420,21 @@
   min-width: 10%;
   display: flex;
   align-items: center;
+  gap: 12px;
 }
 
 .slate-upload-file-module .slate-upload-cancel {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.slate-upload-file-module:hover .slate-upload-cancel {
+  opacity: 0.5;
+  transition: opacity 200ms ease-in-out;
+  cursor: pointer;
 }
 
 .slate-upload-file .slate-upload-file-name {
