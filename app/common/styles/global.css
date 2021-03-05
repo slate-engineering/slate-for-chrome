@@ -96,8 +96,9 @@
 
 .slate-loaderspinner {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
   border: 2px solid var(--color-blue);
   border-radius: 50%;
   border-top-color: var(--color-bgGrayLight);
