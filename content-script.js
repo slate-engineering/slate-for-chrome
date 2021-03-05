@@ -24,16 +24,12 @@ var SlateApp = (function () {
           //
           //
           //Initilize app event listeners
-          document
-            .getElementById("slate-upload-btn")
-            .addEventListener("click", function () {
-              chrome.runtime.sendMessage({ uploadData: "slate" });
-            });
-          document
-            .getElementById("slate-close-icon")
-            .addEventListener("click", function () {
-              location.reload();
-            });
+          document.getElementById("slate-upload-btn").addEventListener("click", function () {
+            chrome.runtime.sendMessage({ uploadData: "slate" });
+          });
+          document.getElementById("slate-close-icon").addEventListener("click", function () {
+            location.reload();
+          });
           return true;
           //
           //
@@ -151,7 +147,12 @@ var SlateApp = (function () {
   };
 
   SlateApp.prototype.getApiKeys = async (props) => {
-    //TODO: @tara add local storage to get all api keys
+    //add local storage to get all api keys
+    let keys = [];
+    chrome.storage.local.get(["apis"], (result) => {
+      for (let api of result.apis) keys.push(api);
+    });
+    return keys;
   };
 
   SlateApp.prototype.listApiKeys = async (props) => {

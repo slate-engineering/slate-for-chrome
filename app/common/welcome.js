@@ -79,10 +79,11 @@ createUploads = () => {
     date: "2020-10-13T19:49:41.036Z",
     url: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
     uploading: false,
+    id: "jasonwillfigureouthowtodotheids",
   };
   uploads.push(upload);
   chrome.storage.local.set({ uploads });
   chrome.storage.local.get(["uploads"], (result) => {
-    console.log("uploads", result);
+    console.log("uploads", result.uploads);
   });
 };
