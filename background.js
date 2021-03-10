@@ -1,9 +1,7 @@
-//
-//
 //Background functions
 var SlateBackground = (function () {
   function SlateBackground() {
-    //Create app
+    //Create background
   }
 
   SlateBackground.prototype.init = async () => {
@@ -43,6 +41,99 @@ var SlateBackground = (function () {
 
   return SlateBackground;
 })();
+
+//Background functions
+var SlateUpload = (function () {
+  function SlateUpload() {
+    //Create background
+  }
+
+  SlateUpload.prototype.start = async (props) => {
+    async function convertToData(props) {
+      const { src } = props.file;
+
+      return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          var reader = new FileReader();
+          reader.onloadend = function () {
+            resolve(reader.result);
+          };
+          reader.readAsDataURL(xhr.response);
+        };
+        xhr.open("GET", props.file.src);
+        xhr.responseType = "blob";
+        console.log("done convert");
+        xhr.send();
+      });
+    }
+
+    async function uploadToSlate(fileData, apiData) {
+      console.log("follow this api data:::", apiData);
+      var arr = fileData.split(","),
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      var mime = fileData.split(",")[0].split(":")[1].split(";")[0];
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+
+      const url =
+        "https://uploads.slate.host/api/public/" + apiData.data.slate.id;
+      let fileBlob = new Blob([u8arr], { mime });
+      let source = "";
+      let file = new File([fileBlob], source, { type: "image/png" });
+      let data = new FormData();
+      data.append("data", file);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          // NOTE: your API key
+          Authorization: "Basic " + apiData.data.api,
+        },
+        body: data,
+      });
+      const json = await response.json();
+      return json;
+    }
+
+    async function getSlateData(fileData) {
+      const response = await fetch("https://slate.host/api/v1/get-slate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // NOTE: your API key
+          Authorization: "Basic " + fileData.data.api,
+        },
+        body: JSON.stringify({
+          data: {
+            // NOTE: your slate ID
+            id: fileData.data.slate.id,
+          },
+        }),
+      });
+      const json = await response.json();
+      //console.log("slate data::", json);
+      return json;
+    }
+
+    async function processArray(array) {
+      //console.log("follow this array", array);
+      for (const file of array) {
+        let data = await convertToData(file.data.file);
+        await uploadToSlate(data, file);
+        //let slateData = await getSlateData(file);
+        console.log("Next file");
+      }
+      console.log("All files uploaded");
+    }
+
+    processArray(props);
+  };
+  return SlateUpload;
+})();
 //
 //
 //Background event listeners
@@ -60,12 +151,34 @@ chrome.browserAction.onClicked.addListener(async function (tabs) {
   //inject all Slate scripts needed into the current tab
   let activeTab = tabs[0];
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
-  chrome.tabs.executeScript(activeTab, { file: "content-script.js" }, slateBg.loadApp());
+  chrome.tabs.executeScript(
+    activeTab,
+    { file: "content-script.js" },
+    slateBg.loadApp()
+  );
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(request.uploadData);
+chrome.runtime.onMessage.addListener(async function (
+  request,
+  sender,
+  sendResponse
+) {
+  if (request.message == "settings") {
+    chrome.tabs.create({
+      url: chrome.extension.getURL("app/pages/settings.html"),
+    });
+  }
+
   if (request.uploadData == "slate") {
-    alert("im in the background");
+    let upload = new SlateUpload();
+    let files = JSON.parse(request.data);
+    let pageData = JSON.parse(request.page);
+    let apiData = JSON.parse(request.api);
+
+    //console.log("file data in the backgorund:", files);
+    console.log("page data in the backgorund:", pageData);
+    console.log("api data in the backgorund:", apiData);
+
+    upload.start(apiData);
   }
 });

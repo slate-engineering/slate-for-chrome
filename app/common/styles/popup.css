@@ -47,7 +47,7 @@
 }
 
 .slate-drawer-content {
-  height: calc(100% - 80px);
+  height: calc(100% - 32px);
   display: none;
 }
 
@@ -240,7 +240,12 @@
   height: 100vh;
   padding: 56px 120px 48px 120px;
   position: absolute;
-  background: linear-gradient(180deg, var(--color-white) 0%, var(--color-white) 46.31%, rgba(255, 255, 255, 0.3) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-white) 46.31%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
   backdrop-filter: blur(20px);
 }
 
@@ -452,6 +457,11 @@
   margin-right: 16px;
   display: flex;
   align-items: center;
+}
+
+.slate-selected {
+  font-weight: bold !important;
+  color: #000 !important;
 }
 
 @media only screen and (min-width: 1024px) {
