@@ -2,6 +2,7 @@
 var SlateApp = (function () {
   //set default variables
   this.uploadQueue = [];
+  this.uploadQueueNum = 0;
   this.uploadQueueSlates = [];
 
   this.pageData = {
@@ -164,21 +165,7 @@ var SlateApp = (function () {
               '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
             div.onclick = async () => {
-              this.uploadQueue.push({ file });
-              if (this.uploadQueue.length > 0) {
-                document
-                  .getElementById("slate-upload-btn")
-                  .classList.remove("disabled");
-
-                if (this.uploadQueue.length == 1) {
-                  document.getElementById("slate-popup-title-name").innerHTML =
-                    "Upload 1 file to Slate";
-                } else {
-                  document.getElementById("slate-popup-title-name").innerHTML =
-                    "Upload " + this.uploadQueue.length + " files to Slate";
-                }
-              }
-              //console.log("File added to queue: ", this.uploadQueue);
+              console.log("File added to queue: ", this.uploadQueue);
               let customCheckIcon = customCheckbox.childNodes[0];
               if (!checkbox.checked) {
                 checkbox.checked = true;
@@ -186,12 +173,37 @@ var SlateApp = (function () {
                 customCheckIcon.classList.add("checked");
                 img.classList.add("selected");
                 div.classList.add("selected");
+                this.uploadQueue.push({ file });
+                this.uploadQueueNum++;
               } else {
                 checkbox.checked = false;
                 customCheckbox.className = "slate-custom-checkbox";
                 customCheckIcon.classList.remove("checked");
                 img.classList.remove("selected");
                 div.classList.remove("selected");
+                console.log(file.id);
+                var objIndex = this.uploadQueue.findIndex(
+                  (obj) => obj.file.id === file.id
+                );
+
+                console.log("objIndex", objIndex);
+                const updatedQueue = this.uploadQueue.splice(objIndex, 1);
+                this.uploadQueueNum--;
+                //this.uploadQueue = updatedQueue;
+                console.log("final upload queue", this.uploadQueue);
+              }
+              if (this.uploadQueueNum > 0) {
+                document
+                  .getElementById("slate-upload-btn")
+                  .classList.remove("disabled");
+
+                if (this.uploadQueueNum == 1) {
+                  document.getElementById("slate-popup-title-name").innerHTML =
+                    "Upload 1 file to Slate";
+                } else {
+                  document.getElementById("slate-popup-title-name").innerHTML =
+                    "Upload " + this.uploadQueueNum + " files to Slate";
+                }
               }
               //await SelectFile(item);
             };
@@ -201,13 +213,13 @@ var SlateApp = (function () {
             div.appendChild(customCheckbox);
             document.getElementById("slate-image-grid").appendChild(div);
           });
-          //console.log("Slates from api keys: ", apiKeys);
+          console.log("Slates from api keys: ", apiKeys);
           apiKeys.forEach(function (slate) {
-            //console.log("Slate info: ", slate.slates);
+            console.log("Slate info: ", slate);
 
             var slateApiContainer = document.createElement("div");
             slateApiContainer.className = "slate-api";
-            slateApiContainer.id = "slate-" + slate.slateName;
+            slateApiContainer.id = "slate-" + slate.data.name;
 
             var slateDropdownButton = document.createElement("div");
             slateDropdownButton.className = "slate-dropdown-button";
@@ -219,11 +231,11 @@ var SlateApp = (function () {
             slateProfile.className = "slate-profile a";
             slateProfile.setAttribute(
               "style",
-              "background-image: url('" + slate.photo + "') !important;"
+              "background-image: url('" + slate.data.photo + "') !important;"
             );
 
             var slateNameText = document.createElement("div");
-            slateNameText.innerHTML = slate.slateName;
+            slateNameText.innerHTML = slate.data.name;
 
             slateName.appendChild(slateProfile);
             slateName.appendChild(slateNameText);
@@ -233,14 +245,17 @@ var SlateApp = (function () {
               .getElementById("list-slates")
               .appendChild(slateApiContainer);
 
+            //let mySlates = await getSlates(slate.data.key)
+            //console.log('my slates:::::', mySlates)
             slate.slates.forEach((item, i) => {
               let slateContainer = document.createElement("div");
               slateContainer.className = "slate-item";
               //slateContainer.setAttribute("data-slateId", slate.id);
               slateContainer.onclick = async () => {
                 let slateArray = uploadQueue.map((fileData) => {
+                  console.log("EYSSSS: ", slate);
                   let data = {
-                    api: slate.key,
+                    api: slate.data.key,
                     slate: item,
                     file: fileData,
                   };
@@ -257,11 +272,11 @@ var SlateApp = (function () {
               slateIcon.innerHTML =
                 '<svg id="not-selected" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>';
               let slateName = document.createElement("div");
-              slateName.innerHTML = item.name;
+              slateName.innerHTML = item.slatename;
               slateContainer.appendChild(slateIcon);
               slateContainer.appendChild(slateName);
               document
-                .getElementById("slate-" + slate.slateName)
+                .getElementById("slate-" + slate.data.name)
                 .appendChild(slateContainer);
             });
           });
@@ -316,10 +331,11 @@ var SlateApp = (function () {
       });
       const data = await response.json();
       let slates = [];
-      for (let item of data.slates) {
-        slates.push({ id: item.id, name: item.slatename });
-      }
-      return slates;
+      //for (let item of data.slates) {
+      //await getKey();
+      //slates.push({ id: item.id, name: item.slatename });
+      //}
+      return data;
     }
 
     var storage = new Promise(function (resolve, reject) {
@@ -328,25 +344,22 @@ var SlateApp = (function () {
       });
     });
 
-    try {
-      const getAPIKeys = await storage;
-      let keys = Object.values(getAPIKeys);
-      let all = [];
+    const getAPIKeys = await storage;
+    console.log("getAPIKeys", getAPIKeys);
+    var finalApiArray = [];
 
-      for (let item of keys) {
-        let fr = await getKey(item.key);
-        all.push({
-          key: item.key,
-          slateName: item.data.name,
-          slates: fr,
-          photo: item.data.photo,
-        });
-      }
+    for (let item of getAPIKeys.apis) {
+      console.log("item 123", item);
+      let keyData = await getKey(item.data.key);
 
-      return all;
-    } catch (e) {
-      return "Can not retrieve API Key";
+      finalApiArray.push({ data: item.data, slates: keyData.slates });
+      console.log("keyData", keyData);
+      //slates.push({ id: item.id, name: item.slatename });
     }
+
+    console.log("getAPIKeys new", finalApiArray);
+
+    return finalApiArray;
   };
 
   return SlateApp;
@@ -363,6 +376,7 @@ chrome.runtime.onMessage.addListener(async function (request, callback) {
     await app.getPageData();
     let allPageFiles = await app.getPageFiles();
     let apiKeys = await app.getApiKeys();
+    console.log("keys from message", apiKeys);
     //let slates = "await app.getSlates(apiKeys);";
     await app.listFiles(allPageFiles, apiKeys);
     //Add below:
