@@ -115,12 +115,11 @@ var SlateUpload = (function () {
         }),
       });
       const json = await response.json();
-      //console.log("slate data::", json);
+      //console.log("slate data:", json);
       return json;
     }
 
     async function processArray(array) {
-      //console.log("follow this array", array);
       for (const file of array) {
         let data = await convertToData(file.data.file);
         await uploadToSlate(data, file);
