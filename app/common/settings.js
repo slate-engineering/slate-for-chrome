@@ -7,35 +7,29 @@ var Settings = (function () {
   }
 
   Settings.prototype.getApiKeys = async () => {
-    // Add chrome local storage get for all api keys
-    let keys = [];
-    //chrome.storage.local.get(["apis"], (result) => {
-    //  for (let api of result.apis) keys.push(api);
-    //});
+    var storage = new Promise(function (resolve, reject) {
+      chrome.storage.local.get(["apis"], function (result) {
+        resolve(result);
+      });
+    });
 
-    let key = {
-      username: "tara",
-      key: "SLA82d4505d-8e3d-4846-ac6c-c72de45523eeTE",
-      data: {
-        photo:
-          "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
-        name: "tlin",
-      },
-      slates: ["perfect-blue", "memory palace"],
-    };
-    keys.push(key);
-    return keys;
+    return storage;
+    //return keys;
   };
 
   Settings.prototype.saveApiKey = (props) => {
     console.log("props outside", props);
+
     chrome.storage.local.get(function (result) {
       var allUploads = [];
-      allUploads = result["apis"];
+      allUploads = Object.values(result["apis"]);
+
+      console.log(allUploads);
       if (!allUploads) {
         allUploads = props;
       } else {
-        allUploads.push({ data: props });
+        let dataArray = props;
+        allUploads.push({ data: dataArray.data });
       }
       chrome.storage.local.set({ apis: allUploads }, function () {
         console.log("saved!");
@@ -81,16 +75,44 @@ var Settings = (function () {
     return acceptedImages;
   };
 
-  Settings.prototype.createApiKey = (api) => {
+  Settings.prototype.newApiKey = (api) => {
     let APIInput = document.getElementById("existing-keys");
     let newAPIInput = document.createElement("div");
     newAPIInput.className = "slate-api-key";
+    let photo;
+    if (api.data.photo) {
+      photo = api.data.photo;
+    }
     newAPIInput.innerHTML =
       '<div class="slate-account name"><img class="slate-avatar" width="20px" src="' +
-      api.data.photo +
+      photo +
       '"/>' +
       "<div>" +
       api.data.name +
+      "</div>" +
+      '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
+    APIInput.append(newAPIInput);
+  };
+
+  Settings.prototype.createApiKey = (api) => {
+    console.log("from create key", api);
+    let APIInput = document.getElementById("existing-keys");
+    let newAPIInput = document.createElement("div");
+    newAPIInput.className = "slate-api-key";
+    let photo;
+    if (api.data.photo) {
+      photo = api.data.photo;
+    }
+    let name = "";
+    if (api.data.photo) {
+      name = api.data.name;
+    }
+    newAPIInput.innerHTML =
+      '<div class="slate-account name"><img class="slate-avatar" width="20px" src="' +
+      photo +
+      '"/>' +
+      "<div>" +
+      name +
       "</div>" +
       '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
     APIInput.append(newAPIInput);
@@ -115,10 +137,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   let apiKeys = await settings.getApiKeys();
   console.log("api keys:", apiKeys);
 
-  apiKeys.forEach((item, i) => {
-    console.log(item.key);
-    settings.createApiKey(item);
-  });
+  let loop = Object.values(apiKeys);
+
+  for (i = 0; i < apiKeys.apis.length; i++) {
+    console.log("hello", apiKeys.apis[i]);
+    settings.createApiKey(apiKeys.apis[i]);
+  }
 
   //enable validation button when input event fires
   let inputKeys = document.getElementsByClassName("slate-input key");
@@ -263,13 +287,9 @@ document
         name = validate.user.data.name;
       }
       let api = {
-        key: keyValue,
-        slates: slates,
-        username: validate.username,
-        key: keyValue,
-        data: { name: name, photo: photo },
+        data: { name: name, photo: photo, key: keyValue, slates: slates },
       };
-      settings.createApiKey(api);
+      settings.newApiKey(api);
       settings.saveApiKey(api);
       let type = "success";
       settings.notification(api, type);
