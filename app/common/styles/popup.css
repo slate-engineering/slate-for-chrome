@@ -139,6 +139,20 @@
 .slate-menu {
   display: flex;
   justify-content: flex-end;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.slate-menu-top {
+  display: flex;
+  justify-content: flex-end;
+  top: 0px;
+  right: 0px;
+}
+
+.slate-show-icon {
+  display: inline !important;
 }
 
 .slate-icon-wrapper {

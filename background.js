@@ -168,6 +168,12 @@ chrome.runtime.onMessage.addListener(async function (
     });
   }
 
+  if (request.message == "uploadsHistory") {
+    chrome.tabs.create({
+      url: chrome.extension.getURL("app/pages/uploads.html"),
+    });
+  }
+
   if (request.uploadData == "slate") {
     let upload = new SlateUpload();
     let files = JSON.parse(request.data);
