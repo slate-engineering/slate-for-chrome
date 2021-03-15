@@ -16,7 +16,7 @@ var SlateApp = (function () {
 
   SlateApp.prototype.init = async () => {
     async function loadUploads(files) {
-      //console.log('Page files: ', files);
+      //console.log("Page files in init: ", files);
       files.map((item) => {
         let div = document.createElement("div");
         div.className = "slate-upload-file-module";
@@ -60,6 +60,25 @@ var SlateApp = (function () {
             });
 
           document
+            .getElementById("slate-uploads-icon")
+            .addEventListener("click", function () {
+              chrome.runtime.sendMessage({
+                message: "uploadsHistory",
+              });
+            });
+
+          document
+            .getElementById("slate-uploads-back-icon")
+            .addEventListener("click", function () {
+              document
+                .getElementById("slate-drawer-upload")
+                .classList.toggle("active");
+              document
+                .getElementById("slate-drawer-upload-progress")
+                .classList.toggle("active");
+            });
+
+          document
             .getElementById("slate-upload-btn")
             .addEventListener("click", function () {
               //console.log("Upload queue:", uploadQueue);
@@ -81,8 +100,13 @@ var SlateApp = (function () {
                 .getElementById("slate-drawer-upload")
                 .classList.toggle("active");
               document
+                .getElementById("slate-uploads-back-icon")
+                .classList.toggle("slate-show-icon");
+              document
                 .getElementById("slate-drawer-upload-progress")
                 .classList.toggle("active");
+
+              loadUploads(uploadQueue);
             });
 
           return true;
