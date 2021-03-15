@@ -35,14 +35,9 @@
 
   "content_scripts": [{
       "matches": ["https://*/*", "http://*/*"],
-      "js": ["app/scripts/jquery.min.js"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["https://*/*", "http://*/*"],
       "css": ["app/common/styles/popup.css", "app/common/styles/constants.css", "app/common/styles/global.css"],
       "js": ["app/scripts/jquery.min.js"],
-      "run_at": "document_idle"
+      "run_at": "document_end"
     },
     {
       "matches": ["https://*/*", "http://*/*"],

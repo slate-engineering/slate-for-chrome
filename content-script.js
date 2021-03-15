@@ -37,90 +37,92 @@ var SlateApp = (function () {
       //console.log('All page files: ', files);
     }
 
-    try {
-      $.get(chrome.extension.getURL("./app/pages/app.html"), function (data) {
-        $(data).prependTo("body");
-      })
-        .done(function () {
-          //
-          //
-          //Initilize app event listeners
-          document
-            .getElementById("slate-close-icon")
-            .addEventListener("click", function () {
-              location.reload();
-            });
-
-          document
-            .getElementById("slate-settings-icon")
-            .addEventListener("click", function () {
-              chrome.runtime.sendMessage({
-                message: "settings",
-              });
-            });
-
-          document
-            .getElementById("slate-uploads-icon")
-            .addEventListener("click", function () {
-              chrome.runtime.sendMessage({
-                message: "uploadsHistory",
-              });
-            });
-
-          document
-            .getElementById("slate-uploads-back-icon")
-            .addEventListener("click", function () {
-              document
-                .getElementById("slate-drawer-upload")
-                .classList.toggle("active");
-              document
-                .getElementById("slate-drawer-upload-progress")
-                .classList.toggle("active");
-            });
-
-          document
-            .getElementById("slate-upload-btn")
-            .addEventListener("click", function () {
-              //console.log("Upload queue:", uploadQueue);
-              //var searchList = [{ test1: 1 }, { test2: 2 }];
-              var isUploadQueue = JSON.stringify(uploadQueue);
-              var isPageTitle = JSON.stringify(pageData);
-              var isApiData = JSON.stringify(uploadQueueSlates);
-
-              //console.log("Page data:", isPageTitle);
-
-              chrome.runtime.sendMessage({
-                uploadData: "slate",
-                data: isUploadQueue,
-                page: isPageTitle,
-                api: isApiData,
-              });
-
-              document
-                .getElementById("slate-drawer-upload")
-                .classList.toggle("active");
-              document
-                .getElementById("slate-uploads-back-icon")
-                .classList.toggle("slate-show-icon");
-              document
-                .getElementById("slate-drawer-upload-progress")
-                .classList.toggle("active");
-
-              loadUploads(uploadQueue);
-            });
-
-          return true;
-          //
-          //
-          //End app listeners
+    async function insertAppMain() {
+      try {
+        $.get(chrome.extension.getURL("./app/pages/app.html"), function (data) {
+          $(data).prependTo("body");
         })
-        .fail(function () {
-          return false;
-        });
-      return true;
-    } catch (error) {
-      console.error(error);
+          .done(function () {
+            //Initilize app event listeners
+            document
+              .getElementById("slate-close-icon")
+              .addEventListener("click", function () {
+                location.reload();
+              });
+            //Listen for settings icon click
+            document
+              .getElementById("slate-settings-icon")
+              .addEventListener("click", function () {
+                chrome.runtime.sendMessage({
+                  message: "settings",
+                });
+              });
+            //Listen for uploads icon click
+            document
+              .getElementById("slate-uploads-icon")
+              .addEventListener("click", function () {
+                chrome.runtime.sendMessage({
+                  message: "uploadsHistory",
+                });
+              });
+
+            document
+              .getElementById("slate-uploads-back-icon")
+              .addEventListener("click", function () {
+                document
+                  .getElementById("slate-drawer-upload")
+                  .classList.toggle("active");
+                document
+                  .getElementById("slate-drawer-upload-progress")
+                  .classList.toggle("active");
+              });
+
+            document
+              .getElementById("slate-upload-btn")
+              .addEventListener("click", function () {
+                //console.log("Upload queue:", uploadQueue);
+                //var searchList = [{ test1: 1 }, { test2: 2 }];
+                var isUploadQueue = JSON.stringify(uploadQueue);
+                var isPageTitle = JSON.stringify(pageData);
+                var isApiData = JSON.stringify(uploadQueueSlates);
+
+                //console.log("Page data:", isPageTitle);
+
+                chrome.runtime.sendMessage({
+                  uploadData: "slate",
+                  data: isUploadQueue,
+                  page: isPageTitle,
+                  api: isApiData,
+                });
+
+                document
+                  .getElementById("slate-drawer-upload")
+                  .classList.toggle("active");
+                document
+                  .getElementById("slate-uploads-back-icon")
+                  .classList.toggle("slate-show-icon");
+                document
+                  .getElementById("slate-drawer-upload-progress")
+                  .classList.toggle("active");
+
+                loadUploads(uploadQueue);
+              });
+
+            return true;
+            //
+            //
+            //End app listeners
+          })
+          .fail(function () {
+            return false;
+          });
+        return true;
+      } catch (error) {
+        console.error(error);
+      }
     }
+
+    insertAppMain();
   };
 
   SlateApp.prototype.getPageFiles = async () => {
