@@ -2,12 +2,15 @@ var Uploads = function () {
   this.uploadData = [];
 };
 
-Uploads.prototype.getUploads = () => {
-  chrome.storage.local.get(["uploads"], function (result) {
-    this.uploads.uploadData = result.uploads;
-    console.log(this.uploads.uploadData);
-    return this.uploads.uploadData;
+Uploads.prototype.getUploads = async () => {
+  var storage = new Promise(function (resolve, reject) {
+    chrome.storage.local.get(["uploads"], function (result) {
+      resolve(result);
+    });
   });
+
+  let getData = await storage;
+  return getData;
 };
 
 Uploads.prototype.showUploads = (upload, filetype) => {
@@ -22,6 +25,8 @@ Uploads.prototype.showUploads = (upload, filetype) => {
       '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/image.svg"></object>';
   }
   uploadEntries.className = "slate-table-row";
+  console.log(upload);
+
   uploadEntries.innerHTML =
     upload
       .map((uploadInfo, i) =>
@@ -38,7 +43,9 @@ Uploads.prototype.showUploads = (upload, filetype) => {
             '<div class="slate-link-info">' +
             uploadInfo +
             "</div>" +
-            '<object class="slate-icon" type="image/svg+xml" data="../common/svg/external-link.svg"></object>' +
+            '<object data-url="' +
+            uploadInfo +
+            '" class="slate-icon" type="image/svg+xml" data="../common/svg/external-link.svg"></object>' +
             "</div>"
           : '<div class="slate-column-width">' + uploadInfo + "</div>"
       )
@@ -77,7 +84,7 @@ var uploads = new Uploads();
 document.addEventListener("DOMContentLoaded", async () => {
   //TODO (@Tara/@Jason) bug: nothing gets returned here
   let existingUploads = await uploads.getUploads();
-  console.log(existingUploads);
+  console.log("existingUploads", existingUploads);
 
   //TODO (@Tara/@Jason) fake data, to be deleted later
   let fakeUploads = [
@@ -87,7 +94,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       source: "https://www.criterion.com/shop/collection/169-wes-anderson",
       cid: "a238149phsdfaklsjdfhlqw48rlfsad",
       date: "2020-10-13T19:49:41.036Z",
-      url: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
+      url:
+        "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
       uploading: false,
     },
     {
@@ -96,7 +104,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       source: "https://www.criterion.com/shop/collection/169-wes-anderson",
       cid: "a238149phsdfaklsjdfhlqw48rlfsad",
       date: "2020-10-13T19:49:41.036Z",
-      url: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
+      url:
+        "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
       uploading: false,
     },
     {
@@ -105,13 +114,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       source: "https://www.criterion.com/shop/collection/169-wes-anderson",
       cid: "a238149phsdfaklsjdfhlqw48rlfsad",
       date: "2020-10-13T19:49:41.036Z",
-      url: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
+      url:
+        "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
       uploading: false,
     },
   ];
 
-  fakeUploads.forEach((upload) => {
-    uploadInfo = [upload.name, upload.date, upload.source];
+  let sort = existingUploads.uploads.reverse();
+
+  sort.forEach((upload) => {
+    let date = new Date(upload.date);
+
+    //let formatDate = date(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+
+    uploadInfo = [upload.name, date, upload.source];
     uploads.showUploads(uploadInfo, upload.type);
   });
 

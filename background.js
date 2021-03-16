@@ -48,7 +48,7 @@ var SlateUpload = (function () {
     //Create background
   }
 
-  SlateUpload.prototype.start = async (props) => {
+  SlateUpload.prototype.start = async (props, pageData) => {
     async function convertToData(props) {
       const { src } = props.file;
 
@@ -68,7 +68,37 @@ var SlateUpload = (function () {
       });
     }
 
-    async function uploadToSlate(fileData, apiData) {
+    async function addDataUpload(props) {
+      console.log(props);
+      chrome.storage.local.get(["uploads"], (result) => {
+        let uploads = [];
+        uploads = result["uploads"];
+        uploads.push(props);
+        chrome.storage.local.set({ uploads });
+      });
+      console.log("done");
+      return true;
+    }
+
+    async function uploadToSlate(fileData, apiData, pageData) {
+      console.log("file data:", apiData);
+      let date = Date.now();
+      let uploadData = {
+        name: apiData.data.file.file.altTitle || "No name",
+        type: "image/jpeg",
+        source: pageData.source,
+        sourceTitle: pageData.title,
+        originalFile: apiData.data.file.file.src,
+        cid: "",
+        date: date,
+        url: "",
+        uploading: true,
+        id: apiData.data.file.file.id,
+      };
+
+      await addDataUpload(uploadData);
+      console.log("submitted to local", uploadData);
+
       console.log("follow this api data:::", apiData);
       var arr = fileData.split(","),
         bstr = atob(arr[1]),
@@ -119,17 +149,18 @@ var SlateUpload = (function () {
       return json;
     }
 
-    async function processArray(array) {
+    async function processArray(array, pageData) {
       for (const file of array) {
+        console.log("page data in process:", pageData);
         let data = await convertToData(file.data.file);
-        await uploadToSlate(data, file);
+        await uploadToSlate(data, file, pageData);
         //let slateData = await getSlateData(file);
         console.log("Next file");
       }
       console.log("All files uploaded");
     }
 
-    processArray(props);
+    processArray(props, pageData);
   };
   return SlateUpload;
 })();
@@ -181,9 +212,9 @@ chrome.runtime.onMessage.addListener(async function (
     let apiData = JSON.parse(request.api);
 
     //console.log("file data in the backgorund:", files);
-    console.log("page data in the backgorund:", pageData);
+    console.log("files in the backgorund:", files);
     console.log("api data in the backgorund:", apiData);
 
-    upload.start(apiData);
+    upload.start(apiData, pageData);
   }
 });

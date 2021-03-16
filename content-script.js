@@ -279,7 +279,7 @@ var SlateApp = (function () {
               //slateContainer.setAttribute("data-slateId", slate.id);
               slateContainer.onclick = async () => {
                 let slateArray = uploadQueue.map((fileData) => {
-                  console.log("EYSSSS: ", slate);
+                  //console.log("EYSSSS: ", slate);
                   let data = {
                     api: slate.data.key,
                     slate: item,
