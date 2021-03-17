@@ -80,6 +80,29 @@ var SlateUpload = (function () {
       return true;
     }
 
+    async function updateDataUpload(props, uploadId) {
+      console.log("look at props", props);
+      chrome.storage.local.get(["uploads"], (result) => {
+        let uploads = result.uploads;
+        console.log("upload look for id::::", uploads);
+
+        for (var i in uploads) {
+          if (uploads[i].id == uploadId) {
+            console.log("upload in loop::", uploads[i]);
+            uploads[i].uploading = false;
+            uploads[i].cid = props.data.cid;
+            uploads[i].url = props.url;
+            break; //Stop this loop
+          }
+        }
+        console.log("done final upload array:", uploads);
+        chrome.storage.local.set({ uploads: uploads }, function () {
+          console.log("saved");
+        });
+      });
+      return true;
+    }
+
     async function uploadToSlate(fileData, apiData, pageData) {
       console.log("file data:", apiData);
       let date = Date.now();
@@ -99,7 +122,7 @@ var SlateUpload = (function () {
       await addDataUpload(uploadData);
       console.log("submitted to local", uploadData);
 
-      console.log("follow this api data:::", apiData);
+      //console.log("follow this api data:::", apiData);
       var arr = fileData.split(","),
         bstr = atob(arr[1]),
         n = bstr.length,
@@ -126,6 +149,8 @@ var SlateUpload = (function () {
         body: data,
       });
       const json = await response.json();
+      await updateDataUpload(json, uploadData.id);
+
       return json;
     }
 

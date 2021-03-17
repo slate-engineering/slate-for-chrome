@@ -13,13 +13,16 @@ Uploads.prototype.getUploads = async () => {
   return getData;
 };
 
-Uploads.prototype.showUploads = (upload, filetype) => {
+Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
   let uploadTable = document.getElementById("slate-uploads");
   let uploadEntries = document.createElement("div");
   let fileTypeIcon = document.createElement("div");
   let popOver = document.createElement("div");
   popOver.innerHTML =
-    '<div class="slate-popover"><div class="slate-popover-item">View file on Slate</div><div class="slate-popover-item">Copy file URL</div><div class="slate-popover-item">Remove from history</div></div>';
+    '<div class="slate-popover"><div class="slate-popover-item" data-cid="' +
+    cid +
+    '" id="viewOnSlate">View file on Slate</div><div class="slate-popover-item">Copy file URL</div><div class="slate-popover-item">Remove from history</div></div>';
+
   if (filetype.startsWith("image/")) {
     fileTypeIcon.innerHTML =
       '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/image.svg"></object>';
@@ -45,7 +48,7 @@ Uploads.prototype.showUploads = (upload, filetype) => {
             "</div>" +
             '<object data-url="' +
             uploadInfo +
-            '" class="slate-icon" type="image/svg+xml" data="../common/svg/external-link.svg"></object>' +
+            '" class="slate-icon" id="sourceUrl" type="image/svg+xml" data="../common/svg/external-link.svg"></object>' +
             "</div>"
           : '<div class="slate-column-width">' + uploadInfo + "</div>"
       )
@@ -124,12 +127,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   sort.forEach((upload) => {
     let date = new Date(upload.date);
-
-    //let formatDate = date(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-
     uploadInfo = [upload.name, date, upload.source];
-    uploads.showUploads(uploadInfo, upload.type);
+    uploads.showUploads(uploadInfo, upload.type, upload.uploading, upload.cid);
   });
 
   uploads.toggleDropdownDisplay();
+
+  document.getElementById("sourceUrl").addEventListener("click", function (e) {
+    let url = e.target.attributes[1].value;
+    var win = window.open(url, "_blank");
+    win.focus();
+  });
+
+  document
+    .getElementById("viewOnSlate")
+    .addEventListener("click", function (e) {
+      let url = "https://slate.textile.io/ipfs/" + e.target.attributes[1].value;
+      var win = window.open(url, "_blank");
+      win.focus();
+    });
 });
