@@ -98,9 +98,9 @@ var SlateApp = (function () {
                 document
                   .getElementById("slate-drawer-upload")
                   .classList.toggle("active");
-                document
-                  .getElementById("slate-uploads-back-icon")
-                  .classList.toggle("slate-show-icon");
+                document.getElementById(
+                  "slate-uploads-back-icon"
+                ).style.display = "inline";
                 document
                   .getElementById("slate-drawer-upload-progress")
                   .classList.toggle("active");
