@@ -1,11 +1,72 @@
+var Welcome = (function () {
+  //set default variables
+  function Welcome() {}
+
+  Welcome.prototype.saveApiKey = (props) => {
+    console.log("props save", props);
+
+    chrome.storage.local.get(function (result) {
+      var allUploads = [];
+      allUploads = Object.values(result["apis"]);
+
+      console.log(allUploads);
+      if (!allUploads) {
+        allUploads = props;
+      } else {
+        let dataArray = props;
+        allUploads.push({ data: dataArray.data });
+      }
+      chrome.storage.local.set({ apis: allUploads }, function () {
+        console.log("saved!");
+      });
+    });
+  };
+
+  Welcome.prototype.validateApiKey = async (key) => {
+    const response = await fetch("https://slate.host/api/v1/get", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // NOTE: your API key
+        Authorization: "Basic " + key,
+      },
+      body: JSON.stringify({
+        data: {
+          // NOTE: optional, if you want your private slates too.
+          private: false,
+        },
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.user) {
+      return json;
+    } else {
+      return false;
+    }
+  };
+
+  return Welcome;
+})();
+
+var welcome = new Welcome();
+
 document.addEventListener("DOMContentLoaded", () => {
   let helperButton = document.getElementsByClassName("slate-helper-button");
-  helperButton[0].addEventListener("click", () => _handleExpand(helperButton[0]));
+  helperButton[0].addEventListener("click", () =>
+    _handleExpand(helperButton[0])
+  );
 
-  let visibilityButton = document.getElementsByClassName("slate-icon-wrapper visibility");
+  let visibilityButton = document.getElementsByClassName(
+    "slate-icon-wrapper visibility"
+  );
   let input = document.getElementById("slate-api-input");
-  visibilityButton[0].addEventListener("click", () => _handleVisibility(visibilityButton, input, false));
-  visibilityButton[1].addEventListener("click", () => _handleVisibility(visibilityButton, input, true));
+  visibilityButton[0].addEventListener("click", () =>
+    _handleVisibility(visibilityButton, input, false)
+  );
+  visibilityButton[1].addEventListener("click", () =>
+    _handleVisibility(visibilityButton, input, true)
+  );
 
   let getStarted = document.getElementById("get-started");
   let keyValue = input.value;
@@ -13,13 +74,30 @@ document.addEventListener("DOMContentLoaded", () => {
     getStarted.classList.remove("disabled");
   });
 
-  getStarted.addEventListener("click", () => {
+  getStarted.addEventListener("click", async () => {
+    document.getElementById("slate-api-loading").style.display = "inline";
     keyValue = input.value;
-    createAPIs(keyValue);
+    let validate = await welcome.validateApiKey(keyValue);
+    if (!validate) {
+      console.log("There was an error validating the api key");
+    } else {
+      console.log(validate);
+      let photo = validate.user.data.photo;
+      let slates = validate.slates.length;
+      let name = validate.user.username;
+      let api = {
+        data: { name: name, photo: photo, key: keyValue, slates: slates },
+      };
+      welcome.saveApiKey(api);
+      document.getElementById("slate-api-loading").style.display = "none";
+      document.getElementById("slate-api-success").style.display = "inline";
+      setTimeout(function () {
+        document.getElementById("how-it-works").scrollIntoView({
+          behavior: "smooth",
+        });
+      }, 1000);
+    }
   });
-
-  createSettings();
-  createUploads();
 });
 
 _handleExpand = (props) => {
@@ -77,7 +155,8 @@ createUploads = () => {
     source: "https://www.criterion.com/shop/collection/169-wes-anderson",
     cid: "a238149phsdfaklsjdfhlqw48rlfsad",
     date: "2020-10-13T19:49:41.036Z",
-    url: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
+    url:
+      "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
     uploading: false,
     id: "jasonwillfigureouthowtodotheids",
   };

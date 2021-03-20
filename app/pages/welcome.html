@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../common/styles/welcome.css" />
     <meta charset="utf-8">
   </head>
-  
+
   <body>
     <div class="slate-scroll-container">
       <div class="slate-section-wrapper">
@@ -15,7 +15,7 @@
         <div class="slate-subtitle">To set up, enter your API key below</div>
         <button class="slate-helper-button">
           <svg class="slate-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-          How to find my API key?
+          How do I find my API key?
         </button>
         <div class="slate-helper-info">Go to <a class="slate-link" href="https://slate.host/_" target="_blank">slate.host</a> and log in. From the main menu, select API. Make the API key visible before you copy.</div>
         <div class="slate-input-wrapper">
@@ -26,14 +26,30 @@
           <div class="slate-icon-wrapper visibility show active">
             <svg class="slate-icon-eye" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
           </div>
+          <div id="slate-api-loading" style="display:none;margin-left:24px" >
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+              <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 25 25"
+                  to="360 25 25"
+                  dur="0.6s"
+                  repeatCount="indefinite"/>
+                </path>
+              </svg>          </div>
+          <div id="slate-api-success" style="display:none;color:green;margin-left:24px;font-size:16px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <b style="top:60px">Your API key has been added!</b></div>
           </div>
         <button id="get-started" class="slate-primary-button disabled">Get started</button>
         <a class="slate-link" href="https://slate.host/_" target="_blank">Sign up for Slate</a>
       </div>
 
-      <div class="slate-section-wrapper last">
-        <div class="slate-title">How it works</div>
-        <div class="slate-subtitle">Let’s quickly test drive Slate</div>
+      <div id="how-it-works"  class="slate-section-wrapper last">
+        <div class="slate-title">Take the tour</div>
+        <div class="slate-subtitle">Click on a site below to test drive Slate</div>
         <div class="slate-column">
           <a class="slate-test-platform unsplash" href="https://unsplash.com/t/nature/?slatetour">
             <div class="slate-explainer">
@@ -43,8 +59,8 @@
           </a>
           <div class="slate-test-platform youtube">
             <div class="slate-explainer">
-              <div>Upload videos from <br/> <span style="font-family: var(--font-family-bold);">Youtube</span></div>
-              <div><img src="https://slate.textile.io/ipfs/bafkreieb7zmiss2rlnlhhkwbgxlc7szmzsq3yars7ujjflhwq6it2low5m" width="48px"></div>
+              <div>Upload from <br/> <span style="font-family: var(--font-family-bold);">Internet Archive</span></div>
+              <div><img src="https://pbs.twimg.com/profile_images/717127559134056448/BYGRuZmj_400x400.jpg" width="48px"></div>
             </div>
           </div>
           <div class="slate-test-platform soundcloud">
@@ -58,5 +74,6 @@
     </div>
     <script src="../common/welcome.js"></script>
     <script src="../scripts/jquery.min.js"></script>
+    <script src="../common/styles/confetti.js"></script>
   </body>
 </html>
