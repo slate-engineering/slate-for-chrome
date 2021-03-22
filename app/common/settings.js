@@ -129,7 +129,7 @@ var Settings = (function () {
       "<div>" +
       name +
       "</div>" +
-      '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button-delete" id="' +
+      '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete slate-icon-button-delete" id="' +
       api.data.key +
       '" class="slate-icon-button delete"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
 
@@ -166,7 +166,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   Array.from(deleteNow).forEach(function (element) {
     element.addEventListener("click", function (e) {
       console.log(e.target.id);
-      settings.deleteApiKey(e.target.id);
+      var r = confirm("Are you sure you want to delete this API key?");
+      if (r == true) {
+        settings.deleteApiKey(e.target.id);
+      } else {
+        return;
+      }
     });
   });
 
