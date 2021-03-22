@@ -37,6 +37,21 @@ var Settings = (function () {
     });
   };
 
+  Settings.prototype.deleteApiKey = (props) => {
+    console.log("props outside", props);
+
+    chrome.storage.local.get(["apis"], function (result) {
+      var apiKeys = [];
+      apiKeys = Object.values(result["apis"]);
+      let del = apiKeys.findIndex((x) => x.data.key === props);
+      apiKeys.splice(del, 1);
+      console.log(apiKeys);
+      chrome.storage.local.set({ apis: apiKeys }, function () {
+        console.log("saved!");
+      });
+    });
+  };
+
   Settings.prototype.validateApiKey = async (key) => {
     const response = await fetch("https://slate.host/api/v1/get", {
       method: "POST",
@@ -94,7 +109,7 @@ var Settings = (function () {
     APIInput.append(newAPIInput);
   };
 
-  Settings.prototype.createApiKey = (api) => {
+  Settings.prototype.createApiKey = async (api) => {
     console.log("from create key", api);
     let APIInput = document.getElementById("existing-keys");
     let newAPIInput = document.createElement("div");
@@ -114,7 +129,10 @@ var Settings = (function () {
       "<div>" +
       name +
       "</div>" +
-      '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete" onclick="_handleDelete(this.parentNode)"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
+      '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button-delete" id="' +
+      api.data.key +
+      '" class="slate-icon-button delete"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
+
     APIInput.append(newAPIInput);
   };
 
@@ -141,8 +159,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   for (i = 0; i < apiKeys.apis.length; i++) {
     console.log("hello", apiKeys.apis[i]);
-    settings.createApiKey(apiKeys.apis[i]);
+    await settings.createApiKey(apiKeys.apis[i]);
   }
+
+  let deleteNow = document.getElementsByClassName("slate-icon-button-delete");
+  Array.from(deleteNow).forEach(function (element) {
+    element.addEventListener("click", function (e) {
+      console.log(e.target.id);
+      settings.deleteApiKey(e.target.id);
+    });
+  });
 
   //enable validation button when input event fires
   let inputKeys = document.getElementsByClassName("slate-input key");
@@ -165,7 +191,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     "slate-dropdown-options"
   )[0];
   let dropdownOptions = document.getElementsByClassName("slate-option");
-  _handleTimeSelection(dropdownButton, dropdownMenu, dropdownOptions);
+  //_handleTimeSelection(dropdownButton, dropdownMenu, dropdownOptions);
 
   //checking for DOM update with mutation observer api
   let targetNode = document.querySelector("#api-keys");
@@ -213,6 +239,8 @@ _handleValidation = (inputKeys, validateKeyButtons) => {
 
 _handleDelete = (props) => {
   props.remove();
+  console.log("hello");
+  console.log(props);
 };
 
 _handleOptionSelection = (dropdownOptions, selection) => {
