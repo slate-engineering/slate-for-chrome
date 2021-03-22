@@ -47,7 +47,7 @@ var Settings = (function () {
       apiKeys.splice(del, 1);
       console.log(apiKeys);
       chrome.storage.local.set({ apis: apiKeys }, function () {
-        console.log("saved!");
+        location.reload();
       });
     });
   };
