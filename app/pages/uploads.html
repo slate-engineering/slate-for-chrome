@@ -10,16 +10,36 @@
 
   <body class="slate-page">
     <div class="slate-page-wrapper">
-      <div class="slate-title">Uploads</div>
+      <div class="slate-title" style="display: inline-block;">Uploads</div>
+      <button
+        id="clear-history-btn"
+        class="slate-primary-button"
+        style="
+          right: 0;
+          display: inline-block;
+          position: absolute;
+          right: 70px;
+        "
+      >
+        Clear history
+      </button>
       <div class="slate-subtitle">
         You can browse and delete your uploads in this page.
       </div>
+
       <div id="slate-uploads" class="slate-table-container">
         <div class="slate-table-top-row">
           <div class="slate-column-width">Name</div>
           <div class="slate-column-width">Date Uploaded</div>
           <div class="slate-link-column">Source</div>
         </div>
+      </div>
+      <br />
+      <div
+        id="empty-uploads-message"
+        style="display: none; font-weight: bold; font-size: 16px; top: 40px;"
+      >
+        No upload history yet!
       </div>
     </div>
     <script src="../common/uploads.js"></script>

@@ -13,6 +13,14 @@ Uploads.prototype.getUploads = async () => {
   return getData;
 };
 
+Uploads.prototype.clearUploads = async () => {
+  let allUploads = [];
+  chrome.storage.local.set({ uploads: allUploads }, function () {
+    console.log("cleared!");
+    return;
+  });
+};
+
 Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
   let uploadTable = document.getElementById("slate-uploads");
   let uploadEntries = document.createElement("div");
@@ -92,60 +100,85 @@ document.addEventListener("DOMContentLoaded", async () => {
   let existingUploads = await uploads.getUploads();
   console.log("existingUploads", existingUploads);
 
-  //TODO (@Tara/@Jason) fake data, to be deleted later
-  let fakeUploads = [
-    {
-      name: "test-db.png",
-      type: "image/jpeg",
-      source: "https://www.criterion.com/shop/collection/169-wes-anderson",
-      cid: "a238149phsdfaklsjdfhlqw48rlfsad",
-      date: "2020-10-13T19:49:41.036Z",
-      url: "https://slate.textile.io/ipfs/123",
-      uploading: false,
-    },
-  ];
+  if (existingUploads.uploads.length > 0) {
+    //TODO (@Tara/@Jason) fake data, to be deleted later
+    let fakeUploads = [
+      {
+        name: "test-db.png",
+        type: "image/jpeg",
+        source: "https://www.criterion.com/shop/collection/169-wes-anderson",
+        cid: "a238149phsdfaklsjdfhlqw48rlfsad",
+        date: "2020-10-13T19:49:41.036Z",
+        url: "https://slate.textile.io/ipfs/123",
+        uploading: false,
+      },
+    ];
 
-  let sort = existingUploads.uploads.reverse();
+    let sort = existingUploads.uploads.reverse();
 
-  sort.forEach((upload) => {
-    let date = new Date(upload.date);
-    uploadInfo = [upload.name, date, upload.source];
-    uploads.showUploads(uploadInfo, upload.type, upload.uploading, upload.cid);
-  });
+    sort.forEach((upload) => {
+      let date = new Date(upload.date);
+      uploadInfo = [upload.name, date, upload.source];
+      uploads.showUploads(
+        uploadInfo,
+        upload.type,
+        upload.uploading,
+        upload.cid
+      );
+    });
 
-  uploads.toggleDropdownDisplay();
+    uploads.toggleDropdownDisplay();
 
-  document.getElementById("sourceUrl").addEventListener("click", function (e) {
-    let url = e.target.attributes[1].value;
-    var win = window.open(url, "_blank");
-    win.focus();
-  });
+    document
+      .getElementById("sourceUrl")
+      .addEventListener("click", function (e) {
+        let url = e.target.attributes[1].value;
+        var win = window.open(url, "_blank");
+        win.focus();
+      });
 
-  let openCID = document.getElementsByClassName("click-open-cid");
-  for (var i = 0; i < openCID.length; i++) {
-    openCID[i].onclick = function (e) {
-      console.log(e.target.attributes["data-cid"].value);
-      let url =
-        "https://slate.textile.io/ipfs/" +
-        e.target.attributes["data-cid"].value;
-      var win = window.open(url, "_blank");
-      win.focus();
-    };
-  }
+    let openCID = document.getElementsByClassName("click-open-cid");
+    for (var i = 0; i < openCID.length; i++) {
+      openCID[i].onclick = function (e) {
+        console.log(e.target.attributes["data-cid"].value);
+        let url =
+          "https://slate.textile.io/ipfs/" +
+          e.target.attributes["data-cid"].value;
+        var win = window.open(url, "_blank");
+        win.focus();
+      };
+    }
 
-  let copyCID = document.getElementsByClassName("click-copy-cid");
-  for (var i = 0; i < copyCID.length; i++) {
-    copyCID[i].onclick = function (e) {
-      console.log(e.target.attributes["data-cid"].value);
-      let url =
-        "https://slate.textile.io/ipfs/" +
-        e.target.attributes["data-cid"].value;
-      console.log(url);
-      url.select();
-      document.execCommand("copy");
-      console.log("copied");
-      //var win = window.open(url, "_blank");
-      //..win.focus();
-    };
+    let copyCID = document.getElementsByClassName("click-copy-cid");
+    for (var i = 0; i < copyCID.length; i++) {
+      copyCID[i].onclick = function (e) {
+        console.log(e.target.attributes["data-cid"].value);
+        let url =
+          "https://slate.textile.io/ipfs/" +
+          e.target.attributes["data-cid"].value;
+        console.log(url);
+        url.select();
+        document.execCommand("copy");
+        console.log("copied");
+        //var win = window.open(url, "_blank");
+        //..win.focus();
+      };
+    }
+    document
+      .getElementById("clear-history-btn")
+      .addEventListener("click", function (e) {
+        let modal = confirm(
+          "Are you sure you want to clear your upload history?"
+        );
+        if (modal == true) {
+          uploads.clearUploads();
+          location.reload();
+        } else {
+          return;
+        }
+      });
+  } else {
+    document.getElementById("empty-uploads-message").style.display = "inline";
+    //document.getElementById("empty-uploads-message").disabled = true;
   }
 });
