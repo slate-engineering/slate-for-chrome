@@ -149,9 +149,34 @@ var SlateUpload = (function () {
         body: data,
       });
       const json = await response.json();
+      console.log("JSONLLL", json);
       await updateDataUpload(json, uploadData.id);
 
       return json;
+      /*
+      const updateSlateData = json.slate;
+      updateSlateData.data.objects[0].source = pageData.source;
+
+      let finalFinal = { data: updateSlateData };
+
+      console.log("updated slate111111111:", finalFinal);
+
+      const updateSlateResponse = await fetch(
+        "https://slate.host/api/v1/update-slate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // NOTE: your API key
+            Authorization: "Basic SLA9bad2903-54b7-4e6f-a2c1-85e32a7640eeTE",
+          },
+          body: JSON.stringify({ data: json }),
+        }
+      );
+      const updateSlateFinal = await updateSlateResponse.json();
+      console.log(updateSlateFinal);
+      return updateSlateFinal;
+      */
     }
 
     async function getSlateData(fileData) {

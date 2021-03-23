@@ -67,6 +67,17 @@ var SlateApp = (function () {
               });
 
             document
+              .getElementById("slate-upload-alert")
+              .addEventListener("click", function () {
+                document
+                  .getElementById("slate-drawer-upload")
+                  .classList.toggle("active");
+                document
+                  .getElementById("slate-drawer-upload-progress")
+                  .classList.toggle("active");
+              });
+
+            document
               .getElementById("slate-uploads-back-icon")
               .addEventListener("click", function () {
                 document
@@ -163,7 +174,7 @@ var SlateApp = (function () {
     return pageData;
   };
 
-  SlateApp.prototype.listFiles = async (props, apiKeys) => {
+  SlateApp.prototype.listFiles = async (props, apiKeys, isUploading) => {
     try {
       $.getScript(chrome.extension.getURL("./app/index.js"), function (data) {
         $(data).append("body");
@@ -239,6 +250,18 @@ var SlateApp = (function () {
             div.appendChild(customCheckbox);
             document.getElementById("slate-image-grid").appendChild(div);
           });
+          //
+          //
+          //CREATE API KEY UI
+          if (isUploading) {
+            document.getElementById("slate-upload-alert").style.display =
+              "inline-block";
+            document.getElementById("slate-upload-alert-text").innerHTML =
+              "Uploading " + isUploading.length + " files";
+          }
+          //
+          //
+          //CREATE API KEY UI
           console.log("Slates from api keys: ", apiKeys);
           apiKeys.forEach(function (slate) {
             console.log("Slate info: ", slate);
@@ -246,6 +269,13 @@ var SlateApp = (function () {
             var slateApiContainer = document.createElement("div");
             slateApiContainer.className = "slate-api";
             slateApiContainer.id = "slate-" + slate.data.name;
+            slateApiDisplay = document.createElement("div");
+            slateApiDisplay.className = "slate-item-display";
+
+            slateApiContainer.onclick = () => {
+              alert(slate.data.name);
+              slateApiDisplay.classList.toggle("slate-item-display");
+            };
 
             var slateDropdownButton = document.createElement("div");
             slateDropdownButton.className = "slate-dropdown-button";
@@ -279,7 +309,7 @@ var SlateApp = (function () {
               //slateContainer.setAttribute("data-slateId", slate.id);
               slateContainer.onclick = async () => {
                 let slateArray = uploadQueue.map((fileData) => {
-                  //console.log("EYSSSS: ", slate);
+                  //console.log("slate: ", slate);
                   let data = {
                     api: slate.data.key,
                     slate: item,
@@ -388,6 +418,18 @@ var SlateApp = (function () {
     return finalApiArray;
   };
 
+  SlateApp.prototype.getUploads = async () => {
+    var storage = new Promise(function (resolve, reject) {
+      chrome.storage.local.get(["uploads"], function (result) {
+        resolve(result);
+      });
+    });
+
+    let getData = await storage;
+    const result = getData.uploads.filter((img) => img.uploading == true);
+    return result;
+  };
+
   return SlateApp;
 })();
 
@@ -399,12 +441,13 @@ chrome.runtime.onMessage.addListener(async function (request, callback) {
   if (request.message == "openSlateApp") {
     //required order
     await app.init();
+    let isUploading = await app.getUploads();
     await app.getPageData();
     let allPageFiles = await app.getPageFiles();
     let apiKeys = await app.getApiKeys();
     console.log("keys from message", apiKeys);
     //let slates = "await app.getSlates(apiKeys);";
-    await app.listFiles(allPageFiles, apiKeys);
+    await app.listFiles(allPageFiles, apiKeys, isUploading);
     //Add below:
   }
 });

@@ -18,10 +18,13 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
   let uploadEntries = document.createElement("div");
   let fileTypeIcon = document.createElement("div");
   let popOver = document.createElement("div");
+  console.log(cid);
   popOver.innerHTML =
-    '<div class="slate-popover"><div class="slate-popover-item" data-cid="' +
+    '<div class="slate-popover"><div class="slate-popover-item click-open-cid" data-cid="' +
     cid +
-    '" id="viewOnSlate">View file on Slate</div><div class="slate-popover-item">Copy file URL</div><div class="slate-popover-item">Remove from history</div></div>';
+    '" id="viewOnSlate">View file on Slate</div><div class="slate-popover-item click-copy-cid" data-cid="' +
+    cid +
+    '">Copy file URL</div><div class="slate-popover-item">Remove from history</div></div>';
 
   if (filetype.startsWith("image/")) {
     fileTypeIcon.innerHTML =
@@ -92,33 +95,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   //TODO (@Tara/@Jason) fake data, to be deleted later
   let fakeUploads = [
     {
-      name: "jim-dark-secrets.png",
+      name: "test-db.png",
       type: "image/jpeg",
       source: "https://www.criterion.com/shop/collection/169-wes-anderson",
       cid: "a238149phsdfaklsjdfhlqw48rlfsad",
       date: "2020-10-13T19:49:41.036Z",
-      url:
-        "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
-      uploading: false,
-    },
-    {
-      name: "jim-dark-secrets.png",
-      type: "image/jpeg",
-      source: "https://www.criterion.com/shop/collection/169-wes-anderson",
-      cid: "a238149phsdfaklsjdfhlqw48rlfsad",
-      date: "2020-10-13T19:49:41.036Z",
-      url:
-        "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
-      uploading: false,
-    },
-    {
-      name: "jim-dark-secrets.png",
-      type: "image/jpeg",
-      source: "https://www.criterion.com/shop/collection/169-wes-anderson",
-      cid: "a238149phsdfaklsjdfhlqw48rlfsad",
-      date: "2020-10-13T19:49:41.036Z",
-      url:
-        "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
+      url: "https://slate.textile.io/ipfs/123",
       uploading: false,
     },
   ];
@@ -139,11 +121,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     win.focus();
   });
 
-  document
-    .getElementById("viewOnSlate")
-    .addEventListener("click", function (e) {
-      let url = "https://slate.textile.io/ipfs/" + e.target.attributes[1].value;
+  let openCID = document.getElementsByClassName("click-open-cid");
+  for (var i = 0; i < openCID.length; i++) {
+    openCID[i].onclick = function (e) {
+      console.log(e.target.attributes["data-cid"].value);
+      let url =
+        "https://slate.textile.io/ipfs/" +
+        e.target.attributes["data-cid"].value;
       var win = window.open(url, "_blank");
       win.focus();
-    });
+    };
+  }
+
+  let copyCID = document.getElementsByClassName("click-copy-cid");
+  for (var i = 0; i < copyCID.length; i++) {
+    copyCID[i].onclick = function (e) {
+      console.log(e.target.attributes["data-cid"].value);
+      let url =
+        "https://slate.textile.io/ipfs/" +
+        e.target.attributes["data-cid"].value;
+      console.log(url);
+      url.select();
+      document.execCommand("copy");
+      console.log("copied");
+      //var win = window.open(url, "_blank");
+      //..win.focus();
+    };
+  }
 });
