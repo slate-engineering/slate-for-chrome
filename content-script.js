@@ -218,16 +218,16 @@ var SlateApp = (function () {
                 customCheckIcon.classList.remove("checked");
                 img.classList.remove("selected");
                 div.classList.remove("selected");
-                console.log(file.id);
+                //console.log(file.id);
                 var objIndex = this.uploadQueue.findIndex(
                   (obj) => obj.file.id === file.id
                 );
 
-                console.log("objIndex", objIndex);
+                //console.log("objIndex", objIndex);
                 const updatedQueue = this.uploadQueue.splice(objIndex, 1);
                 this.uploadQueueNum--;
                 //this.uploadQueue = updatedQueue;
-                console.log("final upload queue", this.uploadQueue);
+                //console.log("final upload queue", this.uploadQueue);
               }
               if (this.uploadQueueNum > 0) {
                 document
@@ -252,19 +252,25 @@ var SlateApp = (function () {
           });
           //
           //
-          //CREATE API KEY UI
-          if (isUploading) {
+          //UPLOAD ALERT BOX
+          //ONLY DISPLAY WHEN THERE IS AN ACTIVE UPLOAD
+          if (isUploading.length > 0) {
             document.getElementById("slate-upload-alert").style.display =
               "inline-block";
-            document.getElementById("slate-upload-alert-text").innerHTML =
-              "Uploading " + isUploading.length + " files";
+            if (isUploading.length == 1) {
+              document.getElementById("slate-upload-alert-text").innerHTML =
+                "Uploading 1 file";
+            } else {
+              document.getElementById("slate-upload-alert-text").innerHTML =
+                "Uploading " + isUploading.length + " files";
+            }
           }
           //
           //
           //CREATE API KEY UI
-          console.log("Slates from api keys: ", apiKeys);
+          //console.log("Slates from api keys: ", apiKeys);
           apiKeys.forEach(function (slate) {
-            console.log("Slate info: ", slate);
+            //console.log("Slate info: ", slate);
 
             var slateApiContainer = document.createElement("div");
             slateApiContainer.className = "slate-api";
@@ -273,7 +279,6 @@ var SlateApp = (function () {
             slateApiDisplay.className = "slate-item-display";
 
             slateApiContainer.onclick = () => {
-              alert(slate.data.name);
               slateApiDisplay.classList.toggle("slate-item-display");
             };
 
@@ -401,19 +406,17 @@ var SlateApp = (function () {
     });
 
     const getAPIKeys = await storage;
-    console.log("getAPIKeys", getAPIKeys);
+    //onsole.log("getAPIKeys", getAPIKeys);
     var finalApiArray = [];
 
     for (let item of getAPIKeys.apis) {
-      console.log("item 123", item);
+      //console.log("item 123", item);
       let keyData = await getKey(item.data.key);
 
       finalApiArray.push({ data: item.data, slates: keyData.slates });
-      console.log("keyData", keyData);
+      //console.log("keyData", keyData);
       //slates.push({ id: item.id, name: item.slatename });
     }
-
-    console.log("getAPIKeys new", finalApiArray);
 
     return finalApiArray;
   };
@@ -437,7 +440,11 @@ var SlateApp = (function () {
 //
 //App event listeners
 var app = new SlateApp();
-chrome.runtime.onMessage.addListener(async function (request, callback) {
+chrome.runtime.onMessage.addListener(async function (
+  request,
+  changeInfo,
+  callback
+) {
   if (request.message == "openSlateApp") {
     //required order
     await app.init();
@@ -445,7 +452,7 @@ chrome.runtime.onMessage.addListener(async function (request, callback) {
     await app.getPageData();
     let allPageFiles = await app.getPageFiles();
     let apiKeys = await app.getApiKeys();
-    console.log("keys from message", apiKeys);
+    //console.log("keys from message", apiKeys);
     //let slates = "await app.getSlates(apiKeys);";
     await app.listFiles(allPageFiles, apiKeys, isUploading);
     //Add below:

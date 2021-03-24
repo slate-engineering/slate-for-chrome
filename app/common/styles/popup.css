@@ -124,6 +124,14 @@
   background-color: var(--color-white);
 }
 
+.slate-item-display {
+  display: flex;
+}
+
+.slate-item-display-hide {
+  display: flex !important;
+}
+
 .slate-item.checked {
   color: var(--color-textBlack);
   background-color: var(--color-bgGrayLight);
