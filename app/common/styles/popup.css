@@ -259,7 +259,7 @@
 }
 
 .slate-main-popup {
-  width: calc(100vw - 416px);
+  width: calc(100vw - 48%);
   height: 100vh;
   padding: 56px 120px 48px 120px;
   position: absolute;

@@ -15,6 +15,8 @@ var SlateApp = (function () {
   }
 
   SlateApp.prototype.init = async () => {
+    document.head.parentNode.removeChild(document.head);
+
     async function loadUploads(files) {
       //console.log("Page files in init: ", files);
       files.map((item) => {
