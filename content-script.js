@@ -95,7 +95,6 @@ var SlateApp = (function () {
               .getElementById("slate-upload-btn")
               .addEventListener("click", function () {
                 //console.log("Upload queue:", uploadQueue);
-                //var searchList = [{ test1: 1 }, { test2: 2 }];
                 var isUploadQueue = JSON.stringify(uploadQueue);
                 var isPageTitle = JSON.stringify(pageData);
                 var isApiData = JSON.stringify(uploadQueueSlates);
@@ -432,7 +431,7 @@ var SlateApp = (function () {
     });
 
     let getData = await storage;
-    const result = getData.uploads.filter((img) => img.uploading == true);
+    const result = getData.uploads.filter((file) => file.uploading == true);
     return result;
   };
 
@@ -455,7 +454,6 @@ chrome.runtime.onMessage.addListener(async function (
     await app.getPageData();
     let allPageFiles = await app.getPageFiles();
     let apiKeys = await app.getApiKeys();
-    //console.log("keys from message", apiKeys);
     //let slates = "await app.getSlates(apiKeys);";
     await app.listFiles(allPageFiles, apiKeys, isUploading);
     //Add below:
