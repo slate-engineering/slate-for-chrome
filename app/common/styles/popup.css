@@ -3,10 +3,11 @@
   height: 100vh;
   position: fixed;
   z-index: 999999999999 !important;
+  overflow: hidden;
 }
 
 .slate-drawer {
-  width: 416px;
+  width: 25%;
   height: 100vh;
   color: var(--color-textBlack);
   right: 0;
@@ -23,6 +24,7 @@
   flex-direction: column;
   justify-content: space-between;
   font-family: var(--font-family-text) !important;
+  font-size: 16px !important;
 }
 
 .slate-dismiss {
@@ -259,7 +261,8 @@
 }
 
 .slate-main-popup {
-  width: calc(100vw - 48%);
+  width: 100%;
+  left: 0;
   height: 100vh;
   padding: 56px 120px 48px 120px;
   position: absolute;
@@ -274,6 +277,7 @@
 
 .slate-action-bar {
   margin-bottom: 32px;
+  width: 50%;
 }
 
 .slate-result-search-input {
@@ -405,6 +409,7 @@
 .slate-file-gallery {
   overflow: scroll;
   height: 100%;
+  width: 55%;
   padding-bottom: 120px;
 }
 

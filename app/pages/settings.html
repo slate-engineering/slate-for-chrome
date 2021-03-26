@@ -75,7 +75,7 @@
                 data="../common/svg/arrow-right-circle.svg"
               ></object>
             </button>
-            <button class="slate-icon-button show active">
+            <button id="show-api-input-text" class="slate-icon-button show active">
               <object
                 class="slate-icon"
                 type="image/svg+xml"
@@ -92,19 +92,21 @@
           </div>
         </div>
       </div>
-      <div class="slate-setting-module">
+      <div class="slate-setting-module" id="slate-upload-history-btn">
         <div class="slate-module-header">Upload history</div>
         <div class="slate-module-subheader">
-          Configure the time range for the upload history you would like to
-          keep.
+          Your upload history is stored locally and never shared with Slate.
         </div>
         <div class="slate-time-range-dropdown">
           <div class="slate-dropdown-title">
-            Select a time range<object
+            View
+            <object
               id="dropdown-icon"
               class="slate-icon"
               type="image/svg+xml"
               data="../common/svg/chevron-down.svg"
+                style="transform: rotate(-90deg)"
+
             ></object>
           </div>
           <div class="slate-dropdown-options hide">

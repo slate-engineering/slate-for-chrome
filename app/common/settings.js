@@ -138,9 +138,16 @@ var Settings = (function () {
 
   Settings.prototype.notification = (api, type) => {
     let notification = document.getElementById("noti");
+
     notification.innerHTML =
       "Imported " + api.slates + " slates from " + api.name;
     notification.className = "show";
+    if (type == "success") {
+      console.log("all good");
+    } else if (type == "error") {
+      notification.classList.add("noti-error");
+      notification.innerHTML = "There was an error adding that API key.";
+    }
     setTimeout(function () {
       notification.className = notification.className.replace("show", "");
     }, 3000);
@@ -186,7 +193,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   let keys = document.getElementsByClassName("slate-key");
   let showButtons = document.getElementsByClassName("slate-icon-button show");
   let hideButtons = document.getElementsByClassName("slate-icon-button hide");
-  _handleVisibility(hideButtons, showButtons, keys);
+  let apiViewInput = document.getElementById("show-api-input-text");
+
+  apiViewInput.addEventListener("click", function (e) {
+    let input = document.getElementById("slate-api-input");
+    if (input.type == "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  });
 
   //dropdown menu for selecting upload history time range
   let dropdownButton = document.getElementsByClassName(
@@ -214,25 +230,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let observer = new MutationObserver(callback);
   observer.observe(targetNode, observerOptions);
 });
-
-_handleVisibility = (hideButtons, showButtons, keys) => {
-  for (let i = 0; i < hideButtons.length; i++) {
-    hideButtons[i].addEventListener("click", () => {
-      hideButtons[i].classList.remove("active");
-      showButtons[i].classList.add("active");
-      if (keys[i].type === "text") {
-        keys[i].type = "password";
-      }
-    });
-    showButtons[i].addEventListener("click", () => {
-      hideButtons[i].classList.add("active");
-      showButtons[i].classList.remove("active");
-      if (keys[i].type === "password") {
-        keys[i].type = "text";
-      }
-    });
-  }
-};
 
 _handleValidation = (inputKeys, validateKeyButtons) => {
   for (let i = 0; i < inputKeys.length; i++) {
@@ -305,6 +302,12 @@ document
       btn.setAttribute("data", "../common/svg/arrow-right-circle.svg");
       btn.classList.toggle("rotate");
       console.log("There was an error validating the api key");
+      let type = "error";
+      let api = {
+        slates: "no",
+        name: "no",
+      };
+      settings.notification(api, type);
     } else {
       btn.setAttribute("data", "../common/svg/arrow-right-circle.svg");
       btn.classList.toggle("rotate");

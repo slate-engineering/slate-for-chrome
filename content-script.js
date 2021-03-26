@@ -4,6 +4,7 @@ var SlateApp = (function () {
   this.uploadQueue = [];
   this.uploadQueueNum = 0;
   this.uploadQueueSlates = [];
+  this.searchQuery = "tree";
 
   this.pageData = {
     title: document.title,
@@ -15,8 +16,6 @@ var SlateApp = (function () {
   }
 
   SlateApp.prototype.init = async () => {
-    document.head.parentNode.removeChild(document.head);
-
     async function loadUploads(files) {
       //console.log("Page files in init: ", files);
       files.map((item) => {
@@ -40,6 +39,8 @@ var SlateApp = (function () {
     }
 
     async function insertAppMain() {
+      document.head.parentNode.removeChild(document.head);
+
       try {
         $.get(chrome.extension.getURL("./app/pages/app.html"), function (data) {
           $(data).prependTo("body");

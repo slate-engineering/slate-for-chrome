@@ -116,7 +116,10 @@
   left: 0;
 }
 
-.slate-checkbox input[type="checkbox"]:checked ~ .slate-checkbox-custom-input .slate-checkbox-custom-input.selected {
+.slate-checkbox
+  input[type="checkbox"]:checked
+  ~ .slate-checkbox-custom-input
+  .slate-checkbox-custom-input.selected {
   opacity: 1;
   width: 16px;
   height: 16px;
@@ -245,7 +248,7 @@
 
 .slate-time-range-dropdown {
   background-color: var(--color-bgGrayLight);
-  width: 30%;
+  width: 15%;
   font-family: var(--font-family-medium);
   font-size: var(--typescale-lvl1);
   border-radius: 4px;
@@ -259,6 +262,7 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .slate-time-range-dropdown .slate-dropdown-options.hide {
@@ -292,6 +296,7 @@
 .slate-time-range-dropdown .slate-dropdown-options .slate-option:hover,
 .slate-time-range-dropdown .slate-dropdown-title:hover {
   background-color: var(--color-bgGray);
+  border-radius: 8px;
 }
 
 .slate-error {
@@ -320,6 +325,10 @@
   right: 16px; /* Center the snackbar */
   top: 32px; /* 30px from the bottom */
   border-radius: 4px;
+}
+
+.noti-error {
+  background-color: #c71313 !important;
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
