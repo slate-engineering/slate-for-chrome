@@ -50,8 +50,9 @@
 }
 
 .slate-drawer-content {
-  height: calc(100% - 32px);
+  height: calc(100% - 50px);
   display: none;
+  margin-bottom: 32px;
 }
 
 .slate-drawer-content.active {
@@ -153,6 +154,7 @@
   position: absolute;
   bottom: 0px;
   right: 0px;
+  padding: 32px;
 }
 
 .slate-menu-top {

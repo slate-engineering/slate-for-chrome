@@ -1,16 +1,19 @@
 <div id="slate-app" class="slate-container">
   <div class="slate-main-popup">
     <div class="slate-action-bar">
-      <input id="slate-file-search" type="text" class="slate-result-search-input" style="font-size:16px !important" placeholder="Search file metadata (filename, title)" />
       <!--
+
+      <input id="slate-file-search" type="text" class="slate-result-search-input" style="font-size:14px !important" placeholder="Search file metadata (filename, title)" />
+
+
       <div class="slate-primary-filter">
         <div class="slate-tab">All</div>
         <div class="slate-tab selected">Images</div>
         <div class="slate-tab">Audios</div>
         <div class="slate-tab">Videos</div>
       </div>
-      -->
-      <div class="slate-secondary-filter" style="font-size:16px !important">
+-->
+      <div class="slate-secondary-filter" style="font-size:14px !important">
         <div class="slate-dropdown">
           <div>Image sizes</div>
           <svg class="slate-icon-small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -19,13 +22,14 @@
           <div>Image types</div>
           <svg class="slate-icon-small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
-        <div class="slate-select-all">
+        <div id="select-all-check" class="slate-select-all">
           <input class="slate-select-all-checkbox" type="checkbox"/>
           <div class="slate-select-all-custom-checkbox"></div>
           <div>Select all</div>
         </div>
       </div>
     </div>
+
     <div id="slate-page-images" class="slate-file-gallery">
       <div id="slate-image-grid" class="slate-masonry">
       </div>
@@ -57,12 +61,12 @@
         <div id="slate-upload-alert-text" style="margin-left:8px;display: inline-block"></div>
       </div>
     </div>
-    <div id="slate-drawer-upload" class="slate-drawer-content active">
+    <div id="slate-drawer-upload" class="slate-drawer-content active" style="bottom:80px">
       <div class="slate-header" id="slate-popup-title-name" style="font-size:24px !important">Select a file to upload</div>
       <div class="slate-apis">
         <div id="list-slates"></div>
       </div>
-      <button id="slate-upload-btn" class="slate-primary-button full disabled" >Upload files</button>
+      <button id="slate-upload-btn"  class="slate-primary-button full disabled" >Upload files</button>
     </div>
     <div id="slate-drawer-upload-progress" class="slate-drawer-content">
       <div id="slate-popup-title-name" class="slate-header">Upload progress</div>
