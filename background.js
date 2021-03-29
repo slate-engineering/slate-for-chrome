@@ -107,7 +107,7 @@ var SlateUpload = (function () {
       console.log("file data:", apiData);
       let date = Date.now();
       let uploadData = {
-        name: apiData.data.file.file.altTitle || "No name",
+        name: apiData.data.file.file.altTitle || pageData.title,
         type: "image/jpeg",
         source: pageData.source,
         sourceTitle: pageData.title,
@@ -137,7 +137,7 @@ var SlateUpload = (function () {
         "https://uploads.slate.host/api/public/" + apiData.data.slate.id;
       let fileBlob = new Blob([u8arr], { mime });
       let source = "";
-      let file = new File([fileBlob], source, { type: "image/png" });
+      let file = new File([fileBlob], uploadData.name, { type: "image/png" });
       let data = new FormData();
       data.append("data", file);
       const response = await fetch(url, {
@@ -149,17 +149,17 @@ var SlateUpload = (function () {
         body: data,
       });
       const json = await response.json();
-      console.log("JSONLLL", json);
       await updateDataUpload(json, uploadData.id);
 
       return json;
+      //let updateSlateData = json;
+      //console.log("JSONLLL", JSON.parse(updateSlateData));
+
+      //updateSlateData.slate.data.objects[0].source = pageData.source;
+
+      //console.log("updated slate111111111:", updateSlateData);
+
       /*
-      const updateSlateData = json.slate;
-      updateSlateData.data.objects[0].source = pageData.source;
-
-      let finalFinal = { data: updateSlateData };
-
-      console.log("updated slate111111111:", finalFinal);
 
       const updateSlateResponse = await fetch(
         "https://slate.host/api/v1/update-slate",
@@ -168,13 +168,14 @@ var SlateUpload = (function () {
           headers: {
             "Content-Type": "application/json",
             // NOTE: your API key
-            Authorization: "Basic SLA9bad2903-54b7-4e6f-a2c1-85e32a7640eeTE",
+            Authorization: "Basic " + apiData.data.api,
           },
-          body: JSON.stringify({ data: json }),
+          body: JSON.stringify({ data: updateSlateData["slate"] }),
         }
       );
-      const updateSlateFinal = await updateSlateResponse.json();
+      const updateSlateFinal = await updateSlateResponse;
       console.log(updateSlateFinal);
+
       return updateSlateFinal;
       */
     }
@@ -230,6 +231,8 @@ chrome.browserAction.onClicked.addListener(async function (tabs) {
   await slateBg.init();
   //inject all Slate scripts needed into the current tab
   let activeTab = tabs[0];
+  console.log(activeTab);
+
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
   chrome.tabs.executeScript(
     activeTab,

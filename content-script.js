@@ -5,6 +5,7 @@ var SlateApp = (function () {
   this.uploadQueueNum = 0;
   this.uploadQueueSlates = [];
   this.searchQuery = "tree";
+  this.origFiles = [];
 
   this.pageData = {
     title: document.title,
@@ -17,7 +18,6 @@ var SlateApp = (function () {
 
   SlateApp.prototype.init = async () => {
     async function loadUploads(files) {
-      //console.log("Page files in init: ", files);
       files.map((item) => {
         let div = document.createElement("div");
         div.className = "slate-upload-file-module";
@@ -27,7 +27,7 @@ var SlateApp = (function () {
         spinner.className = "slate-loaderspinner";
         let fileName = document.createElement("div");
         fileName.className = "slate-upload-file-name";
-        fileName.innerHTML = item.file.altTitle;
+        fileName.innerHTML = item.file.altTitle || "No title";
 
         div.appendChild(container);
         container.appendChild(spinner);
@@ -39,13 +39,14 @@ var SlateApp = (function () {
     }
 
     async function insertAppMain() {
-      document.head.parentNode.removeChild(document.head);
-
       try {
+        document.head.parentNode.removeChild(document.head);
+
         $.get(chrome.extension.getURL("./app/pages/app.html"), function (data) {
           $(data).prependTo("body");
         })
           .done(function () {
+            console.log("this should be full:", origFiles);
             //Initilize app event listeners
             document
               .getElementById("slate-close-icon")
@@ -68,16 +69,47 @@ var SlateApp = (function () {
                   message: "uploadsHistory",
                 });
               });
-
+            //Listen for select all click
             document
-              .getElementById("slate-upload-alert")
+              .getElementById("select-all-check")
               .addEventListener("click", function () {
+                uploadQueue = origFiles;
+                uploadQueueNum = origFiles.length;
                 document
-                  .getElementById("slate-drawer-upload")
-                  .classList.toggle("active");
+                  .getElementById("actual-select-all-check")
+                  .classList.toggle("checked");
+                for (let i = 0; i < uploadQueue.length; i++) {
+                  console.log(uploadQueue[i].file.id);
+                  let checkbox = document.getElementById(
+                    "check-" + uploadQueue[i].file.id
+                  );
+                  let customCheck = document.getElementById(
+                    "customCheck-" + uploadQueue[i].file.id
+                  );
+
+                  let img = document.getElementById(
+                    "img-item-" + uploadQueue[i].file.id
+                  );
+                  let customCheckIcon = customCheck.childNodes[0];
+                  checkbox.checked = true;
+                  customCheck.className = "slate-custom-checkbox checked";
+                  customCheckIcon.classList.add("checked");
+                  img.classList.add("selected");
+                }
+
                 document
-                  .getElementById("slate-drawer-upload-progress")
-                  .classList.toggle("active");
+                  .getElementById("slate-upload-btn")
+                  .classList.remove("disabled");
+
+                if (this.uploadQueueNum == 1) {
+                  document.getElementById("slate-popup-title-name").innerHTML =
+                    "Upload 1 file to Slate";
+                } else {
+                  document.getElementById("slate-popup-title-name").innerHTML =
+                    "Upload " + uploadQueueNum + " files to Slate";
+                }
+
+                console.log("queue:", uploadQueue);
               });
 
             document
@@ -185,6 +217,7 @@ var SlateApp = (function () {
           props.forEach(function (file) {
             let div = document.createElement("div");
             div.className = "slate-img-container slate-masonry-item";
+            div.id = "img-item-" + file.id;
             let img = document.createElement("img");
             img.className = "slate-list_img";
             img.id = "img-" + file.id;
@@ -195,11 +228,13 @@ var SlateApp = (function () {
             let checkbox = document.createElement("input");
             checkbox.setAttribute("type", "checkbox");
             checkbox.value = file.src;
-            checkbox.id = "check-" + file.id;
             checkbox.className = "slate-img-checkbox";
+            checkbox.id = "check-" + file.id;
 
             let customCheckbox = document.createElement("div");
             customCheckbox.className = "slate-custom-checkbox";
+            customCheckbox.id = "customCheck-" + file.id;
+
             customCheckbox.innerHTML =
               '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
@@ -256,6 +291,7 @@ var SlateApp = (function () {
           //
           //UPLOAD ALERT BOX
           //ONLY DISPLAY WHEN THERE IS AN ACTIVE UPLOAD
+
           if (isUploading.length > 0) {
             document.getElementById("slate-upload-alert").style.display =
               "inline-block";
@@ -451,8 +487,13 @@ chrome.runtime.onMessage.addListener(async function (
     //required order
     await app.init();
     let isUploading = await app.getUploads();
+    console.log("isUploading: ", isUploading);
     await app.getPageData();
     let allPageFiles = await app.getPageFiles();
+    for (let i = 0; i < allPageFiles.length; i++) {
+      origFiles.push({ file: allPageFiles[i] });
+    }
+
     let apiKeys = await app.getApiKeys();
     //let slates = "await app.getSlates(apiKeys);";
     await app.listFiles(allPageFiles, apiKeys, isUploading);

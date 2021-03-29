@@ -1,31 +1,11 @@
 <div id="slate-app" class="slate-container">
   <div class="slate-main-popup">
     <div class="slate-action-bar">
-      <!--
-
-      <input id="slate-file-search" type="text" class="slate-result-search-input" style="font-size:14px !important" placeholder="Search file metadata (filename, title)" />
-
-
-      <div class="slate-primary-filter">
-        <div class="slate-tab">All</div>
-        <div class="slate-tab selected">Images</div>
-        <div class="slate-tab">Audios</div>
-        <div class="slate-tab">Videos</div>
-      </div>
--->
-      <div class="slate-secondary-filter" style="font-size:14px !important">
-        <div class="slate-dropdown">
-          <div>Image sizes</div>
-          <svg class="slate-icon-small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </div>
-        <div class="slate-dropdown">
-          <div>Image types</div>
-          <svg class="slate-icon-small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </div>
+      <div class="slate-secondary-filter" style="font-size:16px !important">
         <div id="select-all-check" class="slate-select-all">
           <input class="slate-select-all-checkbox" type="checkbox"/>
-          <div class="slate-select-all-custom-checkbox"></div>
-          <div>Select all</div>
+          <div id="actual-select-all-check" class="slate-select-all-custom-checkbox"></div>
+          <div style="padding-left:8px;cursor: pointer">Select all</div>
         </div>
       </div>
     </div>
@@ -38,7 +18,9 @@
   <div class="slate-drawer">
     <div class="slate-menu-top" >
       <div id="slate-uploads-back-icon" style="display:none;cursor:pointer;">
+      <!--
       <svg style="transform: rotate(90deg);" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="slate-icon-large"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      -->
       </div>
       <div class="slate-dismiss" id="slate-close-icon">
         <svg class="slate-icon-large" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
