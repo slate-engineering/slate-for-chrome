@@ -1,6 +1,11 @@
 <div id="slate-app" class="slate-container">
   <div class="slate-main-popup">
-    <div class="slate-action-bar">
+
+    <div id="slate-single-image-container">
+      <img id="slate-single-image" class="slate-single-image" />
+    </div>
+
+    <div class="slate-action-bar" id="slate-action-bar">
       <div class="slate-secondary-filter" style="font-size:16px !important">
         <div id="select-all-check" class="slate-select-all">
           <input class="slate-select-all-checkbox" type="checkbox"/>
@@ -9,7 +14,6 @@
         </div>
       </div>
     </div>
-
     <div id="slate-page-images" class="slate-file-gallery">
       <div id="slate-image-grid" class="slate-masonry">
       </div>
@@ -48,7 +52,7 @@
       <div class="slate-apis">
         <div id="list-slates"></div>
       </div>
-      <button id="slate-upload-btn"  class="slate-primary-button full disabled" >Upload files</button>
+      <button id="slate-upload-btn" class="slate-primary-button full disabled" >Upload files</button>
     </div>
     <div id="slate-drawer-upload-progress" class="slate-drawer-content">
       <div id="slate-popup-title-name" class="slate-header">Upload progress</div>

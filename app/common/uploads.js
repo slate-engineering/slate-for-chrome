@@ -27,6 +27,7 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
   let fileTypeIcon = document.createElement("div");
   let popOver = document.createElement("div");
   console.log(cid);
+  /*
   popOver.innerHTML =
     '<div class="slate-popover"><div class="slate-popover-item click-open-cid" data-cid="' +
     cid +
@@ -40,7 +41,21 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
   }
   uploadEntries.className = "slate-table-row";
   console.log(upload);
+  */
 
+  popOver.innerHTML =
+    '<div class="slate-popover"><div class="slate-popover-item click-open-cid" data-cid="' +
+    cid +
+    '" id="viewOnSlate">View file on Slate</div></div>';
+
+  if (filetype.startsWith("image/")) {
+    fileTypeIcon.innerHTML =
+      '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/image.svg"></object>';
+  }
+  uploadEntries.className = "slate-table-row";
+  console.log(upload);
+
+  /*
   uploadEntries.innerHTML =
     upload
       .map((uploadInfo, i) =>
@@ -66,7 +81,32 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
       .join("") +
     '<div class="slate-dropdown"><object class="slate-icon-large" type="image/svg+xml" data="../common/svg/more-horizontal.svg"></object></div>' +
     popOver.innerHTML;
-
+    */
+  uploadEntries.innerHTML =
+    upload
+      .map((uploadInfo, i) =>
+        i === 0
+          ? '<div class="slate-icon-column"><div class="slate-file-icon">' +
+            fileTypeIcon.innerHTML +
+            "</div>" +
+            "<div>" +
+            uploadInfo +
+            "</div>" +
+            "</div>"
+          : i === 2
+          ? '<div class="slate-icon-column">' +
+            '<div class="slate-link-info">' +
+            uploadInfo +
+            "</div>" +
+            '<object data-url="' +
+            uploadInfo +
+            '" class="slate-icon" id="sourceUrl" type="image/svg+xml" data="../common/svg/external-link.svg"></object>' +
+            "</div>"
+          : '<div class="slate-column-width">' + uploadInfo + "</div>"
+      )
+      .join("") +
+    '<div class="slate-dropdown"><object class="slate-icon-large" type="image/svg+xml" data="../common/svg/more-horizontal.svg"></object></div>' +
+    popOver.innerHTML;
   uploadTable.appendChild(uploadEntries);
 };
 

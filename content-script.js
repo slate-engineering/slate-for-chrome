@@ -46,7 +46,7 @@ var SlateApp = (function () {
           $(data).prependTo("body");
         })
           .done(function () {
-            console.log("this should be full:", origFiles);
+            //console.log("this should be full:", origFiles);
             //Initilize app event listeners
             document
               .getElementById("slate-close-icon")
@@ -208,85 +208,109 @@ var SlateApp = (function () {
     return pageData;
   };
 
-  SlateApp.prototype.listFiles = async (props, apiKeys, isUploading) => {
+  SlateApp.prototype.listFiles = async (
+    props,
+    apiKeys,
+    isUploading,
+    uploadType
+  ) => {
     try {
       $.getScript(chrome.extension.getURL("./app/index.js"), function (data) {
         $(data).append("body");
       })
         .done(function () {
-          props.forEach(function (file) {
-            let div = document.createElement("div");
-            div.className = "slate-img-container slate-masonry-item";
-            div.id = "img-item-" + file.id;
-            let img = document.createElement("img");
-            img.className = "slate-list_img";
-            img.id = "img-" + file.id;
-            if (file.type == "img") {
-              img.src = file.src;
-            }
-
-            let checkbox = document.createElement("input");
-            checkbox.setAttribute("type", "checkbox");
-            checkbox.value = file.src;
-            checkbox.className = "slate-img-checkbox";
-            checkbox.id = "check-" + file.id;
-
-            let customCheckbox = document.createElement("div");
-            customCheckbox.className = "slate-custom-checkbox";
-            customCheckbox.id = "customCheck-" + file.id;
-
-            customCheckbox.innerHTML =
-              '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-
-            div.onclick = async () => {
-              console.log("File added to queue: ", this.uploadQueue);
-              let customCheckIcon = customCheckbox.childNodes[0];
-              if (!checkbox.checked) {
-                checkbox.checked = true;
-                customCheckbox.className = "slate-custom-checkbox checked";
-                customCheckIcon.classList.add("checked");
-                img.classList.add("selected");
-                div.classList.add("selected");
-                this.uploadQueue.push({ file });
-                this.uploadQueueNum++;
-              } else {
-                checkbox.checked = false;
-                customCheckbox.className = "slate-custom-checkbox";
-                customCheckIcon.classList.remove("checked");
-                img.classList.remove("selected");
-                div.classList.remove("selected");
-                //console.log(file.id);
-                var objIndex = this.uploadQueue.findIndex(
-                  (obj) => obj.file.id === file.id
-                );
-
-                //console.log("objIndex", objIndex);
-                const updatedQueue = this.uploadQueue.splice(objIndex, 1);
-                this.uploadQueueNum--;
-                //this.uploadQueue = updatedQueue;
-                //console.log("final upload queue", this.uploadQueue);
+          if (uploadType == "single") {
+            uploadQueue.push({ file: props });
+            console.log("props!", props);
+            console.log("Upload queue if its a single:", uploadQueue);
+            let singleImg = (document.getElementById("slate-single-image").src =
+              props.src);
+            document.getElementById("slate-action-bar").style.display = "none";
+            document.getElementById("slate-page-images").style.display = "none";
+            document
+              .getElementById("slate-upload-btn")
+              .classList.remove("disabled");
+          } else {
+            props.forEach(function (file) {
+              document.getElementById(
+                "slate-single-image-container"
+              ).style.display = "none";
+              let div = document.createElement("div");
+              div.className = "slate-img-container slate-masonry-item";
+              div.id = "img-item-" + file.id;
+              let img = document.createElement("img");
+              img.className = "slate-list_img";
+              img.id = "img-" + file.id;
+              if (file.type == "img") {
+                img.src = file.src;
               }
-              if (this.uploadQueueNum > 0) {
-                document
-                  .getElementById("slate-upload-btn")
-                  .classList.remove("disabled");
 
-                if (this.uploadQueueNum == 1) {
-                  document.getElementById("slate-popup-title-name").innerHTML =
-                    "Upload 1 file to Slate";
+              let checkbox = document.createElement("input");
+              checkbox.setAttribute("type", "checkbox");
+              checkbox.value = file.src;
+              checkbox.className = "slate-img-checkbox";
+              checkbox.id = "check-" + file.id;
+
+              let customCheckbox = document.createElement("div");
+              customCheckbox.className = "slate-custom-checkbox";
+              customCheckbox.id = "customCheck-" + file.id;
+
+              customCheckbox.innerHTML =
+                '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+              div.onclick = async () => {
+                console.log("File added to queue: ", this.uploadQueue);
+                let customCheckIcon = customCheckbox.childNodes[0];
+                if (!checkbox.checked) {
+                  checkbox.checked = true;
+                  customCheckbox.className = "slate-custom-checkbox checked";
+                  customCheckIcon.classList.add("checked");
+                  img.classList.add("selected");
+                  div.classList.add("selected");
+                  this.uploadQueue.push({ file });
+                  this.uploadQueueNum++;
                 } else {
-                  document.getElementById("slate-popup-title-name").innerHTML =
-                    "Upload " + this.uploadQueueNum + " files to Slate";
-                }
-              }
-              //await SelectFile(item);
-            };
+                  checkbox.checked = false;
+                  customCheckbox.className = "slate-custom-checkbox";
+                  customCheckIcon.classList.remove("checked");
+                  img.classList.remove("selected");
+                  div.classList.remove("selected");
+                  //console.log(file.id);
+                  var objIndex = this.uploadQueue.findIndex(
+                    (obj) => obj.file.id === file.id
+                  );
 
-            div.appendChild(checkbox);
-            div.appendChild(img);
-            div.appendChild(customCheckbox);
-            document.getElementById("slate-image-grid").appendChild(div);
-          });
+                  //console.log("objIndex", objIndex);
+                  const updatedQueue = this.uploadQueue.splice(objIndex, 1);
+                  this.uploadQueueNum--;
+                  //this.uploadQueue = updatedQueue;
+                  //console.log("final upload queue", this.uploadQueue);
+                }
+                if (this.uploadQueueNum > 0) {
+                  document
+                    .getElementById("slate-upload-btn")
+                    .classList.remove("disabled");
+
+                  if (this.uploadQueueNum == 1) {
+                    document.getElementById(
+                      "slate-popup-title-name"
+                    ).innerHTML = "Upload 1 file to Slate";
+                  } else {
+                    document.getElementById(
+                      "slate-popup-title-name"
+                    ).innerHTML =
+                      "Upload " + this.uploadQueueNum + " files to Slate";
+                  }
+                }
+                //await SelectFile(item);
+              };
+
+              div.appendChild(checkbox);
+              div.appendChild(img);
+              div.appendChild(customCheckbox);
+              document.getElementById("slate-image-grid").appendChild(div);
+            });
+          }
           //
           //
           //UPLOAD ALERT BOX
@@ -485,18 +509,35 @@ chrome.runtime.onMessage.addListener(async function (
 ) {
   if (request.message == "openSlateApp") {
     //required order
+    console.log("type:", request.uploadType);
     await app.init();
-    let isUploading = await app.getUploads();
+    var isUploading = await app.getUploads();
     console.log("isUploading: ", isUploading);
-    await app.getPageData();
-    let allPageFiles = await app.getPageFiles();
-    for (let i = 0; i < allPageFiles.length; i++) {
-      origFiles.push({ file: allPageFiles[i] });
-    }
-
     let apiKeys = await app.getApiKeys();
+    await app.getPageData();
+
+    var allPageFiles = [];
+    var type = request.uploadType;
+    if (type == "single") {
+      allPageFiles = {
+        src: request.singleImageUrl,
+        altTitle: null,
+        height: "656",
+        id: "yvrzkmxnb",
+        page_position: 17,
+        type: "img",
+        width: 12,
+      };
+    } else {
+      allPageFiles = await app.getPageFiles();
+      for (let i = 0; i < allPageFiles.length; i++) {
+        origFiles.push({ file: allPageFiles[i] });
+      }
+    }
+    console.log("allPageFiles::", allPageFiles);
+
     //let slates = "await app.getSlates(apiKeys);";
-    await app.listFiles(allPageFiles, apiKeys, isUploading);
+    await app.listFiles(allPageFiles, apiKeys, isUploading, type);
     //Add below:
   }
 });

@@ -13,8 +13,9 @@
     <div class="slate-page-wrapper">
       <div class="slate-title">Settings</div>
       <div class="slate-subtitle">
-        You can add or update your API keys, configure the file sizes you want to capture, and the time range of upload history you would like to keep.
+        Add, update or delete your API keys.
       </div>
+      <!--
       <div class="slate-setting-module">
         <div class="slate-module-header">Image sizes</div>
         <div class="slate-module-subheader">Select the sizes of images you want to retrieve.</div>
@@ -47,6 +48,7 @@
           </span>
         </label>
       </div>
+      -->
       <div class="slate-setting-module">
         <div class="slate-module-header">API keys</div>
         <div class="slate-module-subheader">
@@ -56,7 +58,11 @@
         <div id="api-keys">
           <div id="existing-keys"></div>
           <div class="slate-api-key">
-            <input id="slate-name-input" class="slate-input name" placeholder="Name (optional)" />
+            <input
+              id="slate-name-input"
+              class="slate-input name"
+              placeholder="Name (optional)"
+            />
             <input
               id="slate-api-input"
               class="slate-input key"
@@ -75,7 +81,10 @@
                 data="../common/svg/arrow-right-circle.svg"
               ></object>
             </button>
-            <button id="show-api-input-text" class="slate-icon-button show active">
+            <button
+              id="show-api-input-text"
+              class="slate-icon-button show active"
+            >
               <object
                 class="slate-icon"
                 type="image/svg+xml"
@@ -97,7 +106,7 @@
         <div class="slate-module-subheader">
           Your upload history is stored locally and never shared with Slate.
         </div>
-        <div class="slate-time-range-dropdown">
+        <div class="slate-time-range-dropdown" id="slate-open-uploads-btn">
           <div class="slate-dropdown-title">
             View
             <object
@@ -105,8 +114,7 @@
               class="slate-icon"
               type="image/svg+xml"
               data="../common/svg/chevron-down.svg"
-                style="transform: rotate(-90deg)"
-
+              style="transform: rotate(-90deg);"
             ></object>
           </div>
           <div class="slate-dropdown-options hide">

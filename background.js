@@ -8,11 +8,13 @@ var SlateBackground = (function () {
     console.log("Initilize slate");
   };
 
-  SlateBackground.prototype.loadApp = () => {
+  SlateBackground.prototype.loadApp = (type, singleImageUrl = "") => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       let activeTab = tabs[0];
       chrome.tabs.sendMessage(activeTab.id, {
         message: "openSlateApp",
+        uploadType: type,
+        singleImageUrl: singleImageUrl,
       });
     });
   };
@@ -50,8 +52,6 @@ var SlateUpload = (function () {
 
   SlateUpload.prototype.start = async (props, pageData) => {
     async function convertToData(props) {
-      const { src } = props.file;
-
       return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -232,13 +232,37 @@ chrome.browserAction.onClicked.addListener(async function (tabs) {
   //inject all Slate scripts needed into the current tab
   let activeTab = tabs[0];
   console.log(activeTab);
-
+  let type = "multi";
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
   chrome.tabs.executeScript(
     activeTab,
     { file: "content-script.js" },
-    slateBg.loadApp()
+    slateBg.loadApp(type)
   );
+});
+
+onClickHandlerImage = async (info, tabs) => {
+  url = info.srcUrl;
+  let slateBg = new SlateBackground();
+  await slateBg.init();
+  let activeTab = tabs[0];
+
+  //inject all Slate scripts needed into the current tab
+  let type = "single";
+  chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
+  chrome.tabs.executeScript(
+    activeTab,
+    { file: "content-script.js" },
+    slateBg.loadApp(type, url)
+  );
+};
+
+chrome.contextMenus.create({
+  title: "Add image",
+  contexts: ["image"],
+  //parentId: "parent",
+  id: "image",
+  onclick: onClickHandlerImage,
 });
 
 chrome.runtime.onMessage.addListener(async function (

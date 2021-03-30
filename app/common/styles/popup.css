@@ -2,6 +2,8 @@
   width: 100vw;
   height: 100vh;
   position: fixed;
+  left: 0 !important;
+  top: 0 !important;
   z-index: 999999999999 !important;
   overflow: hidden;
 }
@@ -268,7 +270,6 @@
   left: 0;
   top: 0;
   height: 100vh;
-  padding: 24px 120px 48px 120px;
   position: absolute;
   background: linear-gradient(
     180deg,
@@ -280,6 +281,7 @@
 }
 
 .slate-action-bar {
+  padding: 48px 120px 0px 120px;
   margin-bottom: 32px;
   width: 50%;
 }
@@ -415,6 +417,7 @@
   height: 100%;
   width: 55%;
   padding-bottom: 120px;
+  padding: 0px 120px 48px 120px;
 }
 
 .slate-masonry {
@@ -501,6 +504,13 @@
 .slate-selected {
   font-weight: bold !important;
   color: #000 !important;
+}
+
+.slate-single-image {
+  max-height: calc(100vh - 48px);
+  max-width: 55%;
+  margin: auto;
+  padding: 48px 120px 48px 120px;
 }
 
 @media only screen and (min-width: 1024px) {

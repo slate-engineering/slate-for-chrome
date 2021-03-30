@@ -199,15 +199,15 @@ html {
 }
 
 .slate-test-platform.unsplash {
-  background-image: url("https://slate.textile.io/ipfs/bafybeianxxfv3a2wcfrv7rcevzkuoaj2dzordze6rzvqavwnl5rfet3wyy");
+  background-image: url("https://images.unsplash.com/photo-1527515234283-d93c5f8486a0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=581&q=80");
 }
 
 .slate-test-platform.youtube {
-  background-image: url("https://archive.org/download/mma_the_muduramiar_mundapam_287272/287272.jpg");
+  background-image: url("https://archive.org/download/SPD-SLRSY-385/Bumper2.jpg");
 }
 
 .slate-test-platform.soundcloud {
-  background-image: url("https://slate.textile.io/ipfs/bafybeie4qvsyjvdtg5wjpxiekb7m7iufb4sahfupzcoq3v6gxkrjwpuycq");
+  background-image: url("https://publicdomainvectors.org/photos/citysky.png");
 }
 
 .slate-test-platform .slate-explainer {

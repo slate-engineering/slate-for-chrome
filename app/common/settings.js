@@ -160,7 +160,6 @@ var settings = new Settings();
 
 document.addEventListener("DOMContentLoaded", async () => {
   let apiKeys = await settings.getApiKeys();
-  console.log("api keys:", apiKeys);
 
   let loop = Object.values(apiKeys);
 
@@ -181,6 +180,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   });
+
+  document
+    .getElementById("slate-open-uploads-btn")
+    .addEventListener("click", function () {
+      chrome.tabs.create({
+        url: chrome.extension.getURL("app/pages/uploads.html"),
+      });
+    });
 
   //enable validation button when input event fires
   let inputKeys = document.getElementsByClassName("slate-input key");
