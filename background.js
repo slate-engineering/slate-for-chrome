@@ -63,41 +63,38 @@ var SlateUpload = (function () {
         };
         xhr.open("GET", props.file.src);
         xhr.responseType = "blob";
-        console.log("done convert");
+        //console.log("done convert");
         xhr.send();
       });
     }
 
     async function addDataUpload(props) {
-      console.log(props);
+      //console.log(props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = [];
         uploads = result["uploads"];
         uploads.push(props);
         chrome.storage.local.set({ uploads });
       });
-      console.log("done");
+      //console.log("done");
       return true;
     }
 
     async function updateDataUpload(props, uploadId) {
-      console.log("look at props", props);
+      //console.log("look at props", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = result.uploads;
-        console.log("upload look for id::::", uploads);
 
         for (var i in uploads) {
           if (uploads[i].id == uploadId) {
-            console.log("upload in loop::", uploads[i]);
             uploads[i].uploading = false;
             uploads[i].cid = props.data.cid;
             uploads[i].url = props.url;
             break; //Stop this loop
           }
         }
-        console.log("done final upload array:", uploads);
         chrome.storage.local.set({ uploads: uploads }, function () {
-          console.log("saved");
+          console.log("saved locally");
         });
       });
       return true;
@@ -120,7 +117,7 @@ var SlateUpload = (function () {
       };
 
       await addDataUpload(uploadData);
-      console.log("submitted to local", uploadData);
+      //console.log("submitted to local", uploadData);
 
       //console.log("follow this api data:::", apiData);
       var arr = fileData.split(","),
@@ -151,33 +148,54 @@ var SlateUpload = (function () {
       const json = await response.json();
       await updateDataUpload(json, uploadData.id);
 
-      return json;
-      //let updateSlateData = json;
-      //console.log("JSONLLL", JSON.parse(updateSlateData));
+      const slateAPIResponseData = {
+        data: {
+          id: json.slate.id,
+          updated_at: "2020-07-27T09:04:53.007Z",
+          created_at: "2020-07-27T09:04:53.007Z",
+          published_at: "2020-07-27T09:04:53.007Z",
+          slatename: json.slate.slatename,
+          // NOTE(jim)
+          // This 'data' property is JSONB in our postgres database
+          // so every child is customizable.
+          data: {
+            ...json.slate.data,
+            name: json.slate.slatename,
+            public: true,
+            objects: [...json.slate.data.objects],
+            ownerId: json.slate.data.ownerId,
+          },
+        },
+      };
+      // NOTE(jim)
+      // Make any modifications you want!
+      // Be careful because if you modify too many things, your Slate may not work
+      // With https://slate.host
+      const slate = slateAPIResponseData.data;
+      let arrPosition = slate.data.objects.length - 1;
 
-      //updateSlateData.slate.data.objects[0].source = pageData.source;
+      //console.log("this should be the last array: ", file);
+      slate.data.objects[arrPosition].source = pageData.source;
 
-      //console.log("updated slate111111111:", updateSlateData);
+      console.log("about to upload this: ", slate);
 
-      /*
-
-      const updateSlateResponse = await fetch(
+      const responseChange = await fetch(
         "https://slate.host/api/v1/update-slate",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             // NOTE: your API key
-            Authorization: "Basic " + apiData.data.api,
+            Authorization: "Basic SLA2a459dde-9433-43a5-966c-cf5603db59f7TE",
           },
-          body: JSON.stringify({ data: updateSlateData["slate"] }),
+          body: JSON.stringify({ data: slate }),
         }
       );
-      const updateSlateFinal = await updateSlateResponse;
-      console.log(updateSlateFinal);
-
-      return updateSlateFinal;
-      */
+      try {
+        const jsonChange = await responseChange.json();
+      } catch (err) {
+        return;
+      }
     }
 
     async function getSlateData(fileData) {
@@ -202,7 +220,7 @@ var SlateUpload = (function () {
 
     async function processArray(array, pageData) {
       for (const file of array) {
-        console.log("page data in process:", pageData);
+        //console.log("page data in process:", pageData);
         let data = await convertToData(file.data.file);
         await uploadToSlate(data, file, pageData);
         //let slateData = await getSlateData(file);
@@ -231,7 +249,6 @@ chrome.browserAction.onClicked.addListener(async function (tabs) {
   await slateBg.init();
   //inject all Slate scripts needed into the current tab
   let activeTab = tabs[0];
-  console.log(activeTab);
   let type = "multi";
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
   chrome.tabs.executeScript(
@@ -289,8 +306,8 @@ chrome.runtime.onMessage.addListener(async function (
     let apiData = JSON.parse(request.api);
 
     //console.log("file data in the backgorund:", files);
-    console.log("files in the backgorund:", files);
-    console.log("api data in the backgorund:", apiData);
+    //console.log("files in the backgorund:", files);
+    //console.log("api data in the background:", apiData);
 
     upload.start(apiData, pageData);
   }
