@@ -23,7 +23,7 @@ var Settings = (function () {
     chrome.storage.local.get(function (result) {
       var allUploads = [];
       console.log("result: ", result["apis"]);
-      if (result["apis"].length > 0) {
+      if (result["apis"]) {
         allUploads = Object.values(result["apis"]);
       }
       console.log(allUploads);
