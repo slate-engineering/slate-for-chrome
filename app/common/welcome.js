@@ -2,7 +2,7 @@ var Welcome = (function () {
   //set default variables
   function Welcome() {}
 
-  Settings.prototype.saveApiKey = (props) => {
+  Welcome.prototype.saveApiKey = (props) => {
     console.log("props outside", props);
 
     chrome.storage.local.get(function (result) {
