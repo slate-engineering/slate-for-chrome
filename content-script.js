@@ -230,6 +230,9 @@ var SlateApp = (function () {
             document
               .getElementById("slate-upload-btn")
               .classList.remove("disabled");
+
+            document.getElementById("slate-popup-title-name").innerHTML =
+              "Upload file to Slate";
           } else {
             props.forEach(function (file) {
               document.getElementById(
