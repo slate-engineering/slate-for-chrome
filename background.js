@@ -41,7 +41,7 @@ var SlateBackground = (function () {
         uploads = props;
       }
 
-      chrome.storage.local.set({ uploads });
+      chrome.storage.local.set({ uploads: uploads });
     });
     return true;
   };
@@ -78,12 +78,13 @@ var SlateUpload = (function () {
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = [];
         if (result["uploads"]) {
+          uploads = result["uploads"];
           uploads.push(props);
         } else {
           uploads = props;
         }
 
-        chrome.storage.local.set({ uploads });
+        chrome.storage.local.set({ uploads: uploads });
       });
       //console.log("done");
       return true;

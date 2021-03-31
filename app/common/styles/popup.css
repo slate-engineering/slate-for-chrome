@@ -524,6 +524,10 @@
   margin: 0 auto;
 }
 
+.slate-success {
+  color: #006837 !important;
+}
+
 @media only screen and (min-width: 1024px) {
   .slate-masonry {
     column-count: 4;

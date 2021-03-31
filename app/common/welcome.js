@@ -2,6 +2,32 @@ var Welcome = (function () {
   //set default variables
   function Welcome() {}
 
+  Welcome.prototype.installApp = () => {
+    chrome.storage.local.get(["uploads"], (result) => {
+      console.log(result.uploads);
+      if (result.uploads == null) {
+        let uploads = [];
+        chrome.storage.local.set({ uploads: uploads });
+      }
+    });
+
+    chrome.storage.local.get(["apis"], (result) => {
+      console.log(result.apis);
+      if (result.apis == null) {
+        let apis = [];
+        chrome.storage.local.set({ apis: apis });
+      }
+    });
+
+    chrome.storage.local.get(["currentUploads"], (result) => {
+      console.log(result.currentUploads);
+      if (result.currentUploads == null) {
+        let currentUploads = 0;
+        chrome.storage.local.set({ currentUploads: currentUploads });
+      }
+    });
+  };
+
   Welcome.prototype.saveApiKey = (props) => {
     console.log("props outside", props);
 
@@ -54,6 +80,8 @@ var Welcome = (function () {
 var welcome = new Welcome();
 
 document.addEventListener("DOMContentLoaded", () => {
+  welcome.installApp();
+
   let helperButton = document.getElementsByClassName("slate-helper-button");
   helperButton[0].addEventListener("click", () =>
     _handleExpand(helperButton[0])
