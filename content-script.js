@@ -319,15 +319,15 @@ var SlateApp = (function () {
           //UPLOAD ALERT BOX
           //ONLY DISPLAY WHEN THERE IS AN ACTIVE UPLOAD
 
-          if (isUploading.length > 0) {
+          if (isUploading.currentUploads > 0) {
             document.getElementById("slate-upload-alert").style.display =
               "inline-block";
-            if (isUploading.length == 1) {
+            if (isUploading.currentUploads == 1) {
               document.getElementById("slate-upload-alert-text").innerHTML =
                 "Uploading 1 file";
             } else {
               document.getElementById("slate-upload-alert-text").innerHTML =
-                "Uploading " + isUploading.length + " files";
+                "Uploading " + isUploading.currentUploads + " files";
             }
           }
           //
@@ -486,6 +486,16 @@ var SlateApp = (function () {
     return finalApiArray;
   };
 
+  SlateApp.prototype.getUploadNum = async () => {
+    var storage = new Promise(function (resolve, reject) {
+      chrome.storage.local.get(["currentUploads"], function (result) {
+        resolve(result);
+      });
+    });
+    let getData = await storage;
+    return getData;
+  };
+
   SlateApp.prototype.getUploads = async () => {
     var storage = new Promise(function (resolve, reject) {
       chrome.storage.local.get(["uploads"], function (result) {
@@ -514,8 +524,8 @@ chrome.runtime.onMessage.addListener(async function (
     //required order
     console.log("type:", request.uploadType);
     await app.init();
-    var isUploading = await app.getUploads();
-    console.log("isUploading: ", isUploading);
+    var isUploading = await app.getUploadNum();
+    console.log("isUploading: ", isUploading.currentUploads);
     let apiKeys = await app.getApiKeys();
     await app.getPageData();
 

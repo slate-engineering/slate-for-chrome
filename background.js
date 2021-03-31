@@ -50,7 +50,7 @@ var SlateUpload = (function () {
     //Create background
   }
 
-  SlateUpload.prototype.start = async (props, pageData) => {
+  SlateUpload.prototype.start = async (props, pageData, numFiles) => {
     async function convertToData(props) {
       return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
@@ -69,7 +69,7 @@ var SlateUpload = (function () {
     }
 
     async function addDataUpload(props) {
-      //console.log(props);
+      console.log("upload prop structure", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = [];
         uploads = result["uploads"];
@@ -77,6 +77,29 @@ var SlateUpload = (function () {
         chrome.storage.local.set({ uploads });
       });
       //console.log("done");
+      return true;
+    }
+
+    async function addDataUploadNumber(props) {
+      chrome.storage.local.get(["currentUploads"], (result) => {
+        let num = parseInt(result.currentUploads);
+        let curr = parseInt(props);
+        let final = num + curr;
+        chrome.storage.local.set({ currentUploads: final }, function () {
+          console.log("saved locally");
+        });
+      });
+      return true;
+    }
+
+    async function removeDataUploadNumber() {
+      chrome.storage.local.get(["currentUploads"], (result) => {
+        let num = parseInt(result.currentUploads);
+        num--;
+        chrome.storage.local.set({ currentUploads: num }, function () {
+          console.log("removed upload num");
+        });
+      });
       return true;
     }
 
@@ -102,6 +125,7 @@ var SlateUpload = (function () {
 
     async function uploadToSlate(fileData, apiData, pageData) {
       console.log("file data:", apiData);
+
       let date = Date.now();
       let uploadData = {
         name: apiData.data.file.file.altTitle || pageData.title,
@@ -191,6 +215,7 @@ var SlateUpload = (function () {
           body: JSON.stringify({ data: slate }),
         }
       );
+      await removeDataUploadNumber();
       try {
         const jsonChange = await responseChange.json();
       } catch (err) {
@@ -229,6 +254,7 @@ var SlateUpload = (function () {
       console.log("All files uploaded");
     }
 
+    addDataUploadNumber(numFiles);
     processArray(props, pageData);
   };
   return SlateUpload;
@@ -305,10 +331,12 @@ chrome.runtime.onMessage.addListener(async function (
     let pageData = JSON.parse(request.page);
     let apiData = JSON.parse(request.api);
 
-    //console.log("file data in the backgorund:", files);
+    console.log("file data in the backgorund:", files);
+
+    //upload.addDataUploadNumber(files.length);
     //console.log("files in the backgorund:", files);
     //console.log("api data in the background:", apiData);
 
-    upload.start(apiData, pageData);
+    upload.start(apiData, pageData, files.length);
   }
 });
