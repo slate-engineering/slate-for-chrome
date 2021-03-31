@@ -22,14 +22,16 @@ var Settings = (function () {
 
     chrome.storage.local.get(function (result) {
       var allUploads = [];
-      allUploads = Object.values(result["apis"]);
-
+      console.log("result: ", result["apis"]);
+      if (result["apis"].length > 0) {
+        allUploads = Object.values(result["apis"]);
+      }
       console.log(allUploads);
       if (!allUploads) {
         allUploads = props;
       } else {
         let dataArray = props;
-        allUploads.push({ data: dataArray.data });
+        allUploads.push(dataArray);
       }
       chrome.storage.local.set({ apis: allUploads }, function () {
         console.log("saved!");
@@ -138,9 +140,9 @@ var Settings = (function () {
 
   Settings.prototype.notification = (api, type) => {
     let notification = document.getElementById("noti");
-
+    console.log("noti: ", api);
     notification.innerHTML =
-      "Imported " + api.slates + " slates from " + api.name;
+      "Imported " + api.data.slates + " slates from " + api.data.name;
     notification.className = "show";
     if (type == "success") {
       console.log("all good");
@@ -163,11 +165,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let loop = Object.values(apiKeys);
 
-  for (i = 0; i < apiKeys.apis.length; i++) {
-    console.log("hello", apiKeys.apis[i]);
-    await settings.createApiKey(apiKeys.apis[i]);
+  if (apiKeys.apis) {
+    for (i = 0; i < apiKeys.apis.length; i++) {
+      console.log("hello", apiKeys.apis[i]);
+      await settings.createApiKey(apiKeys.apis[i]);
+    }
   }
-
   let deleteNow = document.getElementsByClassName("slate-icon-button-delete");
   Array.from(deleteNow).forEach(function (element) {
     element.addEventListener("click", function (e) {
@@ -232,7 +235,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     keys = document.getElementsByClassName("key");
     showButtons = document.getElementsByClassName("slate-icon-button show");
     hideButtons = document.getElementsByClassName("slate-icon-button hide");
-    _handleVisibility(hideButtons, showButtons, keys);
+    //_handleVisibility(hideButtons, showButtons, keys);
   };
   let observer = new MutationObserver(callback);
   observer.observe(targetNode, observerOptions);

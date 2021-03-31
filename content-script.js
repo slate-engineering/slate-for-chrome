@@ -471,16 +471,18 @@ var SlateApp = (function () {
     });
 
     const getAPIKeys = await storage;
-    //onsole.log("getAPIKeys", getAPIKeys);
+    //console.log("getAPIKeys", getAPIKeys.apis);
     var finalApiArray = [];
 
-    for (let item of getAPIKeys.apis) {
-      //console.log("item 123", item);
-      let keyData = await getKey(item.data.key);
+    if (getAPIKeys.apis) {
+      for (let item of getAPIKeys.apis) {
+        //console.log("item 123", item);
+        let keyData = await getKey(item.data.key);
 
-      finalApiArray.push({ data: item.data, slates: keyData.slates });
-      //console.log("keyData", keyData);
-      //slates.push({ id: item.id, name: item.slatename });
+        finalApiArray.push({ data: item.data, slates: keyData.slates });
+        //console.log("keyData", keyData);
+        //slates.push({ id: item.id, name: item.slatename });
+      }
     }
 
     return finalApiArray;
