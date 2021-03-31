@@ -2,19 +2,21 @@ var Welcome = (function () {
   //set default variables
   function Welcome() {}
 
-  Welcome.prototype.saveApiKey = (props) => {
-    console.log("props save", props);
+  Settings.prototype.saveApiKey = (props) => {
+    console.log("props outside", props);
 
     chrome.storage.local.get(function (result) {
       var allUploads = [];
-      allUploads = Object.values(result["apis"]);
-
+      console.log("result: ", result["apis"]);
+      if (result["apis"]) {
+        allUploads = Object.values(result["apis"]);
+      }
       console.log(allUploads);
       if (!allUploads) {
         allUploads = props;
       } else {
         let dataArray = props;
-        allUploads.push({ data: dataArray.data });
+        allUploads.push(dataArray);
       }
       chrome.storage.local.set({ apis: allUploads }, function () {
         console.log("saved!");
