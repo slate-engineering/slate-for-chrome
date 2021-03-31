@@ -34,8 +34,13 @@ var SlateBackground = (function () {
     //   id: "jasonwillfigureouthowtodotheids"
     // };
     chrome.storage.local.get(["uploads"], (result) => {
-      let uploads = result.uploads;
-      uploads.push(props);
+      let uploads = [];
+      if (result.uploads) {
+        uploads.push(props);
+      } else {
+        uploads = props;
+      }
+
       chrome.storage.local.set({ uploads });
     });
     return true;
@@ -72,8 +77,12 @@ var SlateUpload = (function () {
       console.log("upload prop structure", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = [];
-        uploads = result["uploads"];
-        uploads.push(props);
+        if (result["uploads"]) {
+          uploads.push(props);
+        } else {
+          uploads = props;
+        }
+
         chrome.storage.local.set({ uploads });
       });
       //console.log("done");
