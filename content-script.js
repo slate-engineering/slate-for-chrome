@@ -63,7 +63,7 @@ var SlateApp = (function () {
         document.getElementById("slate-upload-file-modules").appendChild(div);
       });
 
-      setInterval(function () {
+      setInterval(() => {
         let result = uploadQueue.map((a) => a.file.id);
         for (let i = 0; i < result.length; i++) {
           let id = result[i];
@@ -74,24 +74,24 @@ var SlateApp = (function () {
       //console.log('All page files: ', files);
     };
 
-    async function insertAppMain() {
+    insertAppMain = async () => {
       try {
         document.head.parentNode.removeChild(document.head);
 
-        $.get(chrome.extension.getURL("./app/pages/app.html"), function (data) {
+        $.get(chrome.extension.getURL("./app/pages/app.html"), (data) => {
           $(data).prependTo("body");
         })
-          .done(function () {
+          .done(() => {
             //Initilize app event listeners
             document
               .getElementById("slate-close-icon")
-              .addEventListener("click", function () {
+              .addEventListener("click", () => {
                 location.reload();
               });
             //Listen for settings icon click
             document
               .getElementById("slate-settings-icon")
-              .addEventListener("click", function () {
+              .addEventListener("click", () => {
                 chrome.runtime.sendMessage({
                   message: "settings",
                 });
@@ -99,7 +99,7 @@ var SlateApp = (function () {
             //Listen for uploads icon click
             document
               .getElementById("slate-uploads-icon")
-              .addEventListener("click", function () {
+              .addEventListener("click", () => {
                 chrome.runtime.sendMessage({
                   message: "uploadsHistory",
                 });
@@ -107,7 +107,7 @@ var SlateApp = (function () {
             //Listen for select all click
             document
               .getElementById("select-all-check")
-              .addEventListener("click", function () {
+              .addEventListener("click", () => {
                 uploadQueue = origFiles;
                 uploadQueueNum = origFiles.length;
                 document
@@ -148,7 +148,7 @@ var SlateApp = (function () {
 
             document
               .getElementById("slate-uploads-back-icon")
-              .addEventListener("click", function () {
+              .addEventListener("click", () => {
                 document
                   .getElementById("slate-drawer-upload")
                   .classList.toggle("active");
@@ -159,13 +159,11 @@ var SlateApp = (function () {
 
             document
               .getElementById("slate-upload-btn")
-              .addEventListener("click", function () {
+              .addEventListener("click", () => {
                 //console.log("Upload queue:", uploadQueue);
                 var isUploadQueue = JSON.stringify(uploadQueue);
                 var isPageTitle = JSON.stringify(pageData);
                 var isApiData = JSON.stringify(uploadQueueSlates);
-
-                //console.log("Page data:", isPageTitle);
 
                 chrome.runtime.sendMessage({
                   uploadData: "slate",
@@ -188,9 +186,6 @@ var SlateApp = (function () {
               });
 
             return true;
-            //
-            //
-            //End app listeners
           })
           .fail(function () {
             return false;
@@ -199,7 +194,7 @@ var SlateApp = (function () {
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     insertAppMain();
   };
@@ -213,7 +208,7 @@ var SlateApp = (function () {
         return this;
       })
       .get();
-    Array.prototype.map.call(fetchImages, function (i) {
+    Array.prototype.map.call(fetchImages, (i) => {
       allFiles.push(i);
     });
     let position = 0;
@@ -249,10 +244,10 @@ var SlateApp = (function () {
     uploadType
   ) => {
     try {
-      $.getScript(chrome.extension.getURL("./app/index.js"), function (data) {
+      $.getScript(chrome.extension.getURL("./app/index.js"), (data) => {
         $(data).append("body");
       })
-        .done(function () {
+        .done(() => {
           if (uploadType == "single") {
             uploadQueue.push({ file: props });
             console.log("props!", props);
@@ -268,7 +263,7 @@ var SlateApp = (function () {
             document.getElementById("slate-popup-title-name").innerHTML =
               "Upload file to Slate";
           } else {
-            props.forEach(function (file) {
+            props.forEach((file) => {
               document.getElementById(
                 "slate-single-image-container"
               ).style.display = "none";
@@ -357,7 +352,7 @@ var SlateApp = (function () {
               "inline-block";
             document.getElementById("slate-upload-alert-text").innerHTML =
               "Uploading";
-            setInterval(async function () {
+            setInterval(async () => {
               document.getElementById("slate-upload-alert-text").innerHTML =
                 "Uploading " + currentUploadNum.currentUploads + " files";
 
@@ -383,7 +378,7 @@ var SlateApp = (function () {
           //
           //CREATE API KEY UI
           //console.log("Slates from api keys: ", apiKeys);
-          apiKeys.forEach(function (slate) {
+          apiKeys.forEach((slate) => {
             //console.log("Slate info: ", slate);
 
             var slateApiContainer = document.createElement("div");
@@ -489,7 +484,7 @@ var SlateApp = (function () {
   };
 
   SlateApp.prototype.getApiKeys = async () => {
-    async function getKey(key) {
+    getKey = async (key) => {
       const response = await fetch("https://slate.host/api/v1/get", {
         method: "POST",
         headers: {
@@ -511,10 +506,10 @@ var SlateApp = (function () {
       //slates.push({ id: item.id, name: item.slatename });
       //}
       return data;
-    }
+    };
 
-    var storage = new Promise(function (resolve, reject) {
-      chrome.storage.local.get(["apis"], function (result) {
+    var storage = new Promise((resolve, reject) => {
+      chrome.storage.local.get(["apis"], (result) => {
         resolve(result);
       });
     });
@@ -538,8 +533,8 @@ var SlateApp = (function () {
   };
 
   SlateApp.prototype.getUploadNum = async () => {
-    var storage = new Promise(function (resolve, reject) {
-      chrome.storage.local.get(["currentUploads"], function (result) {
+    var storage = new Promise((resolve, reject) => {
+      chrome.storage.local.get(["currentUploads"], (result) => {
         resolve(result);
       });
     });
@@ -548,8 +543,8 @@ var SlateApp = (function () {
   };
 
   SlateApp.prototype.getUploads = async () => {
-    var storage = new Promise(function (resolve, reject) {
-      chrome.storage.local.get(["uploads"], function (result) {
+    var storage = new Promise((resolve, reject) => {
+      chrome.storage.local.get(["uploads"], (result) => {
         resolve(result);
       });
     });
@@ -566,11 +561,7 @@ var SlateApp = (function () {
 //
 //App event listeners
 var app = new SlateApp();
-chrome.runtime.onMessage.addListener(async function (
-  request,
-  changeInfo,
-  callback
-) {
+chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
   if (request.message == "openSlateApp") {
     //required order
     //console.log("type:", request.uploadType);
@@ -578,7 +569,7 @@ chrome.runtime.onMessage.addListener(async function (
     var isUploading = await app.getUploadNum();
     //console.log("isUploading: ", isUploading.currentUploads);
     if (isUploading.currentUploads > 0) {
-      const isCheckUploads = setInterval(async function () {
+      const isCheckUploads = setInterval(async () => {
         currentUploadNum = await app.getUploadNum();
         if (currentUploadNum == 0) {
           clearInterval(isCheckUploads);

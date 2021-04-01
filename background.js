@@ -207,7 +207,7 @@ var SlateUpload = (function () {
       }
     };
 
-    async function getSlateData(fileData) {
+    getSlateData = async (fileData) => {
       const response = await fetch("https://slate.host/api/v1/get-slate", {
         method: "POST",
         headers: {
@@ -225,9 +225,9 @@ var SlateUpload = (function () {
       const json = await response.json();
       //console.log("slate data:", json);
       return json;
-    }
+    };
 
-    async function processArray(array, pageData) {
+    processArray = async (array, pageData) => {
       for (const file of array) {
         //console.log("page data in process:", pageData);
         let data = await convertToData(file.data.file);
@@ -236,7 +236,7 @@ var SlateUpload = (function () {
         console.log("Next file");
       }
       console.log("All files uploaded");
-    }
+    };
 
     addDataUploadNumber(numFiles);
     processArray(props, pageData);
@@ -246,7 +246,7 @@ var SlateUpload = (function () {
 //
 //
 //Background event listeners
-chrome.runtime.onInstalled.addListener(function (tab) {
+chrome.runtime.onInstalled.addListener((tab) => {
   //on new install, open the welcome page
   chrome.tabs.create({
     url: chrome.extension.getURL("app/pages/welcome.html"),
@@ -254,7 +254,7 @@ chrome.runtime.onInstalled.addListener(function (tab) {
 });
 
 //Wait for Slate Extension icon to be clicked
-chrome.browserAction.onClicked.addListener(async function (tabs) {
+chrome.browserAction.onClicked.addListener(async (tabs) => {
   let slateBg = new SlateBackground();
   await slateBg.init();
   //inject all Slate scripts needed into the current tab
@@ -292,11 +292,7 @@ chrome.contextMenus.create({
   onclick: onClickHandlerImage,
 });
 
-chrome.runtime.onMessage.addListener(async function (
-  request,
-  sender,
-  sendResponse
-) {
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.message == "settings") {
     chrome.tabs.create({
       url: chrome.extension.getURL("app/pages/settings.html"),
