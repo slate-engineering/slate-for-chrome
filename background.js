@@ -20,19 +20,6 @@ var SlateBackground = (function () {
   };
 
   SlateBackground.prototype.addUpload = (props) => {
-    // add data from upload to history
-    //console.log(props);
-    // TODO: (@jason) props should look like this:
-    // {
-    //   name: "jim-dark-secrets.png",
-    //   type: "image/jpeg",
-    //   source: "https://www.criterion.com/shop/collection/169-wes-anderson",
-    //   cid: "a238149phsdfaklsjdfhlqw48rlfsad",
-    //   date: "2020-10-13T19:49:41.036Z",
-    //   url: "https://slate.textile.io/ipfs/bafkreiepfcul4ortkdvxkqe4hfbulggzvlcijkr3mgzfhnbbrcgwlykvxu",
-    //   uploading: false,
-    //   id: "jasonwillfigureouthowtodotheids"
-    // };
     chrome.storage.local.get(["uploads"], (result) => {
       let uploads = [];
       if (result.uploads) {
@@ -56,7 +43,7 @@ var SlateUpload = (function () {
   }
 
   SlateUpload.prototype.start = async (props, pageData, numFiles) => {
-    async function convertToData(props) {
+    convertToData = async (props) => {
       return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -71,9 +58,9 @@ var SlateUpload = (function () {
         //console.log("done convert");
         xhr.send();
       });
-    }
+    };
 
-    async function addDataUpload(props) {
+    addDataUpload = (props) => {
       //console.log("upload prop structure", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = [];
@@ -88,9 +75,9 @@ var SlateUpload = (function () {
       });
       //console.log("done");
       return true;
-    }
+    };
 
-    async function addDataUploadNumber(props) {
+    addDataUploadNumber = async (props) => {
       chrome.storage.local.get(["currentUploads"], (result) => {
         let num = parseInt(result.currentUploads);
         let curr = parseInt(props);
@@ -100,9 +87,9 @@ var SlateUpload = (function () {
         });
       });
       return true;
-    }
+    };
 
-    async function removeDataUploadNumber() {
+    removeDataUploadNumber = async () => {
       chrome.storage.local.get(["currentUploads"], (result) => {
         let num = parseInt(result.currentUploads);
         num--;
@@ -111,9 +98,9 @@ var SlateUpload = (function () {
         });
       });
       return true;
-    }
+    };
 
-    async function updateDataUpload(props, uploadId) {
+    updateDataUpload = async (props, uploadId) => {
       //console.log("look at props", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = result.uploads;
@@ -131,11 +118,10 @@ var SlateUpload = (function () {
         });
       });
       return true;
-    }
+    };
 
-    async function uploadToSlate(fileData, apiData, pageData) {
+    uploadToSlate = async (fileData, apiData, pageData) => {
       //console.log("file data:", apiData);
-
       let date = Date.now();
       let uploadData = {
         name: apiData.data.file.file.altTitle || pageData.title,
@@ -151,9 +137,7 @@ var SlateUpload = (function () {
       };
 
       await addDataUpload(uploadData);
-      //console.log("submitted to local", uploadData);
 
-      //console.log("follow this api data:::", apiData);
       var arr = fileData.split(","),
         bstr = atob(arr[1]),
         n = bstr.length,
@@ -189,9 +173,6 @@ var SlateUpload = (function () {
           created_at: "2020-07-27T09:04:53.007Z",
           published_at: "2020-07-27T09:04:53.007Z",
           slatename: json.slate.slatename,
-          // NOTE(jim)
-          // This 'data' property is JSONB in our postgres database
-          // so every child is customizable.
           data: {
             ...json.slate.data,
             name: json.slate.slatename,
@@ -201,17 +182,11 @@ var SlateUpload = (function () {
           },
         },
       };
-      // NOTE(jim)
-      // Make any modifications you want!
-      // Be careful because if you modify too many things, your Slate may not work
-      // With https://slate.host
+
       const slate = slateAPIResponseData.data;
       let arrPosition = slate.data.objects.length - 1;
 
-      //console.log("this should be the last array: ", file);
       slate.data.objects[arrPosition].source = pageData.source;
-
-      //console.log("about to upload this: ", slate);
 
       const responseChange = await fetch(
         "https://slate.host/api/v1/update-slate",
@@ -219,8 +194,7 @@ var SlateUpload = (function () {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // NOTE: your API key
-            Authorization: "Basic SLA2a459dde-9433-43a5-966c-cf5603db59f7TE",
+            Authorization: "Basic " + apiData.data.api,
           },
           body: JSON.stringify({ data: slate }),
         }
@@ -231,7 +205,7 @@ var SlateUpload = (function () {
       } catch (err) {
         return;
       }
-    }
+    };
 
     async function getSlateData(fileData) {
       const response = await fetch("https://slate.host/api/v1/get-slate", {
