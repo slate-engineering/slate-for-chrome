@@ -22,11 +22,9 @@ var SlateApp = (function () {
       //console.log(id);
       chrome.storage.local.get(["uploads"], (result) => {
         let find = result.uploads.find((x) => x.id === id);
-
-        console.log("find: ", find);
         if (find) {
           if (!find.uploading) {
-            console.log("still uploading");
+            return;
           } else {
             console.log("done from id: ", id);
             let spinner = document.getElementById(id + "-spinner");
@@ -34,6 +32,7 @@ var SlateApp = (function () {
             spinner.classList.add("slate-success");
             spinner.innerHTML =
               '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            return;
           }
         }
         /*
@@ -66,7 +65,6 @@ var SlateApp = (function () {
 
       setInterval(function () {
         let result = uploadQueue.map((a) => a.file.id);
-        console.log(result);
         for (let i = 0; i < result.length; i++) {
           let id = result[i];
           checkUploadStatus(id);
@@ -116,7 +114,7 @@ var SlateApp = (function () {
                   .getElementById("actual-select-all-check")
                   .classList.toggle("checked");
                 for (let i = 0; i < uploadQueue.length; i++) {
-                  console.log(uploadQueue[i].file.id);
+                  //console.log(uploadQueue[i].file.id);
                   let checkbox = document.getElementById(
                     "check-" + uploadQueue[i].file.id
                   );
@@ -145,8 +143,7 @@ var SlateApp = (function () {
                   document.getElementById("slate-popup-title-name").innerHTML =
                     "Upload " + uploadQueueNum + " files to Slate";
                 }
-
-                console.log("queue:", uploadQueue);
+                //console.log("queue:", uploadQueue);
               });
 
             document
@@ -361,7 +358,6 @@ var SlateApp = (function () {
             document.getElementById("slate-upload-alert-text").innerHTML =
               "Uploading";
             setInterval(async function () {
-              console.log("updating");
               document.getElementById("slate-upload-alert-text").innerHTML =
                 "Uploading " + currentUploadNum.currentUploads + " files";
 
@@ -577,17 +573,16 @@ chrome.runtime.onMessage.addListener(async function (
 ) {
   if (request.message == "openSlateApp") {
     //required order
-    console.log("type:", request.uploadType);
+    //console.log("type:", request.uploadType);
     await app.init();
     var isUploading = await app.getUploadNum();
-    console.log("isUploading: ", isUploading.currentUploads);
+    //console.log("isUploading: ", isUploading.currentUploads);
     if (isUploading.currentUploads > 0) {
       const isCheckUploads = setInterval(async function () {
         currentUploadNum = await app.getUploadNum();
         if (currentUploadNum == 0) {
           clearInterval(isCheckUploads);
         }
-        console.log(currentUploadNum);
       }, 3000);
     }
     let apiKeys = await app.getApiKeys();
@@ -611,7 +606,7 @@ chrome.runtime.onMessage.addListener(async function (
         origFiles.push({ file: allPageFiles[i] });
       }
     }
-    console.log("allPageFiles::", allPageFiles);
+    //console.log("allPageFiles::", allPageFiles);
 
     //let slates = "await app.getSlates(apiKeys);";
     await app.listFiles(allPageFiles, apiKeys, isUploading, type);

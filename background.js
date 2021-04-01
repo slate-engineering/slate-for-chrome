@@ -21,7 +21,7 @@ var SlateBackground = (function () {
 
   SlateBackground.prototype.addUpload = (props) => {
     // add data from upload to history
-    console.log(props);
+    //console.log(props);
     // TODO: (@jason) props should look like this:
     // {
     //   name: "jim-dark-secrets.png",
@@ -74,7 +74,7 @@ var SlateUpload = (function () {
     }
 
     async function addDataUpload(props) {
-      console.log("upload prop structure", props);
+      //console.log("upload prop structure", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = [];
         if (result["uploads"]) {
@@ -96,7 +96,7 @@ var SlateUpload = (function () {
         let curr = parseInt(props);
         let final = num + curr;
         chrome.storage.local.set({ currentUploads: final }, function () {
-          console.log("saved locally");
+          //console.log("saved locally");
         });
       });
       return true;
@@ -107,7 +107,7 @@ var SlateUpload = (function () {
         let num = parseInt(result.currentUploads);
         num--;
         chrome.storage.local.set({ currentUploads: num }, function () {
-          console.log("removed upload num");
+          //console.log("removed upload num");
         });
       });
       return true;
@@ -127,14 +127,14 @@ var SlateUpload = (function () {
           }
         }
         chrome.storage.local.set({ uploads: uploads }, function () {
-          console.log("saved locally");
+          //console.log("saved locally");
         });
       });
       return true;
     }
 
     async function uploadToSlate(fileData, apiData, pageData) {
-      console.log("file data:", apiData);
+      //console.log("file data:", apiData);
 
       let date = Date.now();
       let uploadData = {
@@ -211,7 +211,7 @@ var SlateUpload = (function () {
       //console.log("this should be the last array: ", file);
       slate.data.objects[arrPosition].source = pageData.source;
 
-      console.log("about to upload this: ", slate);
+      //console.log("about to upload this: ", slate);
 
       const responseChange = await fetch(
         "https://slate.host/api/v1/update-slate",
