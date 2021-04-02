@@ -24,7 +24,6 @@ var SlateApp = (function () {
           if (!isIdUploading.uploading) {
             return;
           } else {
-            console.log("done from id: ", id);
             let spinner = document.getElementById(id + "-spinner");
             spinner.classList.remove("slate-loaderspinner");
             spinner.classList.add("slate-success");

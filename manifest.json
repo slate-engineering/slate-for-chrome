@@ -13,9 +13,7 @@
     "webNavigation"
   ],
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
   "web_accessible_resources": [
     "content-script.js",
@@ -33,9 +31,14 @@
     "app/public/fonts/*.woff"
   ],
 
-  "content_scripts": [{
+  "content_scripts": [
+    {
       "matches": ["https://*/*", "http://*/*"],
-      "css": ["app/common/styles/popup.css", "app/common/styles/constants.css", "app/common/styles/global.css"],
+      "css": [
+        "app/common/styles/popup.css",
+        "app/common/styles/constants.css",
+        "app/common/styles/global.css"
+      ],
       "js": ["app/scripts/jquery.min.js"],
       "run_at": "document_end"
     },
@@ -45,9 +48,13 @@
       "run_at": "document_end"
     },
     {
-      "matches": ["https://unsplash.com/t/nature/?slatetour"],
+      "matches": [
+        "https://unsplash.com/t/nature/?slatetour",
+        "https://archive.org/details/solarsystemcollection?slatetour",
+        "https://publicdomainvectors.org/?slatetour"
+      ],
       "css": ["app/common/styles/product-tour.css"],
-      "js": ["app/common/product-tour.js"],
+      "js": ["app/scripts/jquery.min.js", "app/common/product-tour.js"],
       "run_at": "document_start"
     }
   ],

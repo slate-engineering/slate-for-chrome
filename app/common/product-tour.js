@@ -1,6 +1,8 @@
 //inject product-tour html into the test platform webpage
 $(document).ready(() => {
-  $.get(chrome.extension.getURL("./app/pages/product-tour.html"), function (data) {
+  $.get(chrome.extension.getURL("./app/pages/product-tour.html"), function (
+    data
+  ) {
     $(data).prependTo("body");
     console.log("html added");
     _handleNavigation();
@@ -15,29 +17,43 @@ _handleNavigation = () => {
   tourWrapper[0].onanimationend = () => {
     tourWrapper[0].classList.remove("active");
   };
-  let productTours = document.getElementsByClassName("slate-product-tour-module");
+  let productTours = document.getElementsByClassName(
+    "slate-product-tour-module"
+  );
   productTours[0].classList.add("active");
-  let nextTourButtons = document.getElementsByClassName("slate-secondary-button next");
+  let nextTourButtons = document.getElementsByClassName(
+    "slate-secondary-button next"
+  );
   for (let i = 0; i < nextTourButtons.length; i++) {
-    nextTourButtons[i].addEventListener("click", () => changeStep(tourWrapper, productTours, i, nextTourButtons[i]));
+    nextTourButtons[i].addEventListener("click", () =>
+      changeStep(tourWrapper, productTours, i, nextTourButtons[i])
+    );
   }
 
-  let prevTourButtons = document.getElementsByClassName("slate-secondary-button previous");
+  let prevTourButtons = document.getElementsByClassName(
+    "slate-secondary-button previous"
+  );
   for (let i = 0; i < prevTourButtons.length; i++) {
     prevTourButtons[i].addEventListener("click", () =>
       changeStep(tourWrapper, productTours, i + 1, prevTourButtons[i])
     );
   }
 
-  let cancelTourButtons = document.getElementsByClassName("slate-cancel-button");
+  let cancelTourButtons = document.getElementsByClassName(
+    "slate-cancel-button"
+  );
   for (let i = 0; i < cancelTourButtons.length; i++) {
     cancelTourButtons[i].addEventListener("click", () => closeTour());
   }
 
-  let finishTourButton = document.getElementsByClassName("slate-secondary-button finish");
+  let finishTourButton = document.getElementsByClassName(
+    "slate-secondary-button finish"
+  );
   finishTourButton[0].addEventListener("click", () => closeTour());
 
-  let progressIndicators = document.getElementsByClassName("slate-progress-indicator inactive");
+  let progressIndicators = document.getElementsByClassName(
+    "slate-progress-indicator inactive"
+  );
   for (let i = 0; i < progressIndicators.length; i++) {
     progressIndicators[i].addEventListener("click", () =>
       switchStep(tourWrapper, productTours, progressIndicators.length - 1 - i)
@@ -76,5 +92,5 @@ closeCurrentTour = (productTours, stepNumber) => {
 };
 
 closeTour = () => {
-  location.href = "/t/nature/";
+  window.location.assign("/");
 };
