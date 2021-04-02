@@ -351,10 +351,9 @@ var SlateApp = (function () {
               } else if (currentUploadNum.currentUploads == 0) {
                 document.getElementById("slate-upload-alert-text").innerHTML =
                   "Done!";
-                document.getElementById("slate-upload-alert").style.background =
-                  "#C0DACD";
-                document.getElementById("slate-upload-alert").style.color =
-                  "#006837";
+                document
+                  .getElementById("slate-upload-alert")
+                  .classList.add("slate-success-alert");
                 document.getElementById("slate-uploading-icon").style.display =
                   "none";
               } else {
