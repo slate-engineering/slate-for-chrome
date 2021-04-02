@@ -43,21 +43,4 @@ We are currently working through some known bugs in the app. If you encounter an
 
 2. If your file has successfully uploaded, but you still see the uploading bar, something went wrong when updating the local storage. 
 
-  Temporary fix: Open the Uploads page and clear your upload history. 
-
-<br /><br />
-
-## Version 2.1
-Features:
-* Grabs every images from any website (based on user settings)
-* Mass upload images
-* Upload to multiple slates at once
-* Add all of your Slate accounts
-* Welcome screen after install
-* Full settings page
-
-![Chrome Extension Homepage Gif](https://i.ibb.co/4TBFvNd/ezgif-com-gif-maker.gif)
-
-![Chrome Extension Homepage](https://i.ibb.co/Jy42Z8V/multi-file-upload.png)
-
-![Chrome Extension Welcome](https://i.ibb.co/kJ9jBpc/welcome-5.png)
+  Temporary fix: Open the Uploads page and clear your upload history or click the 'Reset upload count'. 
