@@ -43,4 +43,4 @@ We are currently working through some known bugs in the app. If you encounter an
 
 2. If your file has successfully uploaded, but you still see the uploading bar, something went wrong when updating the local storage. 
 
-  Temporary fix: Open the Uploads page and clear your upload history or click the 'Reset upload count'. 
+  Temporary fix: Open the Uploads page and clear your upload history or click the 'Reset upload count' button. 
