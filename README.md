@@ -21,10 +21,8 @@ To pin the extension on the taskbar, click the puzzle icon again and click the p
 
 ## API keys
 The first step is to add at least one Slate API key. You can do this on the welcome screen when you first install the app, or by clicking the settings icon on the main Slate popup. 
-<img width="1440" alt="Screen Shot 2021-03-31 at 9 48 08 AM" src="https://user-images.githubusercontent.com/60402678/113173080-49c46980-9206-11eb-8aad-e18b70a27372.png">
 
-
-### Usage
+## Usage
 
 #### Multi image uploads
 Clicking the Slate icon will grab every loaded image on the page and display them on a grid. You can click on multiple images and add them to multiple slate accounts. 
@@ -33,7 +31,7 @@ Clicking the Slate icon will grab every loaded image on the page and display the
 Similar to version 1, you can right click on any image and click `Add image`.<br />
 This will open the Slate app and you can upload that image to muliple Slate accounts.
 
-### Known Bugs
+## Known Bugs
 We are currently working through some known bugs in the app. If you encounter any of them, here's how you can fix it:
 
 1. Sometimes the Chrome API will load the app twice, displaying two of every image. This won't affect much if you only upload one version of that image. However, using the `Select all` button will cause problems if app has loaded twice. 
@@ -46,10 +44,10 @@ We are currently working through some known bugs in the app. If you encounter an
 
   Temporary fix: Open the Uploads page and clear your upload history or click the 'Reset upload count' button. 
   
-### Feature requests & bug reporting  
+## Feature requests & bug reporting  
 Feel free to file a new issue with a respective title and description on this repo with your feature request or bug report!   
 
-### License
+## License
 The Slate for Chrome app is released under the MIT License.
 
 
