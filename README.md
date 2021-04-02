@@ -1,4 +1,6 @@
-# slate-for-chrome-v2-prototype
+<img src="https://i.ibb.co/pKfPgfj/image.png" width="45px">
+
+# slate-for-chrome
 [WIP] You can follow the progress of The Slate Chrome Extension Version 2 on this repo as we prototype the app. 
 
 The official Slate Chrome Store install will be updated at a later version. 
