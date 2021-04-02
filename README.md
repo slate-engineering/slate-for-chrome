@@ -19,9 +19,7 @@ The official Slate Chrome Store install will be updated at a later version.
 
 To pin the extension on the taskbar, click the puzzle icon again and click the pin icon beside the Slate app.
 
-## App
-
-### API Keys
+## API keys
 The first step is to add at least one Slate API key. You can do this on the welcome screen when you first install the app, or by clicking the settings icon on the main Slate popup. 
 <img width="1440" alt="Screen Shot 2021-03-31 at 9 48 08 AM" src="https://user-images.githubusercontent.com/60402678/113173080-49c46980-9206-11eb-8aad-e18b70a27372.png">
 
@@ -32,7 +30,7 @@ The first step is to add at least one Slate API key. You can do this on the welc
 Clicking the Slate icon will grab every loaded image on the page and display them on a grid. You can click on multiple images and add them to multiple slate accounts. 
 
 #### Single image upload
-Similar to version 1, you can right click on any image and click `Add image`
+Similar to version 1, you can right click on any image and click `Add image`.<br />
 This will open the Slate app and you can upload that image to muliple Slate accounts.
 
 ### Known Bugs
