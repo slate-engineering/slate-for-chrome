@@ -366,7 +366,15 @@ var SlateApp = (function () {
           //
           //
           //CREATE API KEY UI
-          //console.log("Slates from api keys: ", apiKeys);
+          console.log("Slates from api keys: ", apiKeys.length);
+          if (apiKeys.length == 0) {
+            document.getElementById("slate-nokeys-error").style.display =
+              "inline-block";
+          } else {
+            document.getElementById("slate-nokeys-error").style.display =
+              "none";
+          }
+
           apiKeys.forEach((slate) => {
             //console.log("Slate info: ", slate);
 
@@ -554,14 +562,15 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
     var allPageFiles = [];
     var type = request.uploadType;
     if (type == "single") {
+      let isSingleId = Math.random().toString(36).substr(2, 9);
       allPageFiles = {
         src: request.singleImageUrl,
-        altTitle: null,
-        height: "656",
-        id: "yvrzkmxnb",
-        page_position: 17,
+        id: isSingleId,
+        page_position: null,
         type: "img",
-        width: 12,
+        altTitle: null,
+        height: null,
+        width: null,
       };
     } else {
       allPageFiles = await app.getPageFiles();

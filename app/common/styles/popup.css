@@ -454,6 +454,22 @@
   margin: 0 -24px 24px -24px;
 }
 
+.slate-error-msg {
+  display: "none";
+  box-sizing: border-box;
+  padding: 12px 24px;
+  background-color: RGBA(199, 19, 19, 0.1);
+  color: var(--color-red);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: calc(100% + 48px);
+  font-family: var(--font-family-text) !important;
+  font-size: var(--typescale-lvl1) !important;
+  font-weight: 400;
+  margin: 0 -24px 24px -24px;
+}
+
 .slate-upload-file-module {
   display: flex;
   align-items: center;
