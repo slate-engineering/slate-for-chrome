@@ -4,7 +4,6 @@ var SlateApp = (function () {
   this.uploadQueue = [];
   this.uploadQueueNum = 0;
   this.uploadQueueSlates = [];
-  this.searchQuery = "tree";
   this.origFiles = [];
   this.currentUploadNum = 0;
 
@@ -19,11 +18,10 @@ var SlateApp = (function () {
 
   SlateApp.prototype.init = async () => {
     checkUploadStatus = async (id) => {
-      //console.log(id);
       chrome.storage.local.get(["uploads"], (result) => {
-        let find = result.uploads.find((x) => x.id === id);
-        if (find) {
-          if (!find.uploading) {
+        let isIdUploading = result.uploads.find((x) => x.id === id);
+        if (isIdUploading) {
+          if (!isIdUploading.uploading) {
             return;
           } else {
             console.log("done from id: ", id);
@@ -35,12 +33,6 @@ var SlateApp = (function () {
             return;
           }
         }
-        /*
-        if (result.uploads == null) {
-          let uploads = [];
-          chrome.storage.local.set({ uploads: uploads });
-        }
-        */
       });
     };
 
@@ -64,14 +56,12 @@ var SlateApp = (function () {
       });
 
       setInterval(() => {
-        let result = uploadQueue.map((a) => a.file.id);
-        for (let i = 0; i < result.length; i++) {
-          let id = result[i];
+        let isUploadIds = uploadQueue.map((x) => x.file.id);
+        for (let i = 0; i < isUploadIds.length; i++) {
+          let id = isUploadIds[i];
           checkUploadStatus(id);
         }
       }, 3000);
-
-      //console.log('All page files: ', files);
     };
 
     insertAppMain = async () => {
@@ -432,8 +422,6 @@ var SlateApp = (function () {
                   this.uploadQueueSlates.push({ data });
                   return data;
                 });
-
-                //this.uploadQueueSlates.push({ slateData });
                 //console.log("Slate added to queue: ", this.uploadQueueSlates);
                 slateContainer.classList.toggle("slate-selected");
               };
@@ -472,14 +460,11 @@ var SlateApp = (function () {
       },
       body: JSON.stringify({
         data: {
-          // NOTE: optional, if you want your private slates too.
           private: true,
         },
       }),
     });
     const data = await response.json();
-    //console.log("Response data: ", data);
-
     return data;
   };
 
@@ -501,10 +486,6 @@ var SlateApp = (function () {
       });
       const data = await response.json();
       let slates = [];
-      //for (let item of data.slates) {
-      //await getKey();
-      //slates.push({ id: item.id, name: item.slatename });
-      //}
       return data;
     };
 
@@ -515,17 +496,12 @@ var SlateApp = (function () {
     });
 
     const getAPIKeys = await storage;
-    //console.log("getAPIKeys", getAPIKeys.apis);
     var finalApiArray = [];
 
     if (getAPIKeys.apis) {
       for (let item of getAPIKeys.apis) {
-        //console.log("item 123", item);
         let keyData = await getKey(item.data.key);
-
         finalApiArray.push({ data: item.data, slates: keyData.slates });
-        //console.log("keyData", keyData);
-        //slates.push({ id: item.id, name: item.slatename });
       }
     }
 
@@ -556,7 +532,6 @@ var SlateApp = (function () {
 
   return SlateApp;
 })();
-
 //
 //
 //App event listeners
@@ -564,10 +539,8 @@ var app = new SlateApp();
 chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
   if (request.message == "openSlateApp") {
     //required order
-    //console.log("type:", request.uploadType);
     await app.init();
     var isUploading = await app.getUploadNum();
-    //console.log("isUploading: ", isUploading.currentUploads);
     if (isUploading.currentUploads > 0) {
       const isCheckUploads = setInterval(async () => {
         currentUploadNum = await app.getUploadNum();
@@ -597,10 +570,6 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
         origFiles.push({ file: allPageFiles[i] });
       }
     }
-    //console.log("allPageFiles::", allPageFiles);
-
-    //let slates = "await app.getSlates(apiKeys);";
     await app.listFiles(allPageFiles, apiKeys, isUploading, type);
-    //Add below:
   }
 });

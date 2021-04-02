@@ -158,7 +158,6 @@ var SlateUpload = (function () {
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          // NOTE: your API key
           Authorization: "Basic " + apiData.data.api,
         },
         body: data,
@@ -169,9 +168,9 @@ var SlateUpload = (function () {
       const slateAPIResponseData = {
         data: {
           id: json.slate.id,
-          updated_at: "2020-07-27T09:04:53.007Z",
-          created_at: "2020-07-27T09:04:53.007Z",
-          published_at: "2020-07-27T09:04:53.007Z",
+          //updated_at: "2020-07-27T09:04:53.007Z",
+          //created_at: "2020-07-27T09:04:53.007Z",
+          //published_at: "2020-07-27T09:04:53.007Z",
           slatename: json.slate.slatename,
           data: {
             ...json.slate.data,
@@ -217,19 +216,16 @@ var SlateUpload = (function () {
         },
         body: JSON.stringify({
           data: {
-            // NOTE: your slate ID
             id: fileData.data.slate.id,
           },
         }),
       });
       const json = await response.json();
-      //console.log("slate data:", json);
       return json;
     };
 
     processArray = async (array, pageData) => {
       for (const file of array) {
-        //console.log("page data in process:", pageData);
         let data = await convertToData(file.data.file);
         await uploadToSlate(data, file, pageData);
         //let slateData = await getSlateData(file);
@@ -243,8 +239,7 @@ var SlateUpload = (function () {
   };
   return SlateUpload;
 })();
-//
-//
+
 //Background event listeners
 chrome.runtime.onInstalled.addListener((tab) => {
   //on new install, open the welcome page
@@ -287,7 +282,6 @@ onClickHandlerImage = async (info, tabs) => {
 chrome.contextMenus.create({
   title: "Add image",
   contexts: ["image"],
-  //parentId: "parent",
   id: "image",
   onclick: onClickHandlerImage,
 });
@@ -310,13 +304,6 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     let files = JSON.parse(request.data);
     let pageData = JSON.parse(request.page);
     let apiData = JSON.parse(request.api);
-
-    console.log("file data in the backgorund:", files);
-
-    //upload.addDataUploadNumber(files.length);
-    //console.log("files in the backgorund:", files);
-    //console.log("api data in the background:", apiData);
-
     upload.start(apiData, pageData, files.length);
   }
 });
