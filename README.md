@@ -3,6 +3,7 @@
 
 The official Slate Chrome Store install will be updated at a later version. 
 
+<img width="1012" alt="Slate Extension v2" src="https://user-images.githubusercontent.com/60402678/113448202-9f407800-93b8-11eb-99fe-49b4e7ebbddb.png">
 
 ## How to test locally
 
@@ -32,7 +33,7 @@ Clicking the Slate icon will grab every loaded image on the page and display the
 Similar to version 1, you can right click on any image and click `Add image`
 This will open the Slate app and you can upload that image to muliple Slate accounts.
 
-### Bugs
+### Known Bugs
 We are currently working through some known bugs in the app. If you encounter any of them, here's how you can fix it:
 
 1. Sometimes the Chrome API will load the app twice, displaying two of every image. This won't affect much if you only upload one version of that image. However, using the `Select all` button will cause problems if app has loaded twice. 
@@ -44,3 +45,12 @@ We are currently working through some known bugs in the app. If you encounter an
 2. If your file has successfully uploaded, but you still see the uploading bar, something went wrong when updating the local storage. 
 
   Temporary fix: Open the Uploads page and clear your upload history or click the 'Reset upload count' button. 
+  
+### Feature requests & bug reporting  
+Feel free to file a new issue with a respective title and description on this repo with your feature request or bug report!   
+
+### License
+The Slate for Chrome app is released under the MIT License.
+
+
+  
