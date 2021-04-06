@@ -239,8 +239,6 @@ var SlateApp = (function () {
         .done(() => {
           if (uploadType == "single") {
             uploadQueue.push({ file: props });
-            console.log("props!", props);
-            console.log("Upload queue if its a single:", uploadQueue);
             let singleImg = (document.getElementById("slate-single-image").src =
               props.src);
             document.getElementById("slate-action-bar").style.display = "none";
@@ -365,7 +363,6 @@ var SlateApp = (function () {
           //
           //
           //CREATE API KEY UI
-          console.log("Slates from api keys: ", apiKeys.length);
           if (apiKeys.length == 0) {
             document.getElementById("slate-nokeys-error").style.display =
               "inline-block";
@@ -510,7 +507,6 @@ var SlateApp = (function () {
         finalApiArray.push({ data: item.data, slates: keyData.slates });
       }
     }
-
     return finalApiArray;
   };
 
@@ -544,7 +540,13 @@ var SlateApp = (function () {
 var app = new SlateApp();
 chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
   if (request.message == "openSlateApp") {
+    //checking to see if the window has loaded
+    //stops duplicate app loads
+    if (window.hasRun === true) return true;
+    window.hasRun = true;
+
     //required order
+    await app.getPageData();
     await app.init();
     var isUploading = await app.getUploadNum();
     if (isUploading.currentUploads > 0) {
@@ -556,7 +558,6 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
       }, 3000);
     }
     let apiKeys = await app.getApiKeys();
-    await app.getPageData();
 
     var allPageFiles = [];
     var type = request.uploadType;
