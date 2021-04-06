@@ -131,7 +131,11 @@ var Settings = (function () {
       "<div>" +
       name +
       "</div>" +
-      '</div><div class="slate-account key">XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX</div><button class="slate-icon-button show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete slate-icon-button-delete" id="' +
+      '</div><input id="textbox-' +
+      api.data.key +
+      '" class="slate-account key" value="XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX" /><button data-id="' +
+      api.data.key +
+      '" class="slate-icon-button existing-slate show active"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye.svg"></object></button><button class="slate-icon-button hide"><object class="slate-icon" type="image/svg+xml" data="../common/svg/eye-off.svg"></object></button><button class="slate-icon-button delete slate-icon-button-delete" id="' +
       api.data.key +
       '" class="slate-icon-button delete"><object class="slate-icon" type="image/svg+xml" data="../common/svg/x.svg"></object></button>';
 
@@ -180,6 +184,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         settings.deleteApiKey(e.target.id);
       } else {
         return;
+      }
+    });
+  });
+
+  let showSlate = document.getElementsByClassName("existing-slate");
+  Array.from(showSlate).forEach(function (element) {
+    element.addEventListener("click", function (e) {
+      let apiKeyTxt = document.getElementById(
+        "textbox-" + e.target.attributes[0].value
+      ).value;
+
+      if (apiKeyTxt.startsWith("X")) {
+        //console.log(e.target.attributes[0].value);
+        document.getElementById(
+          "textbox-" + e.target.attributes[0].value
+        ).value = e.target.attributes[0].value;
+      } else {
+        document.getElementById(
+          "textbox-" + e.target.attributes[0].value
+        ).value = "XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX";
       }
     });
   });
