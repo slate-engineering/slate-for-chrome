@@ -60,10 +60,10 @@
   ],
 
   "commands": {
-    "screenshot": {
+    "openSlate": {
       "suggested_key": {
-        "default": "Alt+S",
-        "mac": "Alt+S"
+        "default": "Ctrl+Shift+S",
+        "mac": "Ctrl+Shift+S"
       },
       "description": "Take a screenshot"
     }

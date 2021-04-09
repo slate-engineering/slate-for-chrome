@@ -248,20 +248,19 @@ chrome.runtime.onInstalled.addListener((tab) => {
   });
 });
 
-//Wait for Slate Extension icon to be clicked
-chrome.browserAction.onClicked.addListener(async (tabs) => {
+onClickHandlerAll = async (tab) => {
   let slateBg = new SlateBackground();
   await slateBg.init();
   //inject all Slate scripts needed into the current tab
-  let activeTab = tabs[0];
+  //let activeTab = tabs[0];
   let type = "multi";
-  chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
+  chrome.tabs.executeScript(tab, { file: "app/scripts/jquery.min.js" });
   chrome.tabs.executeScript(
-    activeTab,
+    tab,
     { file: "content-script.js" },
     slateBg.loadApp(type)
   );
-});
+};
 
 onClickHandlerImage = async (info, tabs) => {
   url = info.srcUrl;
@@ -279,11 +278,44 @@ onClickHandlerImage = async (info, tabs) => {
   );
 };
 
+onClickHandlerDirectImage = async (info, tabs) => {
+  url = info.srcUrl;
+  console.log(url);
+};
+
 chrome.contextMenus.create({
-  title: "Add image",
+  title: "Slate",
+  id: "parent",
+  contexts: ["all"],
+});
+
+chrome.contextMenus.create({
+  title: "Upload to a slate",
   contexts: ["image"],
-  id: "image",
+  parentId: "parent",
+  id: "image_slate",
   onclick: onClickHandlerImage,
+});
+
+/*
+chrome.contextMenus.create({
+  title: "Direct upload",
+  contexts: ["image"],
+  parentId: "parent",
+  id: "image_direct",
+  onclick: onClickHandlerDirectImage,
+});
+*/
+
+chrome.commands.onCommand.addListener(function (command) {
+  if (command === "openSlate") {
+    onClickHandlerAll();
+  }
+});
+
+//Wait for Slate Extension icon to be clicked
+chrome.browserAction.onClicked.addListener(async (tabs) => {
+  onClickHandlerAll();
 });
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
