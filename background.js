@@ -283,13 +283,20 @@ onClickHandlerImage = async (info, tabs) => {
 
 onClickHandlerDirectImage = async (info, tabs) => {
   url = info.srcUrl;
-  console.log("info: ", info);
-  console.log("tabs: ", tabs);
+
+  var storage = new Promise((resolve, reject) => {
+    chrome.storage.local.get(["apis"], (result) => {
+      resolve(result);
+    });
+  });
+
+  const getAPIKeys = await storage;
+
   let id = Math.random().toString(36).substr(2, 9);
   let apiData = [
     {
       data: {
-        api: "SLA2a459dde-9433-43a5-966c-cf5603db59f7TE",
+        api: getAPIKeys.apis[0].data.key,
         file: {
           file: {
             id: id,

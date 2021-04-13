@@ -60,7 +60,7 @@ var SlateApp = (function () {
           let id = isUploadIds[i];
           checkUploadStatus(id);
         }
-      }, 3000);
+      }, 1000);
     };
 
     insertAppMain = async () => {
@@ -358,7 +358,7 @@ var SlateApp = (function () {
                 document.getElementById("slate-upload-alert-text").innerHTML =
                   "Uploading " + currentUploadNum.currentUploads + " files";
               }
-            }, 3000);
+            }, 1000);
           }
           //
           //
@@ -555,7 +555,7 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
         if (currentUploadNum == 0) {
           clearInterval(isCheckUploads);
         }
-      }, 3000);
+      }, 1000);
     }
     let apiKeys = await app.getApiKeys();
 
