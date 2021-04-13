@@ -148,8 +148,13 @@ var SlateUpload = (function () {
         u8arr[n] = bstr.charCodeAt(n);
       }
 
-      const url =
-        "https://uploads.slate.host/api/public/" + apiData.data.slate.id;
+      var url;
+      if (apiData.data.slate.id) {
+        url = "https://uploads.slate.host/api/public/" + apiData.data.slate.id;
+      } else {
+        url = "https://uploads.slate.host/api/public";
+      }
+
       let fileBlob = new Blob([u8arr], { mime });
       let source = "";
       let file = new File([fileBlob], uploadData.name, { type: "image/png" });
@@ -163,47 +168,45 @@ var SlateUpload = (function () {
         body: data,
       });
       const json = await response.json();
-      await updateDataUpload(json, uploadData.id);
-
-      const slateAPIResponseData = {
-        data: {
-          id: json.slate.id,
-          //updated_at: "2020-07-27T09:04:53.007Z",
-          //created_at: "2020-07-27T09:04:53.007Z",
-          //published_at: "2020-07-27T09:04:53.007Z",
-          slatename: json.slate.slatename,
+      //
+      //Only update metadata if a slate was provided
+      if (apiData.data.slate.id) {
+        const slateAPIResponseData = {
           data: {
-            ...json.slate.data,
-            name: json.slate.slatename,
-            public: true,
-            objects: [...json.slate.data.objects],
-            ownerId: json.slate.data.ownerId,
+            id: json.slate.id,
+            slatename: json.slate.slatename,
+            data: {
+              ...json.slate.data,
+              name: json.slate.slatename,
+              public: true,
+              objects: [...json.slate.data.objects],
+              ownerId: json.slate.data.ownerId,
+            },
           },
-        },
-      };
+        };
 
-      const slate = slateAPIResponseData.data;
-      let arrPosition = slate.data.objects.length - 1;
+        const slate = slateAPIResponseData.data;
+        let arrPosition = slate.data.objects.length - 1;
 
-      slate.data.objects[arrPosition].source = pageData.source;
+        slate.data.objects[arrPosition].source = pageData.source;
 
-      const responseChange = await fetch(
-        "https://slate.host/api/v1/update-slate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Basic " + apiData.data.api,
-          },
-          body: JSON.stringify({ data: slate }),
-        }
-      );
-      await removeDataUploadNumber();
-      try {
-        const jsonChange = await responseChange.json();
-      } catch (err) {
-        return;
+        const responseChange = await fetch(
+          "https://slate.host/api/v1/update-slate",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Basic " + apiData.data.api,
+            },
+            body: JSON.stringify({ data: slate }),
+          }
+        );
+        try {
+          const jsonChange = await responseChange.json();
+        } catch (err) {}
       }
+      await removeDataUploadNumber();
+      await updateDataUpload(json, uploadData.id);
     };
 
     getSlateData = async (fileData) => {
@@ -280,7 +283,38 @@ onClickHandlerImage = async (info, tabs) => {
 
 onClickHandlerDirectImage = async (info, tabs) => {
   url = info.srcUrl;
-  console.log(url);
+  console.log("info: ", info);
+  console.log("tabs: ", tabs);
+  let id = Math.random().toString(36).substr(2, 9);
+  let apiData = [
+    {
+      data: {
+        api: "SLA2a459dde-9433-43a5-966c-cf5603db59f7TE",
+        file: {
+          file: {
+            id: id,
+            src: url,
+            page_position: null,
+            altTitle: null,
+            height: null,
+            width: null,
+            type: "img",
+          },
+        },
+        slate: {
+          id: null,
+        },
+      },
+    },
+  ];
+
+  pageData = {
+    title: info.title,
+    source: info.url,
+  };
+
+  let upload = new SlateUpload();
+  upload.start(apiData, pageData, 1);
 };
 
 chrome.contextMenus.create({
@@ -297,7 +331,6 @@ chrome.contextMenus.create({
   onclick: onClickHandlerImage,
 });
 
-/*
 chrome.contextMenus.create({
   title: "Direct upload",
   contexts: ["image"],
@@ -305,7 +338,6 @@ chrome.contextMenus.create({
   id: "image_direct",
   onclick: onClickHandlerDirectImage,
 });
-*/
 
 chrome.commands.onCommand.addListener(function (command) {
   if (command === "openSlate") {
