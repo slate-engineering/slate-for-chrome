@@ -216,6 +216,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
 
+  document
+    .getElementById("link-go-to-uploads")
+    .addEventListener("click", function () {
+      chrome.tabs.create({
+        url: chrome.extension.getURL("app/pages/uploads.html"),
+      });
+    });
+
   //enable validation button when input event fires
   let inputKeys = document.getElementsByClassName("slate-input key");
   let validateKeyButtons = document.getElementsByClassName(
@@ -357,7 +365,12 @@ document
         name = validate.user.data.name;
       }
       let api = {
-        data: { name: name, photo: photo, key: keyValue, slates: slates },
+        data: {
+          name: name,
+          photo: photo,
+          key: keyValue,
+          slates: slates,
+        },
       };
       settings.newApiKey(api);
       settings.saveApiKey(api);
