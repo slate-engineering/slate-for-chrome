@@ -31,6 +31,10 @@ Clicking the Slate icon will grab every loaded image on the page and display the
 Similar to version 1, you can right click on any image and click `Add image`.<br />
 This will open the Slate app and you can upload that image to muliple Slate accounts.
 
+#### Direct upload
+A direct upload is a simple, UI-less upload that adds an image directly to your primary Slate account.
+To change your primary account, go to the Settings page and change your default API under the `Primary account` section.
+
 ## Known Bugs
 We are currently working through some known bugs in the app. If you encounter any of them, here's how you can fix it:
 
