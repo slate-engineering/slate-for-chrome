@@ -79,6 +79,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--color-textGrayLight);
+  cursor: pointer;
 }
 
 .slate-table-container .slate-icon {

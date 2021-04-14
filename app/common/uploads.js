@@ -61,12 +61,11 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
             "</div>"
           : i === 2
           ? '<div class="slate-icon-column">' +
-            '<div class="slate-link-info">' +
+            '<div id="sourceUrl" data-url="' +
+            uploadInfo +
+            '" class="slate-link-info">' +
             uploadInfo +
             "</div>" +
-            '<object data-url="' +
-            uploadInfo +
-            '" class="slate-icon" id="sourceUrl" type="image/svg+xml" data="../common/svg/external-link.svg"></object>' +
             "</div>"
           : '<div class="slate-column-width">' + uploadInfo + "</div>"
       )
@@ -122,13 +121,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     uploads.toggleDropdownDisplay();
 
-    document
-      .getElementById("sourceUrl")
-      .addEventListener("click", function (e) {
-        let url = e.target.attributes[1].value;
+    let openLink = document.getElementsByClassName("slate-link-info");
+    for (var i = 0; i < openLink.length; i++) {
+      openLink[i].onclick = function (e) {
+        let url = e.target.attributes["data-url"].value;
         var win = window.open(url, "_blank");
         win.focus();
-      });
+      };
+    }
 
     let openCID = document.getElementsByClassName("click-open-cid");
     for (var i = 0; i < openCID.length; i++) {
@@ -139,6 +139,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           e.target.attributes["data-cid"].value;
         var win = window.open(url, "_blank");
         win.focus();
+      };
+    }
+
+    let openExternal = document.getElementsByClassName("slate-open-external");
+    for (var i = 0; i < openExternal.length; i++) {
+      openExternal[i].onclick = function (e) {
+        console.log("hi");
       };
     }
 
