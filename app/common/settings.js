@@ -111,6 +111,32 @@ var Settings = (function () {
     APIInput.append(newAPIInput);
   };
 
+  Settings.prototype.createApiKeyDropdown = async (api) => {
+    console.log("from create key dropdown: ", api);
+    let APIDropdown = document.getElementById("primary-key-select-dropdown");
+    let newAPIDropdown = document.createElement("div");
+    newAPIDropdown.innerHTML = api.data.name;
+    newAPIDropdown.classList.add("slate-option");
+    newAPIDropdown.setAttribute("date-apikey", api.data.key);
+    newAPIDropdown.onclick = async () => {
+      chrome.storage.local.get(["apis"], function (result) {
+        console.log("before:", result["apis"]);
+        var apiKeys = [];
+        apiKeys = Object.values(result["apis"]);
+        let data = apiKeys.find((x) => x.data.key === api.data.key);
+        let del = apiKeys.findIndex((x) => x.data.key === api.data.key);
+        console.log(del);
+        apiKeys.splice(del, 1);
+        apiKeys.unshift(data);
+        console.log(apiKeys);
+        chrome.storage.local.set({ apis: apiKeys }, function () {
+          location.reload();
+        });
+      });
+    };
+    APIDropdown.append(newAPIDropdown);
+  };
+
   Settings.prototype.createApiKey = async (api) => {
     console.log("from create key", api);
     let APIInput = document.getElementById("existing-keys");
@@ -170,8 +196,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   let loop = Object.values(apiKeys);
 
   if (apiKeys.apis) {
+    document.getElementById("slate-dropdown-title-default").innerHTML =
+      apiKeys.apis[0].data.name;
+
     for (i = 0; i < apiKeys.apis.length; i++) {
-      console.log("hello", apiKeys.apis[i]);
+      //console.log("hello", apiKeys.apis[i]);
+      await settings.createApiKeyDropdown(apiKeys.apis[i]);
       await settings.createApiKey(apiKeys.apis[i]);
     }
   }
@@ -222,6 +252,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       chrome.tabs.create({
         url: chrome.extension.getURL("app/pages/uploads.html"),
       });
+    });
+
+  document
+    .getElementById("primary-key-select")
+    .addEventListener("click", function () {
+      document
+        .getElementById("primary-key-select-dropdown")
+        .classList.toggle("hide");
+      document
+        .getElementById("dropdown-icon-apikey-default")
+        .classList.toggle("slate-dropdown-icon-rotate");
     });
 
   //enable validation button when input event fires
