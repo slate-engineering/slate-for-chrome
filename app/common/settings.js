@@ -196,9 +196,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   let loop = Object.values(apiKeys);
 
   if (apiKeys.apis) {
-    document.getElementById("slate-dropdown-title-default").innerHTML =
-      apiKeys.apis[0].data.name;
-
+    if (apiKeys.apis[0]) {
+      document.getElementById("slate-dropdown-title-default").innerHTML =
+        apiKeys.apis[0].data.name;
+    }
     for (i = 0; i < apiKeys.apis.length; i++) {
       //console.log("hello", apiKeys.apis[i]);
       await settings.createApiKeyDropdown(apiKeys.apis[i]);
