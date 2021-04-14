@@ -18,15 +18,11 @@ var Settings = (function () {
   };
 
   Settings.prototype.saveApiKey = (props) => {
-    console.log("props outside", props);
-
     chrome.storage.local.get(function (result) {
       var allUploads = [];
-      console.log("result: ", result["apis"]);
       if (result["apis"]) {
         allUploads = Object.values(result["apis"]);
       }
-      console.log(allUploads);
       if (!allUploads) {
         allUploads = props;
       } else {
@@ -40,14 +36,11 @@ var Settings = (function () {
   };
 
   Settings.prototype.deleteApiKey = (props) => {
-    console.log("props outside", props);
-
     chrome.storage.local.get(["apis"], function (result) {
       var apiKeys = [];
       apiKeys = Object.values(result["apis"]);
       let del = apiKeys.findIndex((x) => x.data.key === props);
       apiKeys.splice(del, 1);
-      console.log(apiKeys);
       chrome.storage.local.set({ apis: apiKeys }, function () {
         location.reload();
       });
@@ -112,7 +105,6 @@ var Settings = (function () {
   };
 
   Settings.prototype.createApiKeyDropdown = async (api) => {
-    console.log("from create key dropdown: ", api);
     let APIDropdown = document.getElementById("primary-key-select-dropdown");
     let newAPIDropdown = document.createElement("div");
     newAPIDropdown.innerHTML = api.data.name;
@@ -120,15 +112,12 @@ var Settings = (function () {
     newAPIDropdown.setAttribute("date-apikey", api.data.key);
     newAPIDropdown.onclick = async () => {
       chrome.storage.local.get(["apis"], function (result) {
-        console.log("before:", result["apis"]);
         var apiKeys = [];
         apiKeys = Object.values(result["apis"]);
         let data = apiKeys.find((x) => x.data.key === api.data.key);
         let del = apiKeys.findIndex((x) => x.data.key === api.data.key);
-        console.log(del);
         apiKeys.splice(del, 1);
         apiKeys.unshift(data);
-        console.log(apiKeys);
         chrome.storage.local.set({ apis: apiKeys }, function () {
           location.reload();
         });
@@ -138,7 +127,6 @@ var Settings = (function () {
   };
 
   Settings.prototype.createApiKey = async (api) => {
-    console.log("from create key", api);
     let APIInput = document.getElementById("existing-keys");
     let newAPIInput = document.createElement("div");
     newAPIInput.className = "slate-api-key";
@@ -170,12 +158,11 @@ var Settings = (function () {
 
   Settings.prototype.notification = (api, type) => {
     let notification = document.getElementById("noti");
-    console.log("noti: ", api);
     notification.innerHTML =
       "Imported " + api.data.slates + " slates from " + api.data.name;
     notification.className = "show";
     if (type == "success") {
-      console.log("all good");
+      console.log("success");
     } else if (type == "error") {
       notification.classList.add("noti-error");
       notification.innerHTML = "There was an error adding that API key.";
@@ -209,7 +196,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let deleteNow = document.getElementsByClassName("slate-icon-button-delete");
   Array.from(deleteNow).forEach(function (element) {
     element.addEventListener("click", function (e) {
-      console.log(e.target.id);
       var r = confirm("Are you sure you want to delete this API key?");
       if (r == true) {
         settings.deleteApiKey(e.target.id);
@@ -325,7 +311,6 @@ _handleValidation = (inputKeys, validateKeyButtons) => {
 
 _handleDelete = (props) => {
   props.remove();
-  console.log("hello");
   console.log(props);
 };
 
