@@ -21,7 +21,7 @@ var SlateApp = (function () {
       chrome.storage.local.get(["uploads"], (result) => {
         let isIdUploading = result.uploads.find((x) => x.id === id);
         if (isIdUploading) {
-          if (!isIdUploading.uploading) {
+          if (isIdUploading.uploading) {
             return;
           } else {
             let spinner = document.getElementById(id + "-spinner");
@@ -409,7 +409,7 @@ var SlateApp = (function () {
               .appendChild(slateApiContainer);
 
             //let mySlates = await getSlates(slate.data.key)
-            //console.log('my slates:::::', mySlates)
+            //console.log('my slates:', mySlates)
             slate.slates.forEach((item, i) => {
               let slateContainer = document.createElement("div");
               slateContainer.className = "slate-item";

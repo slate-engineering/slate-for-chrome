@@ -16,7 +16,7 @@ Uploads.prototype.getUploads = async () => {
 Uploads.prototype.clearUploads = async () => {
   let allUploads = [];
   chrome.storage.local.set({ uploads: allUploads }, function () {
-    console.log("cleared!");
+    console.log("uploads cleared");
     return;
   });
 };
@@ -24,7 +24,7 @@ Uploads.prototype.clearUploads = async () => {
 Uploads.prototype.clearUploadsNumber = async () => {
   let currentUploads = 0;
   chrome.storage.local.set({ currentUploads: currentUploads }, function () {
-    console.log("cleared!");
+    console.log("upload number reset");
     return;
   });
 };
@@ -34,7 +34,6 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
   let uploadEntries = document.createElement("div");
   let fileTypeIcon = document.createElement("div");
   let popOver = document.createElement("div");
-  console.log(cid);
 
   popOver.innerHTML =
     '<div class="slate-popover"><div class="slate-popover-item click-open-cid" data-cid="' +
@@ -46,7 +45,6 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
       '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/image.svg"></object>';
   }
   uploadEntries.className = "slate-table-row";
-  console.log(upload);
 
   uploadEntries.innerHTML =
     upload
@@ -103,7 +101,7 @@ var uploads = new Uploads();
 document.addEventListener("DOMContentLoaded", async () => {
   //TODO (@Tara/@Jason) bug: nothing gets returned here
   let existingUploads = await uploads.getUploads();
-  console.log("existingUploads", existingUploads);
+  //console.log("existingUploads", existingUploads);
 
   if (existingUploads.uploads.length > 0) {
     let sort = existingUploads.uploads.reverse();
@@ -133,7 +131,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let openCID = document.getElementsByClassName("click-open-cid");
     for (var i = 0; i < openCID.length; i++) {
       openCID[i].onclick = function (e) {
-        console.log(e.target.attributes["data-cid"].value);
         let url =
           "https://slate.textile.io/ipfs/" +
           e.target.attributes["data-cid"].value;
@@ -145,23 +142,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     let openExternal = document.getElementsByClassName("slate-open-external");
     for (var i = 0; i < openExternal.length; i++) {
       openExternal[i].onclick = function (e) {
-        console.log("hi");
+        //console.log("none");
       };
     }
 
     let copyCID = document.getElementsByClassName("click-copy-cid");
     for (var i = 0; i < copyCID.length; i++) {
       copyCID[i].onclick = function (e) {
-        console.log(e.target.attributes["data-cid"].value);
         let url =
           "https://slate.textile.io/ipfs/" +
           e.target.attributes["data-cid"].value;
-        console.log(url);
         url.select();
         document.execCommand("copy");
         console.log("copied");
-        //var win = window.open(url, "_blank");
-        //..win.focus();
       };
     }
 
