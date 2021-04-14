@@ -316,8 +316,8 @@ onClickHandlerDirectImage = async (info, tabs) => {
   ];
 
   pageData = {
-    title: info.title,
-    source: info.url,
+    title: tabs.title,
+    source: info.pageUrl,
   };
 
   let upload = new SlateUpload();

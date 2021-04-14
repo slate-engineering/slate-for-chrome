@@ -101,6 +101,30 @@
           </div>
         </div>
       </div>
+
+      <div class="slate-setting-module" id="slate-upload-history-btn">
+        <div class="slate-module-header">Primary key</div>
+        <div class="slate-module-subheader">
+          Select the default account for direct uploads.
+          <a href="#faq-direct-uploads" class="slate-text-link">(?)</a>
+        </div>
+        <div class="slate-time-range-dropdown" id="primary-key-select">
+          <div class="slate-dropdown-title">
+            <span id="slate-dropdown-title-default"></span>
+            <object
+              id="dropdown-icon-apikey-default"
+              class="slate-icon"
+              type="image/svg+xml"
+              data="../common/svg/chevron-down.svg"
+            ></object>
+          </div>
+          <div
+            id="primary-key-select-dropdown"
+            class="slate-dropdown-options hide"
+          ></div>
+        </div>
+      </div>
+
       <div class="slate-setting-module" id="slate-upload-history-btn">
         <div class="slate-module-header">Upload history</div>
         <div class="slate-module-subheader">
@@ -137,12 +161,12 @@
           history on occasion.
         </div>
         <br />
-        <div class="slate-module-header">What is a direct upload?</div>
+        <div id="faq-direct-uploads" class="slate-module-header">
+          What is a direct upload?
+        </div>
         <div class="slate-module-subheader">
-          A direct upload skips the app UI and instantly begins the upload to
-          your primary API key.<br />
-          However, this option only uploads to your account, not to a specific
-          slate.
+          A simple, one-click upload that adds an image to your primary API
+          account, not to a specific slate.
         </div>
         <br />
         <div class="slate-module-header">
@@ -162,6 +186,20 @@
           To fix this, visit the
           <a id="link-go-to-uploads" href="#">Uploads</a> page, and click the
           "Reset upload count" button.
+        </div>
+        <br />
+        <div class="slate-module-header">
+          I found a bug, how can I report it?
+        </div>
+        <div class="slate-module-subheader">
+          Awesome! Feel free to file a new issue with a respective title and
+          description on our <br />
+          <a
+            target="_blank"
+            href="https://github.com/slate-engineering/slate-for-chrome"
+            >Github repo</a
+          >
+          with your bug report!
         </div>
       </div>
     </div>

@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .slate-page {
   background-color: var(--color-bgGrayLight);
 }
@@ -288,6 +292,10 @@
   cursor: pointer;
 }
 
+.slate-dropdown-icon-rotate {
+  transform: rotate(180deg) !important;
+}
+
 .slate-time-range-dropdown .slate-dropdown-options .slate-option.selected {
   color: var(--color-blue);
   background-color: var(--color-bgGray);
@@ -309,6 +317,16 @@
   height: 20px;
   border-radius: 50%;
   margin-right: 8px;
+}
+
+.slate-text-link {
+  color: var(--color-textGray);
+  text-decoration: none;
+}
+
+.slate-text-link:hover {
+  color: var(--color-blue);
+  text-decoration: none;
 }
 
 #noti {
