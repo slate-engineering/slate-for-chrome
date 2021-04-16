@@ -57,8 +57,7 @@ var Settings = (function () {
       },
       body: JSON.stringify({
         data: {
-          // NOTE: optional, if you want your private slates too.
-          private: false,
+          private: true,
         },
       }),
     });
@@ -161,9 +160,7 @@ var Settings = (function () {
     notification.innerHTML =
       "Imported " + api.data.slates + " slates from " + api.data.name;
     notification.className = "show";
-    if (type == "success") {
-      console.log("success");
-    } else if (type == "error") {
+    if (type == "error") {
       notification.classList.add("noti-error");
       notification.innerHTML = "There was an error adding that API key.";
     }
@@ -188,7 +185,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         apiKeys.apis[0].data.name;
     }
     for (i = 0; i < apiKeys.apis.length; i++) {
-      //console.log("hello", apiKeys.apis[i]);
       await settings.createApiKeyDropdown(apiKeys.apis[i]);
       await settings.createApiKey(apiKeys.apis[i]);
     }
@@ -224,14 +220,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   });
-
-  document
-    .getElementById("slate-open-uploads-btn")
-    .addEventListener("click", function () {
-      chrome.tabs.create({
-        url: chrome.extension.getURL("app/pages/uploads.html"),
-      });
-    });
 
   document
     .getElementById("link-go-to-uploads")

@@ -29,7 +29,7 @@ Uploads.prototype.clearUploadsNumber = async () => {
   });
 };
 
-Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
+Uploads.prototype.showUploads = (upload, filetype, status, cid, slateUrl) => {
   let uploadTable = document.getElementById("slate-uploads");
   let uploadEntries = document.createElement("div");
   let fileTypeIcon = document.createElement("div");
@@ -38,7 +38,11 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid) => {
   popOver.innerHTML =
     '<div class="slate-popover"><div class="slate-popover-item click-open-cid" data-cid="' +
     cid +
-    '" id="viewOnSlate">View file on Slate</div></div>';
+    '" data-slateUrl="' +
+    slateUrl +
+    '" id="viewOnSlate">View file on Slate</div><div class="slate-popover-item click-open-raw" data-cid="' +
+    cid +
+    '" id="viewRawFile">View raw file</div></div>';
 
   if (filetype.startsWith("image/")) {
     fileTypeIcon.innerHTML =
@@ -108,12 +112,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     sort.forEach((upload) => {
       let date = new Date(upload.date);
-      uploadInfo = [upload.name, date, upload.source];
+      let dateFormat = date.toLocaleString();
+      let str = upload.name;
+      if (upload.name.length > 45) str = upload.name.substring(0, 45) + "...";
+
+      uploadInfo = [str, dateFormat, upload.source];
+      console.log(upload);
       uploads.showUploads(
         uploadInfo,
         upload.type,
         upload.uploading,
-        upload.cid
+        upload.cid,
+        upload.slateUrl
       );
     });
 
@@ -131,6 +141,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     let openCID = document.getElementsByClassName("click-open-cid");
     for (var i = 0; i < openCID.length; i++) {
       openCID[i].onclick = function (e) {
+        let pathname = e.target.attributes["data-slateUrl"].value.split("/");
+
+        let slateUrl =
+          "https://slate.host/" +
+          pathname[3] +
+          "/cid:" +
+          e.target.attributes["data-cid"].value;
+        console.log(slateUrl);
+        let win = window.open(slateUrl, "_blank");
+        win.focus();
+      };
+    }
+
+    let openRaw = document.getElementsByClassName("click-open-raw");
+    for (var i = 0; i < openRaw.length; i++) {
+      openRaw[i].onclick = function (e) {
         let url =
           "https://slate.textile.io/ipfs/" +
           e.target.attributes["data-cid"].value;
