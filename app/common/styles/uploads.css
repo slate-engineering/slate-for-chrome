@@ -18,6 +18,10 @@
   line-height: 1.5;
 }
 
+.slate-no-click {
+  cursor: default !important;
+}
+
 .slate-subtitle {
   font-family: var(--font-family-medium);
   font-size: var(--typescale-lvl2);

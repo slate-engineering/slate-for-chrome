@@ -121,7 +121,7 @@ var SlateUpload = (function () {
     };
 
     uploadToSlate = async (fileData, apiData, pageData) => {
-      //console.log("file data:", apiData);
+      console.log("file data:", apiData);
       let date = Date.now();
       let uploadData = {
         name: apiData.data.file.file.altTitle || pageData.title,
@@ -134,6 +134,7 @@ var SlateUpload = (function () {
         url: "",
         uploading: true,
         id: apiData.data.file.file.id,
+        slateUrl: apiData.data.slate.data.url,
       };
 
       await addDataUpload(uploadData);
@@ -324,6 +325,8 @@ onClickHandlerDirectImage = async (info, tabs) => {
   upload.start(apiData, pageData, 1);
 };
 
+onClickHandlerScreenshot = async (info, tabs) => {};
+
 chrome.contextMenus.create({
   title: "Slate",
   id: "parent",
@@ -345,6 +348,16 @@ chrome.contextMenus.create({
   id: "image_direct",
   onclick: onClickHandlerDirectImage,
 });
+
+/*
+chrome.contextMenus.create({
+  title: "Take screenshot",
+  contexts: ["all"],
+  parentId: "parent",
+  id: "screenshot",
+  onclick: onClickHandlerDirectImage,
+});
+*/
 
 chrome.commands.onCommand.addListener(function (command) {
   if (command === "openSlate") {

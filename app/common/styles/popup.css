@@ -252,6 +252,7 @@
 
 .slate-list_img {
   margin: auto;
+  width: 100%;
   max-width: 100%;
   text-align: center;
   height: auto;
@@ -259,8 +260,10 @@
 }
 
 .slate-img-container {
+  border: 2px solid var(--color-white);
   position: relative;
   margin-bottom: 16px;
+  height: auto;
 }
 
 .slate-img-container.selected {
@@ -403,7 +406,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 8px 12px 8px 16px;
+  padding: 0px 12px 8px 16px;
   border-radius: 4px;
   background-color: var(--color-bgGrayLight);
   margin-right: 12px;
@@ -593,6 +596,10 @@
   height: 100%;
   max-height: 100%;
   margin: 0 auto;
+}
+
+.slate-icon-position {
+  padding-top: 6px;
 }
 
 .slate-success {
