@@ -123,6 +123,13 @@ var SlateUpload = (function () {
     uploadToSlate = async (fileData, apiData, pageData) => {
       console.log("file data:", apiData);
       let date = Date.now();
+      let isSlateUpload;
+      if (!apiData.data.slate.id) {
+        isSlateUpload = null;
+      } else {
+        isSlateUpload = apiData.data.slate.data.url;
+      }
+
       let uploadData = {
         name: apiData.data.file.file.altTitle || pageData.title,
         type: "image/jpeg",
@@ -134,7 +141,7 @@ var SlateUpload = (function () {
         url: "",
         uploading: true,
         id: apiData.data.file.file.id,
-        slateUrl: apiData.data.slate.data.url,
+        slateUrl: isSlateUpload,
       };
 
       await addDataUpload(uploadData);
