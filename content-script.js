@@ -8,7 +8,7 @@ var SlateApp = (function () {
   this.currentUploadNum = 0;
 
   this.pageData = {
-    title: document.title,
+    title: document.title || "No title found",
     source: window.location.href,
   };
 
@@ -24,11 +24,28 @@ var SlateApp = (function () {
           if (isIdUploading.uploading) {
             return;
           } else {
+            console.log("done: ", isIdUploading);
             let spinner = document.getElementById(id + "-spinner");
             spinner.classList.remove("slate-loaderspinner");
             spinner.classList.add("slate-success");
             spinner.innerHTML =
               '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+            let divClick = document.getElementById(
+              "slate-upload-contatiner-" + id
+            );
+            divClick.classList.add("slate-add-link");
+            divClick.onclick = function () {
+              let pathname = isIdUploading.slateUrl.split("/");
+              let slateUrl =
+                "https://slate.host/" +
+                pathname[3] +
+                "/cid:" +
+                isIdUploading.cid;
+              let win = window.open(slateUrl, "_blank");
+              win.focus();
+            };
+
             return;
           }
         }
@@ -39,6 +56,7 @@ var SlateApp = (function () {
       files.map((item) => {
         let div = document.createElement("div");
         div.className = "slate-upload-file-module";
+        div.id = "slate-upload-contatiner-" + item.file.id;
         let container = document.createElement("div");
         container.className = "slate-upload-file";
         let spinner = document.createElement("div");

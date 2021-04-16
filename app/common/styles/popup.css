@@ -285,8 +285,8 @@
 
 .slate-custom-checkbox {
   position: absolute;
-  left: 20px;
-  bottom: 20px;
+  left: 16px;
+  bottom: 16px;
   cursor: pointer;
   height: 24px;
   width: 24px;
@@ -609,6 +609,10 @@
 .slate-success-alert {
   background-color: RGBA(0, 104, 55, 0.1) !important;
   color: #006837 !important;
+}
+
+.slate-add-link {
+  cursor: pointer !important;
 }
 
 @media only screen and (min-width: 1024px) {
