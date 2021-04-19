@@ -512,8 +512,26 @@ var SlateApp = (function () {
               .appendChild(slateApiContainer);
             //let mySlates = await getSlates(slate.data.key)
             //console.log('my slates:', mySlates)
-            if (!slate.slates) {
+            if (slate.slates.length == 0) {
               console.log("no slates");
+              let slateContainer = document.createElement("div");
+              slateContainer.className = "slate-item";
+              let slateIcon = document.createElement("div");
+              slateIcon.classList.add("slate-icon-position");
+              slateIcon.innerHTML =
+                '<svg id="not-selected" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>';
+              let slateName = document.createElement("div");
+              slateName.innerHTML = "Create a slate";
+              slateContainer.appendChild(slateIcon);
+              slateContainer.appendChild(slateName);
+              document
+                .getElementById("slate-" + slate.data.name)
+                .appendChild(slateContainer);
+              slateContainer.onclick = async () => {
+                window
+                  .open("https://slate.host/_?scene=NAV_SLATES", "_blank")
+                  .focus();
+              };
             }
             slate.slates.forEach((item, i) => {
               var slateContainer = document.createElement("div");
