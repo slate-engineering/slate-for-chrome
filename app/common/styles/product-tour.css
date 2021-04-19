@@ -68,15 +68,23 @@
   transition: color 200ms ease-in-out;
 }
 
-.slate-product-tour-module .slate-module-header {
-  font-family: var(--font-family-semiBold);
-  font-size: var(--typescale-lvl2);
+.slate-product-tour-module {
+  font-family: "inter-semiBold", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif !important;
+  font-size: 24px !important;
+  color: var(--color-textBlack);
+}
+
+.slate-module-header {
+  font-family: "inter-semiBold", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif !important;
+  font-size: 16px !important;
   color: var(--color-textBlack);
 }
 
 .slate-product-tour-module .slate-module-subheader {
-  font-family: var(--font-family-text);
-  font-size: var(--typescale-lvl1);
+  font-family: "inter-regular", -apple-system, BlinkMacSystemFont, arial, sans-serif; !important;
+  font-size: 12px !important;
   color: var(--color-textGray);
   margin-bottom: 20px;
 }
@@ -100,6 +108,10 @@
   background-image: url("https://slate.textile.io/ipfs/bafybeia7qbolrhtqkwcko7hbq3bf6l66ttw55wx6zkrg7l4lez5ekwge3u");
 }
 
+.slate-product-tour-module .slate-image.pin {
+  background-image: url("https://slate.textile.io/ipfs/bafybeia7qbolrhtqkwcko7hbq3bf6l66ttw55wx6zkrg7l4lez5ekwge3u");
+}
+
 .slate-product-tour-module .slate-action-line {
   display: flex;
   align-items: center;
@@ -112,7 +124,10 @@
   height: 100%;
 }
 
-.slate-product-tour-module .slate-action-line .slate-progress-indicators .slate-progress-indicator {
+.slate-product-tour-module
+  .slate-action-line
+  .slate-progress-indicators
+  .slate-progress-indicator {
   width: 8px;
   height: 8px;
   background-color: var(--color-bgGray);
@@ -123,12 +138,18 @@
   transition: background-color 200ms ease-in-out;
 }
 
-.slate-product-tour-module .slate-action-line .slate-progress-indicators .slate-progress-indicator.inactive:hover {
+.slate-product-tour-module
+  .slate-action-line
+  .slate-progress-indicators
+  .slate-progress-indicator.inactive:hover {
   background-color: var(--color-gray50);
   transition: background-color 200ms ease-in-out;
 }
 
-.slate-product-tour-module .slate-action-line .slate-progress-indicators .slate-progress-indicator.selected {
+.slate-product-tour-module
+  .slate-action-line
+  .slate-progress-indicators
+  .slate-progress-indicator.selected {
   background-color: var(--color-gray80);
   cursor: default;
 }

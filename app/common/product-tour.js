@@ -25,6 +25,7 @@ _handleNavigation = () => {
     "slate-secondary-button next"
   );
   for (let i = 0; i < nextTourButtons.length; i++) {
+    console.log(nextTourButtons[i]);
     nextTourButtons[i].addEventListener("click", () =>
       changeStep(tourWrapper, productTours, i, nextTourButtons[i])
     );
@@ -92,5 +93,7 @@ closeCurrentTour = (productTours, stepNumber) => {
 };
 
 closeTour = () => {
-  window.location.assign("/");
+  let isWindowLocation = window.location.toString();
+  let isDoneTour = isWindowLocation.split(/[?]/)[0];
+  window.location.href = isDoneTour;
 };
