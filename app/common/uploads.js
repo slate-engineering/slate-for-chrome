@@ -35,8 +35,15 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid, slateUrl) => {
   let fileTypeIcon = document.createElement("div");
   let popOver = document.createElement("div");
 
+  var username = "n/a";
+  if (slateUrl) {
+    let pathname = slateUrl.split("/");
+    username = pathname[3];
+  }
   popOver.innerHTML =
-    '<div class="slate-popover"><div class="slate-popover-item click-open-cid" data-cid="' +
+    '<div class="slate-popover"><div class="slate-popover-item slate-no-link">Account: ' +
+    username +
+    '</div><hr style="border: 0.5px solid #f8f8f8"/><div class="slate-popover-item click-open-cid" data-cid="' +
     cid +
     '" data-slateUrl="' +
     slateUrl +
