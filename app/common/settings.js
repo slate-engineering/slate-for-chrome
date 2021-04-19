@@ -84,6 +84,11 @@ var Settings = (function () {
     return acceptedImages;
   };
 
+  Settings.prototype.clearUploadsNumber = async () => {
+    let currentUploads = 0;
+    chrome.storage.local.set({ currentUploads: currentUploads });
+  };
+
   Settings.prototype.newApiKey = (api) => {
     let APIInput = document.getElementById("existing-keys");
     let newAPIInput = document.createElement("div");
@@ -220,14 +225,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   });
-
-  document
-    .getElementById("link-go-to-uploads")
-    .addEventListener("click", function () {
-      chrome.tabs.create({
-        url: chrome.extension.getURL("app/pages/uploads.html"),
-      });
-    });
 
   document
     .getElementById("primary-key-select")
@@ -377,7 +374,7 @@ document
       if (nameValue) {
         name = nameValue;
       } else {
-        name = validate.user.data.name;
+        name = validate.user.username || validate.user.data.name;
       }
       let api = {
         data: {
@@ -391,7 +388,23 @@ document
       settings.saveApiKey(api);
       let type = "success";
       settings.notification(api, type);
+      location.reload();
+
       //setttings.openConfirmModal(text, img, btn)
       //document.getElementById("slate-modal").style.display = "fixed";
+    }
+  });
+
+document
+  .getElementById("clear-upload-num-btn")
+  .addEventListener("click", function (e) {
+    let modal = confirm(
+      "Use this if your files have uploaded to Slate, but the app still shows an in-progress upload. Are you sure you want to clear?"
+    );
+    if (modal == true) {
+      settings.clearUploadsNumber();
+      location.reload();
+    } else {
+      return;
     }
   });
