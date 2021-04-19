@@ -8,7 +8,7 @@ var SlateApp = (function () {
   this.currentUploadNum = 0;
 
   this.pageData = {
-    title: document.title || "No title found",
+    title: document.title,
     source: window.location.href,
   };
 
@@ -130,38 +130,78 @@ var SlateApp = (function () {
               .addEventListener("click", () => {
                 uploadQueue = origFiles;
                 uploadQueueNum = origFiles.length;
-                document
+                let isChecked = document
                   .getElementById("actual-select-all-check")
-                  .classList.toggle("checked");
-                for (let i = 0; i < uploadQueue.length; i++) {
-                  //console.log(uploadQueue[i].file.id);
-                  let checkbox = document.getElementById(
-                    "check-" + uploadQueue[i].file.id
-                  );
-                  let customCheck = document.getElementById(
-                    "customCheck-" + uploadQueue[i].file.id
-                  );
+                  .classList.contains("checked");
+                if (isChecked) {
+                  document
+                    .getElementById("actual-select-all-check")
+                    .classList.toggle("checked");
 
-                  let img = document.getElementById(
-                    "img-item-" + uploadQueue[i].file.id
-                  );
-                  let customCheckIcon = customCheck.childNodes[0];
-                  checkbox.checked = true;
-                  customCheck.className = "slate-custom-checkbox checked";
-                  customCheckIcon.classList.add("checked");
-                  img.classList.add("selected");
-                }
+                  for (let i = 0; i < uploadQueue.length; i++) {
+                    //console.log(uploadQueue[i].file.id);
+                    let checkbox = document.getElementById(
+                      "check-" + uploadQueue[i].file.id
+                    );
+                    let customCheck = document.getElementById(
+                      "customCheck-" + uploadQueue[i].file.id
+                    );
 
-                document
-                  .getElementById("slate-upload-btn")
-                  .classList.remove("disabled");
-
-                if (this.uploadQueueNum == 1) {
+                    let img = document.getElementById(
+                      "img-item-" + uploadQueue[i].file.id
+                    );
+                    let customCheckIcon = customCheck.childNodes[0];
+                    checkbox.checked = false;
+                    customCheck.className = "slate-custom-checkbox";
+                    customCheckIcon.classList.remove("checked");
+                    img.classList.remove("selected");
+                  }
+                  document
+                    .getElementById("slate-upload-btn")
+                    .classList.add("disabled");
+                  uploadQueue = [];
+                  uploadQueueNum = 0;
                   document.getElementById("slate-popup-title-name").innerHTML =
-                    "Upload 1 file to Slate";
+                    "Select a file to upload";
+                  console.log(uploadQueue);
                 } else {
-                  document.getElementById("slate-popup-title-name").innerHTML =
-                    "Upload " + uploadQueueNum + " files to Slate";
+                  document
+                    .getElementById("actual-select-all-check")
+                    .classList.toggle("checked");
+                  for (let i = 0; i < uploadQueue.length; i++) {
+                    //console.log(uploadQueue[i].file.id);
+                    let checkbox = document.getElementById(
+                      "check-" + uploadQueue[i].file.id
+                    );
+                    let customCheck = document.getElementById(
+                      "customCheck-" + uploadQueue[i].file.id
+                    );
+
+                    let img = document.getElementById(
+                      "img-item-" + uploadQueue[i].file.id
+                    );
+                    let customCheckIcon = customCheck.childNodes[0];
+                    checkbox.checked = true;
+                    customCheck.className = "slate-custom-checkbox checked";
+                    customCheckIcon.classList.add("checked");
+                    img.classList.add("selected");
+                  }
+                  /*
+                  document
+                    .getElementById("slate-upload-btn")
+                    .classList.remove("disabled");
+                  */
+                  if (this.uploadQueueNum == 1) {
+                    document.getElementById(
+                      "slate-popup-title-name"
+                    ).innerHTML = "Upload 1 file to Slate";
+                  } else {
+                    document.getElementById(
+                      "slate-popup-title-name"
+                    ).innerHTML =
+                      "Upload " + uploadQueueNum + " files to Slate";
+                  }
+                  console.log(uploadQueue);
                 }
                 //console.log("queue:", uploadQueue);
               });
@@ -180,29 +220,54 @@ var SlateApp = (function () {
             document
               .getElementById("slate-upload-btn")
               .addEventListener("click", () => {
-                //console.log("Upload queue:", uploadQueue);
-                var isUploadQueue = JSON.stringify(uploadQueue);
-                var isPageTitle = JSON.stringify(pageData);
-                var isApiData = JSON.stringify(uploadQueueSlates);
+                let isDisabled = document
+                  .getElementById("slate-upload-btn")
+                  .classList.contains("disabled");
 
-                chrome.runtime.sendMessage({
-                  uploadData: "slate",
-                  data: isUploadQueue,
-                  page: isPageTitle,
-                  api: isApiData,
-                });
+                if (isDisabled || uploadQueueSlates.length == 0) {
+                  console.log("do nothing");
+                } else {
+                  var uploadArray = [];
+                  uploadQueue.forEach((item) => {
+                    console.log("upload slates btn: ", uploadQueueSlates);
+                    uploadQueueSlates.forEach((slate, i) => {
+                      //console.log(item);
+                      let isUploadData = {
+                        file: item,
+                        slate: slate.slate,
+                        api: slate.api,
+                      };
+                      uploadArray.push({ data: isUploadData });
+                      console.log("data main: ", isUploadData);
+                    });
+                  });
 
-                document
-                  .getElementById("slate-drawer-upload")
-                  .classList.toggle("active");
-                document.getElementById(
-                  "slate-uploads-back-icon"
-                ).style.display = "inline";
-                document
-                  .getElementById("slate-drawer-upload-progress")
-                  .classList.toggle("active");
+                  console.log("Final upload array: ", uploadArray);
 
-                loadUploads(uploadQueue);
+                  //console.log("Upload queue:", uploadQueue);
+                  var isUploadQueue = JSON.stringify(uploadQueue);
+                  var isPageTitle = JSON.stringify(pageData);
+                  var isApiData = JSON.stringify(uploadArray);
+
+                  chrome.runtime.sendMessage({
+                    uploadData: "slate",
+                    data: isUploadQueue,
+                    page: isPageTitle,
+                    api: isApiData,
+                  });
+
+                  document
+                    .getElementById("slate-drawer-upload")
+                    .classList.toggle("active");
+                  document.getElementById(
+                    "slate-uploads-back-icon"
+                  ).style.display = "inline";
+                  document
+                    .getElementById("slate-drawer-upload-progress")
+                    .classList.toggle("active");
+
+                  loadUploads(uploadQueue);
+                }
               });
 
             return true;
@@ -333,13 +398,20 @@ var SlateApp = (function () {
                   //console.log("objIndex", objIndex);
                   const updatedQueue = this.uploadQueue.splice(objIndex, 1);
                   this.uploadQueueNum--;
+                  if (this.uploadQueueNum == 0) {
+                    document
+                      .getElementById("slate-upload-btn")
+                      .classList.add("disabled");
+                  }
                   //this.uploadQueue = updatedQueue;
                   //console.log("final upload queue", this.uploadQueue);
                 }
                 if (this.uploadQueueNum > 0) {
-                  document
-                    .getElementById("slate-upload-btn")
-                    .classList.remove("disabled");
+                  if (uploadQueueSlates.length > 0) {
+                    document
+                      .getElementById("slate-upload-btn")
+                      .classList.remove("disabled");
+                  }
 
                   if (this.uploadQueueNum == 1) {
                     document.getElementById(
@@ -404,14 +476,14 @@ var SlateApp = (function () {
 
           apiKeys.forEach((slate) => {
             //console.log("Slate info: ", slate);
-
             var slateApiContainer = document.createElement("div");
             slateApiContainer.className = "slate-api";
             slateApiContainer.id = "slate-" + slate.data.name;
             slateApiDisplay = document.createElement("div");
-            slateApiDisplay.className = "slate-item-display";
+            //slateApiDisplay.className = "slate-item-display-hide";
 
             slateApiContainer.onclick = () => {
+              console.log("hi");
               slateApiDisplay.classList.toggle("slate-item-display");
             };
 
@@ -438,25 +510,98 @@ var SlateApp = (function () {
             document
               .getElementById("list-slates")
               .appendChild(slateApiContainer);
-
             //let mySlates = await getSlates(slate.data.key)
             //console.log('my slates:', mySlates)
+            if (!slate.slates) {
+              console.log("no slates");
+            }
             slate.slates.forEach((item, i) => {
-              let slateContainer = document.createElement("div");
+              var slateContainer = document.createElement("div");
               slateContainer.className = "slate-item";
               //slateContainer.setAttribute("data-slateId", slate.id);
               slateContainer.onclick = async () => {
+                let isSelected = slateContainer.classList.contains(
+                  "slate-selected"
+                );
+                console.log(isSelected);
+
+                console.log("slates: ", this.uploadQueueSlates);
+
+                var isFinalUpload = {
+                  api: slate.data.key,
+                  slate: item,
+                };
+                if (isSelected) {
+                  console.log("selected", isFinalUpload);
+                  for (let i = 0; i < this.uploadQueueSlates.length; i++) {
+                    console.log(i);
+                    if (
+                      this.uploadQueueSlates[i].slate.slatename ==
+                      isFinalUpload.slate.slatename
+                    ) {
+                      console.log("yes this is the same");
+                      this.uploadQueueSlates.splice(i, 1);
+                    }
+                  }
+                  console.log("after remove final: ", this.uploadQueueSlates);
+                } else {
+                  console.log("not selected");
+                  this.uploadQueueSlates.push(isFinalUpload);
+                  console.log("inside after: ", this.uploadQueueSlates);
+                }
+
+                if (uploadQueueNum > 0) {
+                  document
+                    .getElementById("slate-upload-btn")
+                    .classList.remove("disabled");
+                }
+
+                /*
                 let slateArray = uploadQueue.map((fileData) => {
                   //console.log("slate: ", slate);
-                  let data = {
+                  var data = {
                     api: slate.data.key,
                     slate: item,
                     file: fileData,
                   };
-                  this.uploadQueueSlates.push({ data });
+                  //console.log("data:", data);
+
+                  let isSelected = slateContainer.classList.contains(
+                    "slate-selected"
+                  );
+                  if (isSelected) {
+                    for (let i = 0; i < this.uploadQueueSlates.length; i++) {
+                      console.log(i);
+                      if (
+                        this.uploadQueueSlates[i].data.slate.slatename ==
+                        data.slate.slatename
+                      ) {
+                        console.log("yes this is the same");
+                        this.uploadQueueSlates.splice(i, 1);
+                      }
+                    }
+                  } else {
+                    this.uploadQueueSlates.push({ data });
+                    console.log("inside after: ", this.uploadQueueSlates);
+                  }
+
+                  console.log("FINAL QUEUE: ", this.uploadQueueSlates);
+                  if (uploadQueueNum > 0) {
+                    document
+                      .getElementById("slate-upload-btn")
+                      .classList.remove("disabled");
+                  }
+
                   return data;
                 });
+                */
+
                 //console.log("Slate added to queue: ", this.uploadQueueSlates);
+                if (uploadQueueNum > 0) {
+                  document
+                    .getElementById("slate-upload-btn")
+                    .classList.remove("disabled");
+                }
                 slateContainer.classList.toggle("slate-selected");
               };
 
@@ -581,8 +726,9 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
     await app.getPageData();
     await app.init();
     var isUploading = await app.getUploadNum();
+    var isCheckUploads;
     if (isUploading.currentUploads > 0) {
-      const isCheckUploads = setInterval(async () => {
+      isCheckUploads = setInterval(async () => {
         currentUploadNum = await app.getUploadNum();
         if (currentUploadNum == 0) {
           clearInterval(isCheckUploads);
