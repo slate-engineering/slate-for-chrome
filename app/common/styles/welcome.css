@@ -125,6 +125,7 @@ html {
   margin-bottom: 24px;
   white-space: nowrap;
   cursor: pointer;
+  position: relative;
 }
 
 .slate-helper-button.active,
@@ -169,8 +170,15 @@ html {
 }
 
 .slate-info {
-  margin-right: 8px;
+  margin-right: 0px;
+  padding-top: 0px !important;
   width: 20px;
+}
+
+.slate-info-text {
+  margin-left: 8px;
+  margin-bottom: 16px;
+  position: absolute;
 }
 
 .slate-column {
