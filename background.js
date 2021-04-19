@@ -245,6 +245,8 @@ var SlateUpload = (function () {
       console.log("All files uploaded");
     };
 
+    //console.log(pageData);
+
     addDataUploadNumber(numFiles);
     processArray(props, pageData);
   };
@@ -328,6 +330,8 @@ onClickHandlerDirectImage = async (info, tabs) => {
     source: info.pageUrl,
   };
 
+  //console.log(pageData);
+
   let upload = new SlateUpload();
   upload.start(apiData, pageData, 1);
 };
@@ -349,7 +353,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-  title: "Direct upload",
+  title: "Upload",
   contexts: ["image"],
   parentId: "parent",
   id: "image_direct",
