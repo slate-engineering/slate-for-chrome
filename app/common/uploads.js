@@ -77,16 +77,6 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid, slateUrl) => {
   uploadTable.appendChild(uploadEntries);
 };
 
-Uploads.prototype.removeUpload = () => {
-  //TODO (@Tara/@Jason): remove single file upload data
-};
-Uploads.prototype.removeUploads = () => {
-  //TODO (@Tara/@Jason): remove all upload data
-};
-Uploads.prototype.copyFileUrl = () => {
-  //TODO (@Tara/@Jason): copy file url
-};
-
 Uploads.prototype.toggleDropdownDisplay = () => {
   let dropdownBtns = document.getElementsByClassName("slate-dropdown");
   for (let dropdownBtn of dropdownBtns) {
@@ -183,20 +173,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log("copied");
       };
     }
-
-    document
-      .getElementById("clear-upload-num-btn")
-      .addEventListener("click", function (e) {
-        let modal = confirm(
-          "Use this if your files have uploaded to Slate, but the app still shows an in-progress upload."
-        );
-        if (modal == true) {
-          uploads.clearUploadsNumber();
-          location.reload();
-        } else {
-          return;
-        }
-      });
 
     document
       .getElementById("clear-history-btn")

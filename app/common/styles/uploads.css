@@ -8,6 +8,7 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1440px;
+  position: relative;
 }
 
 .slate-title {
@@ -139,4 +140,14 @@
   align-items: center;
   transition: all 200ms ease-in-out;
   cursor: pointer;
+}
+
+.slate-no-link {
+  cursor: default !important;
+}
+
+.slate-right-menu {
+  right: 56px;
+  position: absolute;
+  display: inline-block;
 }
