@@ -125,16 +125,21 @@ var SlateUpload = (function () {
       let date = Date.now();
       let isSlateUpload;
       if (!apiData.data.slate.id) {
-        isSlateUpload = null;
+        isSlateUpload = "https://slate.host/";
       } else {
         isSlateUpload = apiData.data.slate.data.url;
       }
 
+      let checkPageData = pageData.title;
+      if (!pageData.title) {
+        checkPageData = "No title found";
+      }
+
       let uploadData = {
-        name: apiData.data.file.file.altTitle || pageData.title,
+        name: apiData.data.file.file.altTitle || checkPageData,
         type: "image/jpeg",
         source: pageData.source,
-        sourceTitle: pageData.title,
+        sourceTitle: checkPageData,
         originalFile: apiData.data.file.file.src,
         cid: "",
         date: date,
