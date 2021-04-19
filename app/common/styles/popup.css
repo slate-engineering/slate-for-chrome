@@ -129,7 +129,10 @@
   height: 55%;
   max-height: 60%;
   overflow-y: scroll;
+  overflow-x: hidden;
   margin-bottom: 24px;
+  font-family: var(--font-family-medium) !important;
+  font-size: var(--typescale-lvl2) !important;
 }
 
 .slate-api {
@@ -156,6 +159,8 @@
 }
 
 .slate-name {
+  padding-top: 8px;
+  padding-bottom: 8px;
   display: flex;
   align-items: center;
 }
@@ -188,11 +193,11 @@
 }
 
 .slate-item-display {
-  display: flex;
+  display: flex !important;
 }
 
 .slate-item-display-hide {
-  display: flex !important;
+  display: none !important;
 }
 
 .slate-item.checked {
@@ -298,7 +303,10 @@
 
 .slate-custom-checkbox.checked {
   background: var(--color-blue);
+  border-radius: 4px;
   border: none;
+  height: 24px;
+  width: 24px;
 }
 
 .slate-custom-checkbox-icon {
@@ -523,7 +531,7 @@
   flex-wrap: wrap;
   width: calc(100% + 48px);
   font-family: var(--font-family-text) !important;
-  font-size: var(--typescale-lvl1) !important;
+  font-size: 16px !important;
   font-weight: 400;
   margin: 0 -24px 24px -24px;
 }
