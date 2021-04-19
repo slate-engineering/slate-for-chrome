@@ -92,7 +92,12 @@ var SlateUpload = (function () {
     removeDataUploadNumber = async () => {
       chrome.storage.local.get(["currentUploads"], (result) => {
         let num = parseInt(result.currentUploads);
-        num--;
+        if (num == 0 || num < 0) {
+          num = 0;
+        } else {
+          num--;
+        }
+
         chrome.storage.local.set({ currentUploads: num }, function () {
           //console.log("removed upload num");
         });
@@ -110,7 +115,6 @@ var SlateUpload = (function () {
             uploads[i].uploading = false;
             uploads[i].cid = props.data.cid;
             uploads[i].url = props.url;
-            break; //Stop this loop
           }
         }
         chrome.storage.local.set({ uploads: uploads }, function () {
