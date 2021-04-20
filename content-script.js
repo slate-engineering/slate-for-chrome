@@ -268,6 +268,9 @@ var SlateApp = (function () {
                   document.getElementById(
                     "slate-uploads-back-icon"
                   ).style.display = "inline";
+                  document.getElementById("slate-upload-alert").style.display =
+                    "none";
+
                   document
                     .getElementById("slate-drawer-upload-progress")
                     .classList.toggle("active");
