@@ -614,6 +614,10 @@
   color: #006837 !important;
 }
 
+.slate-error {
+  color: #c71313 !important;
+}
+
 .slate-success-alert {
   background-color: RGBA(0, 104, 55, 0.1) !important;
   color: #006837 !important;

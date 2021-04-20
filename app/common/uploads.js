@@ -106,8 +106,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (existingUploads.uploads.length > 0) {
     let sort = existingUploads.uploads.reverse();
+    const isSuccessful = sort.filter((success) => success.uploading != "error");
 
-    sort.forEach((upload) => {
+    isSuccessful.forEach((upload) => {
       let date = new Date(upload.date);
       let dateFormat = date.toLocaleString();
       let str = upload.name;

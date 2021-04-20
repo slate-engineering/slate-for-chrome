@@ -21,7 +21,13 @@ var SlateApp = (function () {
       chrome.storage.local.get(["uploads"], (result) => {
         let isIdUploading = result.uploads.find((x) => x.id === id);
         if (isIdUploading) {
-          if (isIdUploading.uploading) {
+          if (isIdUploading.uploading == "error") {
+            let spinner = document.getElementById(id + "-spinner");
+            spinner.classList.remove("slate-loaderspinner");
+            spinner.classList.add("slate-error");
+            spinner.innerHTML =
+              '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+          } else if (isIdUploading.uploading) {
             return;
           } else {
             console.log("done: ", isIdUploading);
@@ -45,7 +51,6 @@ var SlateApp = (function () {
               let win = window.open(slateUrl, "_blank");
               win.focus();
             };
-
             return;
           }
         }
@@ -64,7 +69,8 @@ var SlateApp = (function () {
         spinner.id = item.file.id + "-spinner";
         let fileName = document.createElement("div");
         fileName.className = "slate-upload-file-name";
-        fileName.innerHTML = item.file.altTitle || "No title";
+        fileName.innerHTML =
+          item.file.altTitle || this.pageData.title || "No title";
 
         div.appendChild(container);
         container.appendChild(spinner);
@@ -764,7 +770,7 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
         id: isSingleId,
         page_position: null,
         type: "img",
-        altTitle: null,
+        altTitle: this.pageData.title,
         height: null,
         width: null,
       };

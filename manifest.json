@@ -9,8 +9,7 @@
     "storage",
     "https://slate.host/",
     "<all_urls>",
-    "unlimitedStorage",
-    "webNavigation"
+    "unlimitedStorage"
   ],
   "background": {
     "scripts": ["background.js"]

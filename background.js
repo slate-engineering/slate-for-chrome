@@ -82,9 +82,7 @@ var SlateUpload = (function () {
         let num = parseInt(result.currentUploads);
         let curr = parseInt(props);
         let final = num + curr;
-        chrome.storage.local.set({ currentUploads: final }, function () {
-          //console.log("saved locally");
-        });
+        chrome.storage.local.set({ currentUploads: final });
       });
       return true;
     };
@@ -97,10 +95,7 @@ var SlateUpload = (function () {
         } else {
           num--;
         }
-
-        chrome.storage.local.set({ currentUploads: num }, function () {
-          //console.log("removed upload num");
-        });
+        chrome.storage.local.set({ currentUploads: num });
       });
       return true;
     };
@@ -117,9 +112,22 @@ var SlateUpload = (function () {
             uploads[i].url = props.url;
           }
         }
-        chrome.storage.local.set({ uploads: uploads }, function () {
-          //console.log("saved locally");
-        });
+        chrome.storage.local.set({ uploads: uploads });
+      });
+      return true;
+    };
+
+    updateDataError = async (uploadId) => {
+      //console.log("look at props", props);
+      chrome.storage.local.get(["uploads"], (result) => {
+        let uploads = result.uploads;
+
+        for (var i in uploads) {
+          if (uploads[i].id == uploadId) {
+            uploads[i].uploading = "error";
+          }
+        }
+        chrome.storage.local.set({ uploads: uploads });
       });
       return true;
     };
@@ -231,7 +239,6 @@ var SlateUpload = (function () {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // NOTE: your API key
           Authorization: "Basic " + fileData.data.api,
         },
         body: JSON.stringify({
@@ -244,17 +251,33 @@ var SlateUpload = (function () {
       return json;
     };
 
+    const delay = async (ms) => new Promise((res) => setTimeout(res, ms));
+
     processArray = async (array, pageData) => {
+      var pos = 0;
       for (const file of array) {
-        let data = await convertToData(file.data.file);
-        await uploadToSlate(data, file, pageData);
-        //let slateData = await getSlateData(file);
+        pos++;
+        console.log("pos: ", pos);
+        if (pos == 3) {
+          console.log("starting delay");
+          await delay(10000);
+          console.log("done delay", pos);
+          pos = 0;
+        }
+        //console.log("array: ", array[0].data.file.file.id);
+        try {
+          let data = await convertToData(file.data.file);
+          await uploadToSlate(data, file, pageData);
+        } catch (err) {
+          let id = file.data.file.file.id;
+          await updateDataError(id);
+          await removeDataUploadNumber();
+          console.log("failed to fetch");
+        }
         console.log("Next file");
       }
       console.log("All files uploaded");
     };
-
-    //console.log(pageData);
 
     addDataUploadNumber(numFiles);
     processArray(props, pageData);
@@ -338,8 +361,6 @@ onClickHandlerDirectImage = async (info, tabs) => {
     title: tabs.title,
     source: info.pageUrl,
   };
-
-  //console.log(pageData);
 
   let upload = new SlateUpload();
   upload.start(apiData, pageData, 1);
