@@ -5,7 +5,7 @@
 
 The official Slate Chrome Store install will be updated at a later version. 
 
-<img width="1012" alt="Slate Extension v2" src="https://user-images.githubusercontent.com/60402678/113448202-9f407800-93b8-11eb-99fe-49b4e7ebbddb.png">
+<img width="1012" alt="Slate Extension v2" src="https://user-images.githubusercontent.com/60402678/115925602-a5b59300-a43e-11eb-97ef-f03a87fe2220.png">
 
 ## How to test locally
 
