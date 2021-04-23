@@ -7,6 +7,11 @@ var SlateApp = (function () {
   this.origFiles = [];
   this.currentUploadNum = 0;
 
+  //timeouts
+  this.isCheckUploads = null;
+  this.isCheckUploadsQueue = null;
+  this.isSuccessfulUploads = 0;
+
   this.pageData = {
     title: document.title,
     source: window.location.href,
@@ -19,7 +24,10 @@ var SlateApp = (function () {
   SlateApp.prototype.init = async () => {
     checkUploadStatus = async (id) => {
       chrome.storage.local.get(["uploads"], (result) => {
-        let isIdUploading = result.uploads.find((x) => x.id === id);
+        var isIdUploading;
+        if (result.uploads.length > 0) {
+          isIdUploading = result.uploads.find((x) => x.id === id);
+        }
         if (isIdUploading) {
           if (isIdUploading.uploading == "error") {
             let spinner = document.getElementById(id + "-spinner");
@@ -27,10 +35,13 @@ var SlateApp = (function () {
             spinner.classList.add("slate-error");
             spinner.innerHTML =
               '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+            const hi = "1";
+            return;
           } else if (isIdUploading.uploading) {
             return;
           } else {
-            console.log("done: ", isIdUploading);
+            //console.log("done: ", isIdUploading);
+            this.isSuccessfulUploads++;
             let spinner = document.getElementById(id + "-spinner");
             spinner.classList.remove("slate-loaderspinner");
             spinner.classList.add("slate-success");
@@ -42,13 +53,10 @@ var SlateApp = (function () {
             );
             divClick.classList.add("slate-add-link");
             divClick.onclick = function () {
-              let pathname = isIdUploading.slateUrl.split("/");
-              let slateUrl =
-                "https://slate.host/" +
-                pathname[3] +
-                "/cid:" +
-                isIdUploading.cid;
-              let win = window.open(slateUrl, "_blank");
+              console.log("isIdUploading: ", isIdUploading);
+              let pathname =
+                isIdUploading.slateUrl + "/cid:" + isIdUploading.cid;
+              let win = window.open(pathname, "_blank");
               win.focus();
             };
             return;
@@ -78,11 +86,11 @@ var SlateApp = (function () {
         document.getElementById("slate-upload-file-modules").appendChild(div);
       });
 
-      setInterval(() => {
+      this.isCheckUploadsQueue = setInterval(async () => {
         let isUploadIds = uploadQueue.map((x) => x.file.id);
         for (let i = 0; i < isUploadIds.length; i++) {
           let id = isUploadIds[i];
-          checkUploadStatus(id);
+          await checkUploadStatus(id);
         }
       }, 1000);
     };
@@ -519,7 +527,6 @@ var SlateApp = (function () {
             document
               .getElementById("list-slates")
               .appendChild(slateApiContainer);
-            //let mySlates = await getSlates(slate.data.key)
             //console.log('my slates:', mySlates)
             if (slate.slates.length == 0) {
               console.log("no slates");
@@ -657,24 +664,6 @@ var SlateApp = (function () {
     }
   };
 
-  SlateApp.prototype.getSlates = async (props) => {
-    const response = await fetch("https://slate.host/api/v1/get", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // NOTE: your API key
-        Authorization: "Basic " + props,
-      },
-      body: JSON.stringify({
-        data: {
-          private: true,
-        },
-      }),
-    });
-    const data = await response.json();
-    return data;
-  };
-
   SlateApp.prototype.getApiKeys = async () => {
     getKey = async (key) => {
       const response = await fetch("https://slate.host/api/v1/get", {
@@ -753,12 +742,11 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
     await app.getPageData();
     await app.init();
     var isUploading = await app.getUploadNum();
-    var isCheckUploads;
     if (isUploading.currentUploads > 0) {
-      isCheckUploads = setInterval(async () => {
+      this.isCheckUploads = setInterval(async () => {
         currentUploadNum = await app.getUploadNum();
-        if (currentUploadNum == 0) {
-          clearInterval(isCheckUploads);
+        if (currentUploadNum.currentUploads === 0) {
+          clearInterval(this.isCheckUploads);
         }
       }, 1000);
     }
