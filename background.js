@@ -133,13 +133,14 @@ var SlateUpload = (function () {
     };
 
     uploadToSlate = async (fileData, apiData, pageData) => {
-      console.log("file data:", apiData);
+      //console.log("file data:", apiData);
       let date = Date.now();
       let isSlateUpload;
+      //console.log("apidata", apiData);
       if (!apiData.data.slate.id) {
         isSlateUpload = "https://slate.host/";
       } else {
-        isSlateUpload = apiData.data.slate.data.url;
+        isSlateUpload = apiData.data.slate.url;
       }
 
       let checkPageData = pageData.title;
@@ -175,9 +176,10 @@ var SlateUpload = (function () {
 
       var url;
       if (apiData.data.slate.id) {
-        url = "https://uploads.slate.host/api/public/" + apiData.data.slate.id;
+        url =
+          "https://uploads.slate.host/api/v2/public/" + apiData.data.slate.id;
       } else {
-        url = "https://uploads.slate.host/api/public";
+        url = "https://uploads.slate.host/api/v2/public";
       }
 
       let fileBlob = new Blob([u8arr], { mime });
@@ -192,10 +194,33 @@ var SlateUpload = (function () {
         },
         body: data,
       });
+
       const json = await response.json();
       //
-      //Only update metadata if a slate was provided
+      //
+      //UPDATE METADATA
+      const fileMeta = json.data;
+      fileMeta.data.name = uploadData.name;
+      fileMeta.data.source = pageData.source;
+
+      console.log(fileMeta);
+
+      const responseMeta = await fetch(
+        "https://slate.host/api/v2/update-file",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Basic " + apiData.data.api,
+          },
+          body: JSON.stringify({ data: fileMeta }),
+        }
+      );
+      console.log("done upload");
+      //
+      /*
       if (apiData.data.slate.id) {
+        console.log("data inside");
         const slateAPIResponseData = {
           data: {
             id: json.slate.id,
@@ -209,6 +234,7 @@ var SlateUpload = (function () {
             },
           },
         };
+        console.log(slateAPIResponseData);
 
         const slate = slateAPIResponseData.data;
         let arrPosition = slate.data.objects.length - 1;
@@ -226,29 +252,15 @@ var SlateUpload = (function () {
             body: JSON.stringify({ data: slate }),
           }
         );
+        const jsonChange = await responseChange.json();
+        console.log("jsonChange", jsonChange);
         try {
-          const jsonChange = await responseChange.json();
+          console.log("trying");
         } catch (err) {}
       }
+      */
       await removeDataUploadNumber();
       await updateDataUpload(json, uploadData.id);
-    };
-
-    getSlateData = async (fileData) => {
-      const response = await fetch("https://slate.host/api/v1/get-slate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Basic " + fileData.data.api,
-        },
-        body: JSON.stringify({
-          data: {
-            id: fileData.data.slate.id,
-          },
-        }),
-      });
-      const json = await response.json();
-      return json;
     };
 
     const delay = async (ms) => new Promise((res) => setTimeout(res, ms));
@@ -257,23 +269,16 @@ var SlateUpload = (function () {
       var pos = 0;
       for (const file of array) {
         pos++;
-        console.log("pos: ", pos);
+        //console.log("pos: ", pos);
         if (pos == 3) {
-          console.log("starting delay");
           await delay(10000);
-          console.log("done delay", pos);
+          console.log("delay done");
           pos = 0;
         }
         //console.log("array: ", array[0].data.file.file.id);
-        try {
-          let data = await convertToData(file.data.file);
-          await uploadToSlate(data, file, pageData);
-        } catch (err) {
-          let id = file.data.file.file.id;
-          await updateDataError(id);
-          await removeDataUploadNumber();
-          console.log("failed to fetch");
-        }
+        let data = await convertToData(file.data.file);
+        await uploadToSlate(data, file, pageData);
+
         console.log("Next file");
       }
       console.log("All files uploaded");
