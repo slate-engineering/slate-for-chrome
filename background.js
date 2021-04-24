@@ -2,6 +2,7 @@
 var SlateBackground = (function () {
   function SlateBackground() {
     //Create background
+    this.isLoaded = false;
   }
 
   SlateBackground.prototype.init = async () => {
@@ -136,12 +137,13 @@ var SlateUpload = (function () {
       //console.log("file data:", apiData);
       let date = Date.now();
       let isSlateUpload;
-      //console.log("apidata", apiData);
+      console.log("apidata", apiData);
       if (!apiData.data.slate.id) {
-        isSlateUpload = "https://slate.host/";
+        isSlateUpload = "https://slate.host/_?scene=NAV_DATA";
       } else {
-        isSlateUpload = apiData.data.slate.url;
+        isSlateUpload = apiData.data.slate.data.url;
       }
+      console.log("isSlateUpload", isSlateUpload);
 
       let checkPageData = pageData.title;
       if (!pageData.title) {
@@ -202,7 +204,6 @@ var SlateUpload = (function () {
       const fileMeta = json.data;
       fileMeta.data.name = uploadData.name;
       fileMeta.data.source = pageData.source;
-
       console.log(fileMeta);
 
       const responseMeta = await fetch(
@@ -217,48 +218,6 @@ var SlateUpload = (function () {
         }
       );
       console.log("done upload");
-      //
-      /*
-      if (apiData.data.slate.id) {
-        console.log("data inside");
-        const slateAPIResponseData = {
-          data: {
-            id: json.slate.id,
-            slatename: json.slate.slatename,
-            data: {
-              ...json.slate.data,
-              name: json.slate.slatename,
-              public: true,
-              objects: [...json.slate.data.objects],
-              ownerId: json.slate.data.ownerId,
-            },
-          },
-        };
-        console.log(slateAPIResponseData);
-
-        const slate = slateAPIResponseData.data;
-        let arrPosition = slate.data.objects.length - 1;
-
-        slate.data.objects[arrPosition].source = pageData.source;
-
-        const responseChange = await fetch(
-          "https://slate.host/api/v1/update-slate",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Basic " + apiData.data.api,
-            },
-            body: JSON.stringify({ data: slate }),
-          }
-        );
-        const jsonChange = await responseChange.json();
-        console.log("jsonChange", jsonChange);
-        try {
-          console.log("trying");
-        } catch (err) {}
-      }
-      */
       await removeDataUploadNumber();
       await updateDataUpload(json, uploadData.id);
     };
@@ -301,8 +260,10 @@ chrome.runtime.onInstalled.addListener((tab) => {
 onClickHandlerAll = async (tab) => {
   let slateBg = new SlateBackground();
   await slateBg.init();
+  console.log("1", this.isLoaded);
   //inject all Slate scripts needed into the current tab
   //let activeTab = tabs[0];
+
   let type = "multi";
   chrome.tabs.executeScript(tab, { file: "app/scripts/jquery.min.js" });
   chrome.tabs.executeScript(
@@ -310,6 +271,8 @@ onClickHandlerAll = async (tab) => {
     { file: "content-script.js" },
     slateBg.loadApp(type)
   );
+  this.isLoaded = true;
+  console.log("2", this.isLoaded);
 };
 
 onClickHandlerImage = async (info, tabs) => {
@@ -377,6 +340,7 @@ chrome.contextMenus.create({
   title: "Slate",
   id: "parent",
   contexts: ["all"],
+  onclick: onClickHandlerAll,
 });
 
 chrome.contextMenus.create({

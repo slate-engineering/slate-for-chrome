@@ -48,7 +48,7 @@ var Settings = (function () {
   };
 
   Settings.prototype.validateApiKey = async (key) => {
-    const response = await fetch("https://slate.host/api/v1/get", {
+    const response = await fetch("https://slate.host/api/v2/get", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -369,7 +369,7 @@ document
       document.getElementById("slate-api-input").value = "";
       document.getElementById("slate-name-input").value = "";
       let photo = validate.user.data.photo;
-      let slates = validate.slates.length;
+      let slates = validate.collections.length;
       let name;
       if (nameValue) {
         name = nameValue;
@@ -389,7 +389,6 @@ document
       let type = "success";
       settings.notification(api, type);
       location.reload();
-
       //setttings.openConfirmModal(text, img, btn)
       //document.getElementById("slate-modal").style.display = "fixed";
     }
