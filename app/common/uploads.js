@@ -35,8 +35,8 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid, slateUrl) => {
   let fileTypeIcon = document.createElement("div");
   let popOver = document.createElement("div");
 
-  var username = "n/a";
-  if (slateUrl) {
+  var username = "Direct upload";
+  if (slateUrl != "https://slate.host/_?scene=NAV_DATA") {
     let pathname = slateUrl.split("/");
     username = pathname[3];
   }
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (upload.name.length > 45) str = upload.name.substring(0, 45) + "...";
 
       uploadInfo = [str, dateFormat, upload.source];
-      console.log(upload);
+      //console.log(upload);
       uploads.showUploads(
         uploadInfo,
         upload.type,
@@ -139,15 +139,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     let openCID = document.getElementsByClassName("click-open-cid");
     for (var i = 0; i < openCID.length; i++) {
       openCID[i].onclick = function (e) {
-        let pathname = e.target.attributes["data-slateUrl"].value.split("/");
+        let oldSlateUrl = e.target.attributes["data-slateUrl"].value;
 
-        let slateUrl =
-          "https://slate.host/" +
-          pathname[3] +
-          "/cid:" +
-          e.target.attributes["data-cid"].value;
-        console.log(slateUrl);
-        let win = window.open(slateUrl, "_blank");
+        var newSlateUrl;
+        if (oldSlateUrl == "https://slate.host/_?scene=NAV_DATA") {
+          newSlateUrl = "https://slate.host/_?scene=NAV_DATA";
+        } else {
+          newSlateUrl =
+            e.target.attributes["data-slateUrl"].value +
+            "/cid:" +
+            e.target.attributes["data-cid"].value;
+        }
+
+        //console.log(newSlateUrl);
+        let win = window.open(newSlateUrl, "_blank");
         win.focus();
       };
     }
@@ -178,7 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           e.target.attributes["data-cid"].value;
         url.select();
         document.execCommand("copy");
-        console.log("copied");
+        //console.log("copied");
       };
     }
 

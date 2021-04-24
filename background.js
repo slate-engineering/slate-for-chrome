@@ -137,13 +137,13 @@ var SlateUpload = (function () {
       //console.log("file data:", apiData);
       let date = Date.now();
       let isSlateUpload;
-      console.log("apidata", apiData);
+      //console.log("apidata", apiData);
       if (!apiData.data.slate.id) {
         isSlateUpload = "https://slate.host/_?scene=NAV_DATA";
       } else {
         isSlateUpload = apiData.data.slate.data.url;
       }
-      console.log("isSlateUpload", isSlateUpload);
+      //console.log("isSlateUpload", isSlateUpload);
 
       let checkPageData = pageData.title;
       if (!pageData.title) {
@@ -204,7 +204,7 @@ var SlateUpload = (function () {
       const fileMeta = json.data;
       fileMeta.data.name = uploadData.name;
       fileMeta.data.source = pageData.source;
-      console.log(fileMeta);
+      //console.log(fileMeta);
 
       const responseMeta = await fetch(
         "https://slate.host/api/v2/update-file",
@@ -260,7 +260,6 @@ chrome.runtime.onInstalled.addListener((tab) => {
 onClickHandlerAll = async (tab) => {
   let slateBg = new SlateBackground();
   await slateBg.init();
-  console.log("1", this.isLoaded);
   //inject all Slate scripts needed into the current tab
   //let activeTab = tabs[0];
 
@@ -272,7 +271,6 @@ onClickHandlerAll = async (tab) => {
     slateBg.loadApp(type)
   );
   this.isLoaded = true;
-  console.log("2", this.isLoaded);
 };
 
 onClickHandlerImage = async (info, tabs) => {
