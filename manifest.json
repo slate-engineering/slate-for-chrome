@@ -27,7 +27,7 @@
     "background.js",
     "app/index.js",
     "app/scripts/jquery.min.js",
-    "app/public/fonts/*.woff"
+    "app/public/fonts/*.*"
   ],
 
   "content_scripts": [

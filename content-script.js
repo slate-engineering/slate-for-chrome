@@ -12,6 +12,8 @@ var SlateApp = (function () {
   this.isCheckUploadsQueue = null;
   this.isSuccessfulUploads = 0;
 
+  this.loaded = false;
+
   this.pageData = {
     title: document.title,
     source: window.location.href,
@@ -53,7 +55,6 @@ var SlateApp = (function () {
             );
             divClick.classList.add("slate-add-link");
             divClick.onclick = function () {
-              console.log("isIdUploading: ", isIdUploading);
               let pathname =
                 isIdUploading.slateUrl + "/cid:" + isIdUploading.cid;
               let win = window.open(pathname, "_blank");
@@ -97,17 +98,19 @@ var SlateApp = (function () {
 
     insertAppMain = async () => {
       try {
-        document.head.parentNode.removeChild(document.head);
-
+        //document.head.parentNode.removeChild(document.head);
         $.get(chrome.extension.getURL("./app/pages/app.html"), (data) => {
           $(data).prependTo("body");
         })
           .done(() => {
             //Initilize app event listeners
+            document.getElementById("slate-app").style.display = "inline";
+
             document
               .getElementById("slate-close-icon")
               .addEventListener("click", () => {
                 location.reload();
+                document.getElementById("slate-app").style.display = "none";
               });
 
             document.onkeydown = function (evt) {
@@ -350,8 +353,10 @@ var SlateApp = (function () {
         $(data).append("body");
       })
         .done(() => {
+          document.getElementById("slate-app").style.display = "inline";
           if (uploadType == "single") {
             uploadQueue.push({ file: props });
+            f;
             let singleImg = (document.getElementById("slate-single-image").src =
               props.src);
             document.getElementById("slate-action-bar").style.display = "none";
@@ -500,7 +505,6 @@ var SlateApp = (function () {
             //slateApiDisplay.className = "slate-item-display-hide";
 
             slateApiContainer.onclick = () => {
-              console.log("hi");
               slateApiDisplay.classList.toggle("slate-item-display");
             };
 
@@ -573,7 +577,6 @@ var SlateApp = (function () {
                       this.uploadQueueSlates[i].slate.slatename ==
                       isFinalUpload.slate.slatename
                     ) {
-                      console.log("yes this is the same");
                       this.uploadQueueSlates.splice(i, 1);
                     }
                   }
@@ -590,47 +593,6 @@ var SlateApp = (function () {
                     .classList.remove("disabled");
                 }
 
-                /*
-                let slateArray = uploadQueue.map((fileData) => {
-                  //console.log("slate: ", slate);
-                  var data = {
-                    api: slate.data.key,
-                    slate: item,
-                    file: fileData,
-                  };
-                  //console.log("data:", data);
-
-                  let isSelected = slateContainer.classList.contains(
-                    "slate-selected"
-                  );
-                  if (isSelected) {
-                    for (let i = 0; i < this.uploadQueueSlates.length; i++) {
-                      console.log(i);
-                      if (
-                        this.uploadQueueSlates[i].data.slate.slatename ==
-                        data.slate.slatename
-                      ) {
-                        console.log("yes this is the same");
-                        this.uploadQueueSlates.splice(i, 1);
-                      }
-                    }
-                  } else {
-                    this.uploadQueueSlates.push({ data });
-                    console.log("inside after: ", this.uploadQueueSlates);
-                  }
-
-                  console.log("FINAL QUEUE: ", this.uploadQueueSlates);
-                  if (uploadQueueNum > 0) {
-                    document
-                      .getElementById("slate-upload-btn")
-                      .classList.remove("disabled");
-                  }
-
-                  return data;
-                });
-                */
-
-                //console.log("Slate added to queue: ", this.uploadQueueSlates);
                 if (uploadQueueNum > 0) {
                   document
                     .getElementById("slate-upload-btn")
@@ -666,7 +628,7 @@ var SlateApp = (function () {
 
   SlateApp.prototype.getApiKeys = async () => {
     getKey = async (key) => {
-      const response = await fetch("https://slate.host/api/v1/get", {
+      const response = await fetch("https://slate.host/api/v2/get", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -681,6 +643,7 @@ var SlateApp = (function () {
         }),
       });
       const data = await response.json();
+      console.log("getApiKeys", data);
       let slates = [];
       return data;
     };
@@ -697,7 +660,7 @@ var SlateApp = (function () {
     if (getAPIKeys.apis) {
       for (let item of getAPIKeys.apis) {
         let keyData = await getKey(item.data.key);
-        finalApiArray.push({ data: item.data, slates: keyData.slates });
+        finalApiArray.push({ data: item.data, slates: keyData.collections });
       }
     }
     return finalApiArray;
