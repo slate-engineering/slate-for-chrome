@@ -357,7 +357,6 @@ var SlateApp = (function () {
           document.getElementById("slate-app").style.display = "inline";
           if (uploadType == "single") {
             uploadQueue.push({ file: props });
-            f;
             let singleImg = (document.getElementById("slate-single-image").src =
               props.src);
             document.getElementById("slate-action-bar").style.display = "none";
@@ -370,6 +369,8 @@ var SlateApp = (function () {
               "Upload file to Slate";
           } else {
             props.forEach((file) => {
+              document.getElementById("slate-action-bar").style.display =
+                "block";
               document.getElementById(
                 "slate-single-image-container"
               ).style.display = "none";
