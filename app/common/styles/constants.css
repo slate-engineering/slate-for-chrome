@@ -45,10 +45,14 @@
   --size-tablet: 960;
   --size-mobile: 768;
 
-  --font-family-text: "inter-regular", -apple-system, BlinkMacSystemFont, arial, sans-serif;
-  --font-family-semiBold: "inter-semiBold", -apple-system, BlinkMacSystemFont, arial, sans-serif;
-  --font-family-medium: "inter-medium", -apple-system, BlinkMacSystemFont, arial, sans-serif;
-  --font-family-bold: "inter-bold", -apple-system, BlinkMacSystemFont, arial, sans-serif;
+  --font-family-text: "inter-regular", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif;
+  --font-family-semiBold: "inter-semiBold", -apple-system, BlinkMacSystemFont,
+    arial, sans-serif;
+  --font-family-medium: "inter-medium", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif;
+  --font-family-bold: "inter-bold", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif;
   --font-family-code: "jet-brains-regular", mono, monospace;
   --font-family-codeBold: "jet-brains-bold", mono, monospace;
 

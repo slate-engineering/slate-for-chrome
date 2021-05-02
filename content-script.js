@@ -2,9 +2,9 @@
 var SlateApp = (function () {
   //set default variables
   this.uploadQueue = [];
-  this.uploadQueueNum = 0;
   this.uploadQueueSlates = [];
   this.origFiles = [];
+  this.uploadQueueNum = 0;
   this.currentUploadNum = 0;
 
   //timeouts
@@ -44,7 +44,7 @@ var SlateApp = (function () {
             spinner.classList.remove("slate-loaderspinner");
             spinner.classList.add("slate-success");
             spinner.innerHTML =
-              '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+              '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
             let divClick = document.getElementById(
               "slate-upload-contatiner-" + id
@@ -105,8 +105,6 @@ var SlateApp = (function () {
         })
           .done(() => {
             //Initilize app event listeners
-            document.getElementById("slate-app").style.display = "inline";
-
             document
               .getElementById("slate-close-icon")
               .addEventListener("click", () => {
@@ -565,7 +563,7 @@ var SlateApp = (function () {
                 );
                 console.log(isSelected);
 
-                console.log("slates: ", this.uploadQueueSlates);
+                //console.log("slates: ", this.uploadQueueSlates);
 
                 var isFinalUpload = {
                   api: slate.data.key,
@@ -586,7 +584,7 @@ var SlateApp = (function () {
                 } else {
                   console.log("not selected");
                   this.uploadQueueSlates.push(isFinalUpload);
-                  console.log("inside after: ", this.uploadQueueSlates);
+                  //console.log("inside after: ", this.uploadQueueSlates);
                 }
 
                 if (uploadQueueNum > 0) {
@@ -608,6 +606,7 @@ var SlateApp = (function () {
               slateIcon.innerHTML =
                 '<svg id="not-selected" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>';
               let slateName = document.createElement("div");
+              slateName.classList.add('slate-name-main')
               slateName.innerHTML = item.slatename;
               slateContainer.appendChild(slateIcon);
               slateContainer.appendChild(slateName);
@@ -645,7 +644,7 @@ var SlateApp = (function () {
         }),
       });
       const data = await response.json();
-      console.log("getApiKeys", data);
+      //console.log("getApiKeys", data);
       let slates = [];
       return data;
     };

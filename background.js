@@ -198,6 +198,7 @@ var SlateUpload = (function () {
       });
 
       const json = await response.json();
+      console.log('data upload: ',json)
       //
       //
       //UPDATE METADATA

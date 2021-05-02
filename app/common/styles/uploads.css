@@ -151,3 +151,33 @@
   position: absolute;
   display: inline-block;
 }
+
+.slate-secondary-button {
+  font-size: var(--typescale-lvl0);
+  letter-spacing: -0.011rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  outline: 0;
+  border: 0;
+  min-height: 40px;
+  padding: 4px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  transition: 200ms ease all;
+  overflow-wrap: break-word;
+  user-select: none;
+  cursor: pointer;
+  background-color: var(--color-bgGrayLight);
+  font-family: "inter-semiBold", -apple-system, BlinkMacSystemFont,
+    arial, sans-serif !important;
+  color: var(--color-textBlack);
+  transition: background-color 200ms ease-in-out;
+}
+
+.slate-secondary-button:hover {
+  background-color: var(--color-bgGray);
+  transition: background-color 200ms ease-in-out;
+}

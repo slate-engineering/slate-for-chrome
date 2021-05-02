@@ -36,11 +36,19 @@
   top: 0 !important;
   z-index: 999999999999 !important;
   overflow: hidden;
+  display: block !important;
+  overflow: hidden !important;
+  align-items: normal !important;
+  flex-direction: row !important;
+  justify-content: start !important;
 }
 
 .slate-helper-text {
   color: var(--color-textGray);
   margin-bottom: 8px;
+  font-family: "inter-medium", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif !important;
+  font-size: 16px !important;
 }
 
 .slate-helper-button {
@@ -98,7 +106,8 @@
 
 .slate-drawer {
   width: 25%;
-  height: 100vh;
+  height: 100%;
+  max-height: 100vh;
   color: var(--color-textBlack);
   right: 0;
   position: relative;
@@ -109,13 +118,68 @@
   position: fixed;
   top: 0px;
   right: 0px;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  flex-direction: row !important;
   justify-content: space-between;
-  font-family: "inter-regular", -apple-system, BlinkMacSystemFont, arial,
-    sans-serif !important;
   font-size: 16px !important;
+  align-items: left !important;
+  display: block !important;
+  align-items: normal !important;
+}
+
+.slate-primary-button-full-one {
+  font-size: 16px !important;
+  letter-spacing: -0.011rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  outline: 0;
+  border: 0;
+  min-height: 40px;
+  padding: 4px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  transition: 200ms ease all;
+  overflow-wrap: break-word;
+  user-select: none;
+  cursor: pointer;
+  background-color: var(--color-blue);
+  font-family: "inter-semi-bold", -apple-system, BlinkMacSystemFont,
+    arial, sans-serif !important;
+  color: var(--color-white);
+  text-transform: capitalize !important;
+  margin: 0 16px 16px 0;
+  width: 100%;
+}
+
+.slate-primary-button-full-one:hover {
+  background-color: var(--color-deepblue);
+  color: var(--color-white);
+}
+
+.slate-primary-button-full-one.disabled {
+  background-color: var(--color-blue) !important;
+  opacity: 0.5;
+  cursor: default;
+}
+
+
+.slate-primary-button.full {
+  width: 100%;
+  font-family: "inter-semiBold", -apple-system, BlinkMacSystemFont,
+    arial, sans-serif !important;
+}
+
+.slate-primary-button:hover {
+  background-color: var(--color-deepblue);
+}
+
+.slate-primary-button.disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .slate-dismiss {
@@ -141,20 +205,21 @@
 }
 
 .slate-drawer-content {
-  width: 100%;
   height: calc(100% - 50px);
   display: none;
   margin-bottom: 32px;
+  overflow: hidden;
 }
 
 .slate-drawer-content.active {
-  display: block;
+  display: block !important;
 }
 
 .slate-header {
   font-family: "inter-medium", -apple-system, BlinkMacSystemFont, arial,
     sans-serif !important;
   font-size: 24px !important;
+  text-align: left !important;
   margin-bottom: 36px;
 }
 
@@ -165,14 +230,20 @@
   overflow-y: scroll;
   overflow-x: hidden;
   margin-bottom: 24px;
-  font-family: "inter-bold", -apple-system, BlinkMacSystemFont, arial,
-    sans-serif !important;
-  font-size: 20px !important;
+  font-size: 16px !important;
+  text-align: left !important;
+  display: block !important;
+  font-family: "inter-semi-bold", -apple-system, BlinkMacSystemFont,
+    arial, sans-serif !important;
 }
 
 .slate-api {
   margin-bottom: 24px;
   width: 100%;
+  text-align: left !important;
+  box-sizing: content-box !important;
+  font-family: "Inter-Medium", -apple-system, BlinkMacSystemFont,
+    arial, sans-serif !important;
 }
 
 .slate-api .slate-profile {
@@ -183,8 +254,6 @@
   height: 24px;
   border-radius: 50%;
   margin-right: 12px;
-  font-family: "inter-bold", -apple-system, BlinkMacSystemFont, arial,
-    sans-serif !important;
 }
 
 .slate-api .slate-profile.a {
@@ -196,10 +265,12 @@
 }
 
 .slate-name {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  display: flex;
-  align-items: center;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  display: flex !important;
+  text-align: left;
+  font-family: "inter-bold", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif !important;
 }
 
 .slate-dropdown-button {
@@ -221,14 +292,21 @@
 
 .slate-item {
   width: 100%;
-  padding: 12px 16px;
+  padding: 8px 8px 8px 16px;
   display: flex;
-  align-items: center;
   gap: 8px;
   color: var(--color-textGrayLight);
-  font-family: "inter-medium", -apple-system, BlinkMacSystemFont, arial,
-    sans-serif !important;
   background-color: var(--color-white);
+  text-align: left !important;
+  border-bottom: 1px solid var(--color-lightBorder);
+  cursor: pointer;
+}
+
+.slate-name-main {
+  margin-top: 6px;
+  font-family: "inter-bold", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif !important;
+  font-size: 16px !important;
 }
 
 .slate-item-display {
@@ -247,23 +325,21 @@
 .slate-item:hover,
 .slate-dropdown-button:hover {
   transition: 0.2s;
-  background-color: var(--color-bgGrayLight);
   color: var(--color-textGrayDark);
-  cursor: pointer;
 }
 
 .slate-menu {
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  padding: 32px;
+  display: flex !important;
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 0px !important;
+  padding: 24px;
 }
 
 .slate-menu-top {
-  display: flex;
-  justify-content: flex-end;
+  display: flex !important;
+  justify-content: flex-end !important;
+  box-sizing: border-box !important;
   top: 0px;
   right: 0px;
 }
@@ -301,13 +377,14 @@
   text-align: center;
   height: auto;
   cursor: pointer;
+  display: block;
 }
 
 .slate-img-container {
-  border: 2px solid var(--color-white);
   position: relative;
   margin-bottom: 16px;
   height: auto;
+  box-sizing: border-box;
 }
 
 .slate-img-container.selected {
@@ -319,12 +396,12 @@
   box-sizing: 0;
   opacity: 0;
   pointer-events: none;
-  visibility: hidden;
+  display: none;
   width: 1px;
   height: 1px;
   position: absolute;
-  bottom: 20;
-  left: 20;
+  bottom: 16;
+  left: 16;
 }
 
 .slate-custom-checkbox {
@@ -387,10 +464,11 @@
     rgba(255, 255, 255, 0.3) 100%
   );
   backdrop-filter: blur(20px);
+  align-items: normal !important;
 }
 
 .slate-action-bar {
-  padding: 48px 120px 0px 120px;
+  padding: 40px 120px 0px 120px;
   margin-bottom: 32px;
   width: 50%;
 }
@@ -472,7 +550,7 @@
 .slate-select-all-checkbox {
   box-sizing: 0;
   opacity: 0;
-  visibility: hidden;
+  display: none;
   width: 1px;
   height: 1px;
   cursor: pointer;
@@ -560,10 +638,11 @@
   font-size: 16px !important;
   font-weight: 400;
   margin: 0 -24px 24px -24px;
+  display: none;
 }
 
 .slate-error-msg {
-  display: "none";
+  display: none;
   box-sizing: border-box;
   padding: 12px 24px;
   background-color: RGBA(199, 19, 19, 0.1);
@@ -579,16 +658,25 @@
   margin: 0 -24px 24px -24px;
 }
 
-.slate-upload-file-module {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.slate-upload-file-modules {
   width: 100%;
-  max-width: 100%;
+  height: 55%;
+  max-height: 60%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.slate-upload-file-module {
+  width: 100%;
   overflow: hidden;
   padding: 12px 16px;
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-gray20);
+  font-size: 16px !important;
+  font-family: "inter-medium", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif !important;
 }
 
 .slate-upload-file-module .slate-upload-file {
@@ -621,6 +709,7 @@
   font-size: 14px !important;
   font-family: "inter-medium", -apple-system, BlinkMacSystemFont, arial,
     sans-serif !important;
+  text-align: left !important;
 }
 
 .slate-upload-file .slate-upload-status {
@@ -668,10 +757,12 @@
 }
 
 .slate-icon-position {
-  padding-top: 6px;
+  padding-top: 6px !important;
 }
 
 .slate-success {
+  display: inline-block;
+  flex-shrink: 0;
   margin-top: 4px !important;
   color: #006837 !important;
 }
@@ -690,20 +781,46 @@
   cursor: pointer !important;
 }
 
+.slate-loaderspinner {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-blue);
+  border-radius: 50%;
+  border-top-color: var(--color-bgGrayLight);
+  animation: slate-client-animation-spin 1s ease-in-out infinite;
+}
+
+@keyframes slate-client-animation-spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.slate-masonry {
+  column-count: 4 !important;
+  display: block !important;
+}
+
 @media only screen and (min-width: 1024px) {
   .slate-masonry {
-    column-count: 4;
+    column-count: 4 !important;
+    display: block !important;
   }
 }
 
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
   .slate-masonry {
-    column-count: 3;
+    column-count: 3 !important;
+    align-items: flex-start !important;
+    display: block !important;
   }
 }
 
 @media only screen and (max-width: 767px) and (min-width: 540px) {
   .slate-masonry {
-    column-count: 1;
+    column-count: 1 !important;
+    display: block !important;
   }
 }
