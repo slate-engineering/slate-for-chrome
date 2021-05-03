@@ -364,6 +364,11 @@ var SlateApp = (function () {
             //NOTE UPLOAD
             case "note":
               document.getElementById('slate-page-text-container').style.display = 'flex';
+              document.getElementById("slate-popup-title-name").innerHTML =
+                    "Upload text to Slate";
+              document.getElementById("slate-upload-btn").innerHTML =
+                    "Upload text";
+                    
               //console.log("note");
               var html = "";
               if (typeof window.getSelection != "undefined") {
@@ -403,9 +408,11 @@ var SlateApp = (function () {
             //
             //SINGLE IMAGE UPLOAD
             case "single":
-              console.log("single");
-              console.log("props", props);
+              //console.log("single");
+              //console.log("props", props);
               uploadQueue.push({ file: props });
+              document.getElementById("slate-upload-btn").innerHTML =
+                    "Upload image";
               document.getElementById(
                 "slate-single-image-container"
               ).style.display = "block";
