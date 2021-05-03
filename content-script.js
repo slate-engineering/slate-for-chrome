@@ -2,16 +2,18 @@
 var SlateApp = (function () {
   //set default variables
   this.uploadQueue = [];
+  this.uploadQueueNum = 0;
   this.uploadQueueSlates = [];
   this.origFiles = [];
-  this.uploadQueueNum = 0;
   this.currentUploadNum = 0;
 
   //timeouts
   this.isCheckUploads = null;
   this.isCheckUploadsQueue = null;
+  this.isSuccessfulUploads = 0;
 
   this.loaded = false;
+  this.uploadType = null;
 
   this.pageData = {
     title: document.title,
@@ -36,15 +38,18 @@ var SlateApp = (function () {
             spinner.classList.add("slate-error");
             spinner.innerHTML =
               '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+            const hi = "1";
             return;
           } else if (isIdUploading.uploading) {
             return;
           } else {
+            //console.log("done: ", isIdUploading);
+            this.isSuccessfulUploads++;
             let spinner = document.getElementById(id + "-spinner");
             spinner.classList.remove("slate-loaderspinner");
             spinner.classList.add("slate-success");
             spinner.innerHTML =
-              '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+              '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
             let divClick = document.getElementById(
               "slate-upload-contatiner-" + id
@@ -89,11 +94,6 @@ var SlateApp = (function () {
           let id = isUploadIds[i];
           await checkUploadStatus(id);
         }
-        let getUploads = await app.getUploadNum();
-        if (getUploads.currentUploads == 0) {
-          clearInterval(this.isCheckUploadsQueue);
-          return;
-        }
       }, 1000);
     };
 
@@ -105,6 +105,8 @@ var SlateApp = (function () {
         })
           .done(() => {
             //Initilize app event listeners
+            document.getElementById("slate-app").style.display = "inline";
+
             document
               .getElementById("slate-close-icon")
               .addEventListener("click", () => {
@@ -265,6 +267,8 @@ var SlateApp = (function () {
                   var isPageTitle = JSON.stringify(pageData);
                   var isApiData = JSON.stringify(uploadArray);
 
+                  console.log(isUploadQueue);
+
                   chrome.runtime.sendMessage({
                     uploadData: "slate",
                     data: isUploadQueue,
@@ -353,107 +357,153 @@ var SlateApp = (function () {
       })
         .done(() => {
           document.getElementById("slate-app").style.display = "inline";
-          if (uploadType == "single") {
-            uploadQueue.push({ file: props });
-            let singleImg = (document.getElementById("slate-single-image").src =
-              props.src);
-            document.getElementById("slate-action-bar").style.display = "none";
-            document.getElementById("slate-page-images").style.display = "none";
-            document
-              .getElementById("slate-upload-btn")
-              .classList.remove("disabled");
+          console.log(uploadType);
 
-            document.getElementById("slate-popup-title-name").innerHTML =
-              "Upload file to Slate";
-          } else {
-            props.forEach((file) => {
-              document.getElementById("slate-action-bar").style.display =
-                "block";
+          switch (uploadType) {
+            //
+            //NOTE UPLOAD
+            case "note":
+              document.getElementById('slate-page-text-container').style.display = 'flex';
+              //console.log("note");
+              var html = "";
+              if (typeof window.getSelection != "undefined") {
+                var sel = window.getSelection();
+                if (sel.rangeCount) {
+                  var container = document.createElement("div");
+                  for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                  }
+                  html = container.innerHTML;
+                }
+              } else if (typeof document.selection != "undefined") {
+                if (document.selection.type == "Text") {
+                  html = document.selection.createRange().htmlText;
+                }
+              }
+              document.getElementById('slate-page-text-container').innerHTML = html;
+
+              var turndownService = new TurndownService();
+              var markdown = turndownService.turndown(html);
+              //console.log(markdown);
+
+              props.markdown = markdown;
+              props.type = "text";
+
+              //console.log("props", props);
+              uploadQueue.push({ file: props });
+              console.log("uploadQueue", uploadQueue);
+              document.getElementById(
+                "slate-page-text-container"
+              ).style.display = "block";
+              document
+                .getElementById("slate-upload-btn")
+                .classList.remove("disabled");
+              //document.getElementById("slate-page-text").innerHTML = markdown;
+              break;
+            //
+            //SINGLE IMAGE UPLOAD
+            case "single":
+              console.log("single");
+              console.log("props", props);
+              uploadQueue.push({ file: props });
               document.getElementById(
                 "slate-single-image-container"
-              ).style.display = "none";
-              let div = document.createElement("div");
-              div.className = "slate-img-container slate-masonry-item";
-              div.id = "img-item-" + file.id;
-              let img = document.createElement("img");
-              img.className = "slate-list_img";
-              img.id = "img-" + file.id;
-              if (file.type == "img") {
-                img.src = file.src;
-              }
+              ).style.display = "block";
+              console.log(props);
+              document.getElementById("slate-single-image").src = props.src;
 
-              let checkbox = document.createElement("input");
-              checkbox.setAttribute("type", "checkbox");
-              checkbox.value = file.src;
-              checkbox.className = "slate-img-checkbox";
-              checkbox.id = "check-" + file.id;
+              document
+                .getElementById("slate-upload-btn")
+                .classList.remove("disabled");
 
-              let customCheckbox = document.createElement("div");
-              customCheckbox.className = "slate-custom-checkbox";
-              customCheckbox.id = "customCheck-" + file.id;
-
-              customCheckbox.innerHTML =
-                '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-
-              div.onclick = async () => {
-                console.log("File added to queue: ", this.uploadQueue);
-                let customCheckIcon = customCheckbox.childNodes[0];
-                if (!checkbox.checked) {
-                  checkbox.checked = true;
-                  customCheckbox.className = "slate-custom-checkbox checked";
-                  customCheckIcon.classList.add("checked");
-                  //img.classList.add("selected");
-                  div.classList.add("selected");
-                  this.uploadQueue.push({ file });
-                  this.uploadQueueNum++;
-                } else {
-                  checkbox.checked = false;
-                  customCheckbox.className = "slate-custom-checkbox";
-                  customCheckIcon.classList.remove("checked");
-                  img.classList.remove("selected");
-                  div.classList.remove("selected");
-                  //console.log(file.id);
-                  var objIndex = this.uploadQueue.findIndex(
-                    (obj) => obj.file.id === file.id
-                  );
-
-                  //console.log("objIndex", objIndex);
-                  const updatedQueue = this.uploadQueue.splice(objIndex, 1);
-                  this.uploadQueueNum--;
-                  if (this.uploadQueueNum == 0) {
-                    document
-                      .getElementById("slate-upload-btn")
-                      .classList.add("disabled");
-                  }
-                  //this.uploadQueue = updatedQueue;
-                  //console.log("final upload queue", this.uploadQueue);
+              document.getElementById("slate-popup-title-name").innerHTML =
+                "Upload file to Slate";
+              break;
+            case "multi":
+              props.forEach((file) => {
+                document.getElementById("slate-action-bar").style.display =
+                  "block";
+                let div = document.createElement("div");
+                div.className = "slate-img-container slate-masonry-item";
+                div.id = "img-item-" + file.id;
+                let img = document.createElement("img");
+                img.className = "slate-list_img";
+                img.id = "img-" + file.id;
+                if (file.type == "img") {
+                  img.src = file.src;
                 }
-                if (this.uploadQueueNum > 0) {
-                  if (uploadQueueSlates.length > 0) {
-                    document
-                      .getElementById("slate-upload-btn")
-                      .classList.remove("disabled");
-                  }
 
-                  if (this.uploadQueueNum == 1) {
-                    document.getElementById(
-                      "slate-popup-title-name"
-                    ).innerHTML = "Upload 1 file to Slate";
+                let checkbox = document.createElement("input");
+                checkbox.setAttribute("type", "checkbox");
+                checkbox.value = file.src;
+                checkbox.className = "slate-img-checkbox";
+                checkbox.id = "check-" + file.id;
+
+                let customCheckbox = document.createElement("div");
+                customCheckbox.className = "slate-custom-checkbox";
+                customCheckbox.id = "customCheck-" + file.id;
+
+                customCheckbox.innerHTML =
+                  '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+                div.onclick = async () => {
+                  console.log("File added to queue: ", this.uploadQueue);
+                  let customCheckIcon = customCheckbox.childNodes[0];
+                  if (!checkbox.checked) {
+                    checkbox.checked = true;
+                    customCheckbox.className = "slate-custom-checkbox checked";
+                    customCheckIcon.classList.add("checked");
+                    //img.classList.add("selected");
+                    div.classList.add("selected");
+                    this.uploadQueue.push({ file });
+                    this.uploadQueueNum++;
                   } else {
-                    document.getElementById(
-                      "slate-popup-title-name"
-                    ).innerHTML =
-                      "Upload " + this.uploadQueueNum + " files to Slate";
-                  }
-                }
-                //await SelectFile(item);
-              };
+                    checkbox.checked = false;
+                    customCheckbox.className = "slate-custom-checkbox";
+                    customCheckIcon.classList.remove("checked");
+                    img.classList.remove("selected");
+                    div.classList.remove("selected");
+                    //console.log(file.id);
+                    var objIndex = this.uploadQueue.findIndex(
+                      (obj) => obj.file.id === file.id
+                    );
 
-              div.appendChild(checkbox);
-              div.appendChild(img);
-              div.appendChild(customCheckbox);
-              document.getElementById("slate-image-grid").appendChild(div);
-            });
+                    //console.log("objIndex", objIndex);
+                    const updatedQueue = this.uploadQueue.splice(objIndex, 1);
+                    this.uploadQueueNum--;
+                    if (this.uploadQueueNum == 0) {
+                      document
+                        .getElementById("slate-upload-btn")
+                        .classList.add("disabled");
+                    }
+                    //this.uploadQueue = updatedQueue;
+                    //console.log("final upload queue", this.uploadQueue);
+                  }
+                  if (this.uploadQueueNum > 0) {
+                    if (uploadQueueSlates.length > 0) {
+                      document
+                        .getElementById("slate-upload-btn")
+                        .classList.remove("disabled");
+                    }
+
+                    if (this.uploadQueueNum == 1) {
+                      document.getElementById(
+                        "slate-popup-title-name"
+                      ).innerHTML = "Upload 1 file to Slate";
+                    } else {
+                      document.getElementById(
+                        "slate-popup-title-name"
+                      ).innerHTML =
+                        "Upload " + this.uploadQueueNum + " files to Slate";
+                    }
+                  }
+                };
+
+                div.appendChild(checkbox);
+                div.appendChild(img);
+                div.appendChild(customCheckbox);
+                document.getElementById("slate-image-grid").appendChild(div);
+              });
           }
           //
           //
@@ -561,8 +611,7 @@ var SlateApp = (function () {
                 let isSelected = slateContainer.classList.contains(
                   "slate-selected"
                 );
-                console.log(isSelected);
-
+                //console.log(isSelected);
                 //console.log("slates: ", this.uploadQueueSlates);
 
                 var isFinalUpload = {
@@ -570,7 +619,7 @@ var SlateApp = (function () {
                   slate: item,
                 };
                 if (isSelected) {
-                  console.log("selected", isFinalUpload);
+                  //console.log("selected", isFinalUpload);
                   for (let i = 0; i < this.uploadQueueSlates.length; i++) {
                     console.log(i);
                     if (
@@ -580,9 +629,9 @@ var SlateApp = (function () {
                       this.uploadQueueSlates.splice(i, 1);
                     }
                   }
-                  console.log("after remove final: ", this.uploadQueueSlates);
+                  //console.log("after remove final: ", this.uploadQueueSlates);
                 } else {
-                  console.log("not selected");
+                  //console.log("not selected");
                   this.uploadQueueSlates.push(isFinalUpload);
                   //console.log("inside after: ", this.uploadQueueSlates);
                 }
@@ -606,8 +655,8 @@ var SlateApp = (function () {
               slateIcon.innerHTML =
                 '<svg id="not-selected" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>';
               let slateName = document.createElement("div");
-              slateName.classList.add('slate-name-main')
               slateName.innerHTML = item.slatename;
+              slateName.classList.add('slate-name-main')
               slateContainer.appendChild(slateIcon);
               slateContainer.appendChild(slateName);
               document
@@ -644,7 +693,7 @@ var SlateApp = (function () {
         }),
       });
       const data = await response.json();
-      //console.log("getApiKeys", data);
+      console.log("getApiKeys", data);
       let slates = [];
       return data;
     };
@@ -717,8 +766,24 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
     let apiKeys = await app.getApiKeys();
 
     var allPageFiles = [];
-    var type = request.uploadType;
-    if (type == "single") {
+    this.uploadType = request.uploadType;
+    if (this.uploadType == "note") {
+      console.log("note upload");
+      let isSingleId = Math.random().toString(36).substr(2, 9);
+      allPageFiles = {
+        src:
+          "https://www.mcdonalds.com/content/dam/ca/nfl/web/nutrition/products/tile/en/mcdonalds-fries-small.jpg",
+        id: isSingleId,
+        page_position: null,
+        type: "text",
+        altTitle: this.pageData.title,
+        height: null,
+        width: null,
+        markdown: null,
+      };
+    }
+    if (this.uploadType == "single") {
+      console.log("single image upload");
       let isSingleId = Math.random().toString(36).substr(2, 9);
       allPageFiles = {
         src: request.singleImageUrl,
@@ -729,12 +794,13 @@ chrome.runtime.onMessage.addListener(async (request, changeInfo, callback) => {
         height: null,
         width: null,
       };
-    } else {
+    }
+    if (this.uploadType == "multi") {
       allPageFiles = await app.getPageFiles();
       for (let i = 0; i < allPageFiles.length; i++) {
         origFiles.push({ file: allPageFiles[i] });
       }
     }
-    await app.listFiles(allPageFiles, apiKeys, isUploading, type);
+    await app.listFiles(allPageFiles, apiKeys, isUploading, this.uploadType);
   }
 });
