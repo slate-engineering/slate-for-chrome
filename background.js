@@ -435,7 +435,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-  title: "Upload to collections",
+  title: "Save to collection",
   contexts: ["image"],
   parentId: "parent",
   id: "image_slate",
@@ -443,7 +443,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-  title: "Upload",
+  title: "Save to Slate",
   contexts: ["image"],
   parentId: "parent",
   id: "image_direct",
@@ -451,7 +451,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-  title: "Upload note",
+  title: "Save to collection",
   contexts: ["selection"],
   parentId: "parent",
   id: "text_slate",

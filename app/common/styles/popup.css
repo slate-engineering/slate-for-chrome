@@ -182,13 +182,36 @@
   cursor: default;
 }
 
-.slate-page-text-container {
+#slate-page-text-container {
   display: none;
-  width:100%;
-  padding: 40px 120px 0px 120px;
-  color: #000 !important;
-  font-family: "inter-regular", -apple-system, BlinkMacSystemFont, arial,
-    sans-serif !important;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  padding: 100px 224px 0px 224px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+#slate-page-text-container > * {
+  color: #000;
+  font-family: "inter-regular", -apple-system, BlinkMacSystemFont, arial, sans-serif;
+}
+
+#slate-page-text-container a {
+  color: var(--color-deepblue);
+}
+
+#slate-page-text-container b {
+  font-weight: bold;
+  color: #000;
+}
+
+#slate-page-text-container ul {
+  margin: 16px 0px 16px 16px;
+}
+
+#slate-page-text-container li {
+  color: #000;
 }
 
 .slate-textarea {
@@ -503,12 +526,7 @@
   height: 100vh;
   max-height: 100vh;
   position: absolute;
-  background: linear-gradient(
-    180deg,
-    var(--color-white) 0%,
-    var(--color-white) 46.31%,
-    rgba(255, 255, 255, 0.3) 100%
-  );
+  background: rgb(255,255,255, 0.8);
   backdrop-filter: blur(20px);
   align-items: normal !important;
 }
