@@ -187,7 +187,7 @@
   width: 100%;
   max-width: 100%;
   height: auto;
-  padding: 100px 224px 0px 224px;
+  padding: 108px 224px 0px 224px;
   overflow-y: hidden;
   overflow-x: scroll;
 }
@@ -208,10 +208,24 @@
 
 #slate-page-text-container ul {
   margin: 16px 0px 16px 16px;
+  font-size: 16px;
+  list-style-type: circle;
+  font-family: "inter-regular", -apple-system, BlinkMacSystemFont, arial, sans-serif;
 }
 
 #slate-page-text-container li {
   color: #000;
+}
+
+#slate-page-text-container p {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+#slate-page-text-container div {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .slate-textarea {

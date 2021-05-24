@@ -52,12 +52,11 @@ var SlateApp = (function () {
               '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
             let divClick = document.getElementById(
-              "slate-upload-contatiner-" + id
+              `slate-upload-contatiner-${id}`
             );
             divClick.classList.add("slate-add-link");
             divClick.onclick = function () {
-              let pathname =
-                isIdUploading.slateUrl + "/cid:" + isIdUploading.cid;
+              let pathname = `${isIdUploading.slateUrl}?cid=${isIdUploading.cid}`;
               let win = window.open(pathname, "_blank");
               win.focus();
             };
@@ -71,7 +70,7 @@ var SlateApp = (function () {
       files.map((item) => {
         let div = document.createElement("div");
         div.className = "slate-upload-file-module";
-        div.id = "slate-upload-contatiner-" + item.file.id;
+        div.id = `slate-upload-contatiner-${item.file.id}`;
         let container = document.createElement("div");
         container.className = "slate-upload-file";
         let spinner = document.createElement("div");
@@ -159,14 +158,14 @@ var SlateApp = (function () {
                   for (let i = 0; i < uploadQueue.length; i++) {
                     //console.log(uploadQueue[i].file.id);
                     let checkbox = document.getElementById(
-                      "check-" + uploadQueue[i].file.id
+                      `check-${uploadQueue[i].file.id}`
                     );
                     let customCheck = document.getElementById(
-                      "customCheck-" + uploadQueue[i].file.id
+                      `customCheck-${uploadQueue[i].file.id}`
                     );
 
                     let img = document.getElementById(
-                      "img-item-" + uploadQueue[i].file.id
+                      `img-item-${uploadQueue[i].file.id}`
                     );
                     let customCheckIcon = customCheck.childNodes[0];
                     checkbox.checked = false;
@@ -188,16 +187,10 @@ var SlateApp = (function () {
                     .classList.toggle("checked");
                   for (let i = 0; i < uploadQueue.length; i++) {
                     //console.log(uploadQueue[i].file.id);
-                    let checkbox = document.getElementById(
-                      "check-" + uploadQueue[i].file.id
-                    );
-                    let customCheck = document.getElementById(
-                      "customCheck-" + uploadQueue[i].file.id
-                    );
+                    let checkbox = document.getElementById(`check-${uploadQueue[i].file.id}`);
+                    let customCheck = document.getElementById(`customCheck-${uploadQueue[i].file.id}`);
 
-                    let img = document.getElementById(
-                      "img-item-" + uploadQueue[i].file.id
-                    );
+                    let img = document.getElementById(`img-item-${uploadQueue[i].file.id}`);
                     let customCheckIcon = customCheck.childNodes[0];
                     checkbox.checked = true;
                     customCheck.className = "slate-custom-checkbox checked";
@@ -216,8 +209,7 @@ var SlateApp = (function () {
                   } else {
                     document.getElementById(
                       "slate-popup-title-name"
-                    ).innerHTML =
-                      "Upload " + uploadQueueNum + " files to Slate";
+                    ).innerHTML = `Upload ${uploadQueueNum} files to Slate`;
                   }
                   console.log(uploadQueue);
                 }
@@ -432,10 +424,10 @@ var SlateApp = (function () {
                   "block";
                 let div = document.createElement("div");
                 div.className = "slate-img-container slate-masonry-item";
-                div.id = "img-item-" + file.id;
+                div.id = `img-item-${file.id}`; 
                 let img = document.createElement("img");
                 img.className = "slate-list_img";
-                img.id = "img-" + file.id;
+                img.id = `img-${file.id}`;
                 if (file.type == "img") {
                   img.src = file.src;
                 }
@@ -444,11 +436,11 @@ var SlateApp = (function () {
                 checkbox.setAttribute("type", "checkbox");
                 checkbox.value = file.src;
                 checkbox.className = "slate-img-checkbox";
-                checkbox.id = "check-" + file.id;
+                checkbox.id = `check-${file.id}`;
 
                 let customCheckbox = document.createElement("div");
                 customCheckbox.className = "slate-custom-checkbox";
-                customCheckbox.id = "customCheck-" + file.id;
+                customCheckbox.id = `customCheck-${file.id}`;
 
                 customCheckbox.innerHTML =
                   '<svg class="slate-custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
@@ -501,7 +493,7 @@ var SlateApp = (function () {
                       document.getElementById(
                         "slate-popup-title-name"
                       ).innerHTML =
-                        "Upload " + this.uploadQueueNum + " files to Slate";
+                        `Upload ${this.uploadQueueNum} files to Slate`;
                     }
                   }
                 };
@@ -523,7 +515,7 @@ var SlateApp = (function () {
               "Uploading";
             setInterval(async () => {
               document.getElementById("slate-upload-alert-text").innerHTML =
-                "Uploading " + currentUploadNum.currentUploads + " files";
+                `Uploading ${currentUploadNum.currentUploads} files`;
 
               if (currentUploadNum.currentUploads == 1) {
                 document.getElementById("slate-upload-alert-text").innerHTML =
@@ -538,7 +530,7 @@ var SlateApp = (function () {
                   "none";
               } else {
                 document.getElementById("slate-upload-alert-text").innerHTML =
-                  "Uploading " + currentUploadNum.currentUploads + " files";
+                  `Uploading ${currentUploadNum.currentUploads} files`;
               }
             }, 1000);
           }
@@ -557,7 +549,7 @@ var SlateApp = (function () {
             //console.log("Slate info: ", slate);
             var slateApiContainer = document.createElement("div");
             slateApiContainer.className = "slate-api";
-            slateApiContainer.id = "slate-" + slate.data.name;
+            slateApiContainer.id = `slate-${slate.data.name}`;
             slateApiDisplay = document.createElement("div");
             //slateApiDisplay.className = "slate-item-display-hide";
 
@@ -575,7 +567,7 @@ var SlateApp = (function () {
             slateProfile.className = "slate-profile a";
             slateProfile.setAttribute(
               "style",
-              "background-image: url('" + slate.data.photo + "') !important;"
+              `background-image: url('${slate.data.photo}') !important;`
             );
 
             var slateNameText = document.createElement("div");
@@ -602,7 +594,7 @@ var SlateApp = (function () {
               slateContainer.appendChild(slateIcon);
               slateContainer.appendChild(slateName);
               document
-                .getElementById("slate-" + slate.data.name)
+                .getElementById(`slate-${slate.data.name}`)
                 .appendChild(slateContainer);
               slateContainer.onclick = async () => {
                 window
@@ -667,7 +659,7 @@ var SlateApp = (function () {
               slateContainer.appendChild(slateIcon);
               slateContainer.appendChild(slateName);
               document
-                .getElementById("slate-" + slate.data.name)
+                .getElementById(`slate-${slate.data.name}`)
                 .appendChild(slateContainer);
             });
           });
@@ -690,7 +682,7 @@ var SlateApp = (function () {
         headers: {
           "Content-Type": "application/json",
           // NOTE: your API key
-          Authorization: "Basic " + key,
+          Authorization: `Basic ${key}`,
         },
         body: JSON.stringify({
           data: {
