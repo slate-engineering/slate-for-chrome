@@ -39,6 +39,10 @@ var SlateBackground = (function () {
 
 //Background functions
 var SlateUpload = (function () {
+
+  this.slateAPIUrl = "https://slate.host/api/v2";
+  this.slateAPIUploadUrl = "https://uploads.slate.host/api/v2/public";
+
   function SlateUpload() {
     //Create background
   }
@@ -56,13 +60,11 @@ var SlateUpload = (function () {
         };
         xhr.open("GET", props.file.src);
         xhr.responseType = "blob";
-        //console.log("done convert");
         xhr.send();
       });
     };
 
-    addDataUpload = (props) => {
-      //console.log("upload prop structure", props);
+    addUploadData = (props) => {
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = [];
         if (result["uploads"]) {
@@ -71,10 +73,8 @@ var SlateUpload = (function () {
         } else {
           uploads = props;
         }
-
         chrome.storage.local.set({ uploads: uploads });
       });
-      //console.log("done");
       return true;
     };
 
@@ -102,10 +102,8 @@ var SlateUpload = (function () {
     };
 
     updateDataUpload = async (props, uploadId) => {
-      //console.log("look at props", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = result.uploads;
-
         for (var i in uploads) {
           if (uploads[i].id == uploadId) {
             uploads[i].uploading = false;
@@ -119,10 +117,8 @@ var SlateUpload = (function () {
     };
 
     updateDataError = async (uploadId) => {
-      //console.log("look at props", props);
       chrome.storage.local.get(["uploads"], (result) => {
         let uploads = result.uploads;
-
         for (var i in uploads) {
           if (uploads[i].id == uploadId) {
             uploads[i].uploading = "error";
@@ -134,82 +130,65 @@ var SlateUpload = (function () {
     };
 
     uploadTextToSlate = async (apiData, pageData) => {
-      let date = Date.now();
+      let fileData = apiData.data.file.file;
       let uploadData = {
-        name: apiData.data.file.file.altTitle || pageData.title,
+        name: fileData.altTitle || pageData.title,
         type: "text/markdown",
         source: pageData.source,
         sourceTitle: pageData.title,
-        originalFile: apiData.data.file.file.src,
-        cid: "",
-        date: date,
-        url: "",
+        originalFile: fileData.src,
         uploading: true,
-        id: apiData.data.file.file.id,
+        id: fileData.id,
         slateUrl: apiData.data.slate.data.url,
+        date: Date.now(),
+        cid: "",        
+        url: "",
       };
 
-      await addDataUpload(uploadData);
+      await addUploadData(uploadData);
 
-      console.log("apiData 123", apiData);
       let markdown = apiData.data.file.file.markdown;
-      console.log("markdown", markdown);
-      let url =
-        "https://uploads.slate.host/api/v2/public/" + apiData.data.slate.id;
-      let fileBlob = new Blob([markdown], {
-        type: "text/markdown",
-      });
+      let url = `${slateAPIUploadUrl}/${apiData.data.slate.id}`;
+      let filename = `${uploadData.name}.md`;
+      let fileBlob = new Blob([markdown], { type: "text/markdown" });
 
-      let file = new File([fileBlob], uploadData.name + ".md", {
-        type: "text/markdown",
-      });
+      let file = new File([fileBlob], filename, { type: "text/markdown" });
       let data = new FormData();
       data.append("data", file);
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          Authorization: "Basic " + apiData.data.api,
+          Authorization: `Basic ${apiData.data.api}`,
         },
         body: data,
       });
-
       const json = await response.json();
-      console.log("json: ", json);
       //
       //
       //UPDATE METADATA
       const fileMeta = json.data;
       fileMeta.data.name = uploadData.name;
       fileMeta.data.source = pageData.source;
-      //console.log(fileMeta);
-
-      const responseMeta = await fetch(
-        "https://slate.host/api/v2/update-file",
+      const responseMeta = await fetch(`${this.slateAPIUrl}/update-file`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Basic " + apiData.data.api,
+            Authorization: `Basic ${apiData.data.api}`,
           },
           body: JSON.stringify({ data: fileMeta }),
         }
       );
-      console.log("done upload");
       await removeDataUploadNumber();
       await updateDataUpload(json, uploadData.id);
     };
 
     uploadToSlate = async (fileData, apiData, pageData) => {
-      //console.log("file data:", apiData);
-      let date = Date.now();
-      let isSlateUpload;
-      console.log("apidata", apiData);
+      //console.log("file data:", apiData);      
+      let isSlateUpload = apiData.data.slate.data.url;
       if (!apiData.data.slate.id) {
         isSlateUpload = "https://slate.host/_?scene=NAV_DATA";
-      } else {
-        isSlateUpload = apiData.data.slate.data.url;
       }
-      //console.log("isSlateUpload", isSlateUpload);
 
       let checkPageData = pageData.title;
       if (!pageData.title) {
@@ -222,15 +201,15 @@ var SlateUpload = (function () {
         source: pageData.source,
         sourceTitle: checkPageData,
         originalFile: apiData.data.file.file.src,
-        cid: "",
-        date: date,
-        url: "",
         uploading: true,
         id: apiData.data.file.file.id,
         slateUrl: isSlateUpload,
+        date: Date.now(),
+        cid: "",
+        url: "",
       };
 
-      await addDataUpload(uploadData);
+      await addUploadData(uploadData);
 
       var arr = fileData.split(","),
         bstr = atob(arr[1]),
@@ -242,27 +221,22 @@ var SlateUpload = (function () {
         u8arr[n] = bstr.charCodeAt(n);
       }
 
-      var url;
+      var url = `${slateAPIUploadUrl}/${slateAPIUploadVersion}/public`;
       if (apiData.data.slate.id) {
-        url =
-          "https://uploads.slate.host/api/v2/public/" + apiData.data.slate.id;
-      } else {
-        url = "https://uploads.slate.host/api/v2/public";
+        url = `${slateAPIUploadUrl}/${apiData.data.slate.id}`;
       }
 
       let fileBlob = new Blob([u8arr], { mime });
-      let source = "";
       let file = new File([fileBlob], uploadData.name, { type: "image/png" });
       let data = new FormData();
       data.append("data", file);
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          Authorization: "Basic " + apiData.data.api,
+          Authorization: `Basic ${apiData.data.api}`,
         },
         body: data,
       });
-
       const json = await response.json();
       //
       //
@@ -271,14 +245,12 @@ var SlateUpload = (function () {
       fileMeta.data.name = uploadData.name;
       fileMeta.data.source = pageData.source;
       //console.log(fileMeta);
-
-      const responseMeta = await fetch(
-        "https://slate.host/api/v2/update-file",
+      const responseMeta = await fetch(`${slateAPIUrl}/update-file`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Basic " + apiData.data.api,
+            Authorization: `Basic ${apiData.data.api}`,
           },
           body: JSON.stringify({ data: fileMeta }),
         }
@@ -294,23 +266,18 @@ var SlateUpload = (function () {
       var pos = 0;
       for (const file of array) {
         pos++;
-        //console.log("pos: ", pos);
         if (pos == 3) {
           await delay(10000);
           console.log("delay done");
           pos = 0;
         }
-        console.log("array: ", array);
 
-        console.log(file.data.file.file.type);
         if (file.data.file.file.type == "text") {
-          console.log("this is it!!!");
           uploadTextToSlate(file, pageData);
           return;
         }
 
         let data = await convertToData(file.data.file);
-
         await uploadToSlate(data, file, pageData);
 
         console.log("Next file");
@@ -327,9 +294,7 @@ var SlateUpload = (function () {
 //Background event listeners
 chrome.runtime.onInstalled.addListener((tab) => {
   //on new install, open the welcome page
-  chrome.tabs.create({
-    url: chrome.extension.getURL("app/pages/welcome.html"),
-  });
+  chrome.tabs.create({ url: chrome.extension.getURL("app/pages/welcome.html") });
 });
 
 onClickHandlerAll = async (tab) => {
@@ -337,12 +302,9 @@ onClickHandlerAll = async (tab) => {
   await slateBg.init();
   //inject all Slate scripts needed into the current tab
   //let activeTab = tabs[0];
-
   let type = "multi";
   chrome.tabs.executeScript(tab, { file: "app/scripts/jquery.min.js" });
-  chrome.tabs.executeScript(
-    tab,
-    { file: "content-script.js" },
+  chrome.tabs.executeScript(tab, { file: "content-script.js" },
     slateBg.loadApp(type)
   );
   this.isLoaded = true;
@@ -359,9 +321,7 @@ onClickHandlerNote = async (info, tabs) => {
   let type = "note";
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/turndown.js" });
-  chrome.tabs.executeScript(
-    activeTab,
-    { file: "content-script.js" },
+  chrome.tabs.executeScript(activeTab, { file: "content-script.js" },
     slateBg.loadApp(type, url)
   );
 };
@@ -369,22 +329,19 @@ onClickHandlerNote = async (info, tabs) => {
 onClickHandlerImage = async (info, tabs) => {
   url = info.srcUrl;
   let slateBg = new SlateBackground();
-  await slateBg.init();
   let activeTab = tabs[0];
+  await slateBg.init();
 
   //inject all Slate scripts needed into the current tab
   let type = "single";
   chrome.tabs.executeScript(activeTab, { file: "app/scripts/jquery.min.js" });
-  chrome.tabs.executeScript(
-    activeTab,
-    { file: "content-script.js" },
+  chrome.tabs.executeScript(activeTab, { file: "content-script.js" },
     slateBg.loadApp(type, url)
   );
 };
 
 onClickHandlerDirectImage = async (info, tabs) => {
   url = info.srcUrl;
-
   var storage = new Promise((resolve, reject) => {
     chrome.storage.local.get(["apis"], (result) => {
       resolve(result);
@@ -458,15 +415,13 @@ chrome.contextMenus.create({
   onclick: onClickHandlerNote,
 });
 
-/*
 chrome.contextMenus.create({
-  title: "Take screenshot",
+  title: "Save screenshot to collection",
   contexts: ["all"],
   parentId: "parent",
   id: "screenshot",
   onclick: onClickHandlerDirectImage,
 });
-*/
 
 chrome.commands.onCommand.addListener(function (command) {
   if (command === "openSlate") {
@@ -481,15 +436,11 @@ chrome.browserAction.onClicked.addListener(async (tabs) => {
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.message == "settings") {
-    chrome.tabs.create({
-      url: chrome.extension.getURL("app/pages/settings.html"),
-    });
+    chrome.tabs.create({ url: chrome.extension.getURL("app/pages/settings.html") });
   }
 
   if (request.message == "uploadsHistory") {
-    chrome.tabs.create({
-      url: chrome.extension.getURL("app/pages/uploads.html"),
-    });
+    chrome.tabs.create({ url: chrome.extension.getURL("app/pages/uploads.html") });
   }
 
   if (request.uploadData == "slate") {

@@ -145,13 +145,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (oldSlateUrl == "https://slate.host/_?scene=NAV_DATA") {
           newSlateUrl = "https://slate.host/_?scene=NAV_DATA";
         } else {
-          newSlateUrl =
-            e.target.attributes["data-slateUrl"].value +
-            "/cid:" +
-            e.target.attributes["data-cid"].value;
+          newSlateUrl = 
+            `${e.target.attributes["data-slateUrl"].value}?cid=${e.target.attributes["data-cid"].value}`;
         }
-
-        //console.log(newSlateUrl);
         let win = window.open(newSlateUrl, "_blank");
         win.focus();
       };
@@ -178,9 +174,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let copyCID = document.getElementsByClassName("click-copy-cid");
     for (var i = 0; i < copyCID.length; i++) {
       copyCID[i].onclick = function (e) {
-        let url =
-          "https://slate.textile.io/ipfs/" +
-          e.target.attributes["data-cid"].value;
+        let url = `https://slate.textile.io/ipfs/${e.target.attributes["data-cid"].value}`;
         url.select();
         document.execCommand("copy");
         //console.log("copied");

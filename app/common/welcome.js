@@ -56,7 +56,7 @@ var Welcome = (function () {
       headers: {
         "Content-Type": "application/json",
         // NOTE: your API key
-        Authorization: "Basic " + key,
+        Authorization: `Basic ${key}`,
       },
       body: JSON.stringify({
         data: {

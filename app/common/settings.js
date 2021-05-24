@@ -1,5 +1,7 @@
 var Settings = (function () {
   //set default variables
+  this.slateAPIUrl = "https://slate.host/api/v2";
+
   function Settings() {
     this._apiKeys = {};
     this._acceptedImages = {};
@@ -48,12 +50,12 @@ var Settings = (function () {
   };
 
   Settings.prototype.validateApiKey = async (key) => {
-    const response = await fetch("https://slate.host/api/v2/get", {
+    const response = await fetch(`${this.slateAPIUrl}/get`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         // NOTE: your API key
-        Authorization: "Basic " + key,
+        Authorization: `Basic ${key}`,
       },
       body: JSON.stringify({
         data: {
@@ -162,8 +164,7 @@ var Settings = (function () {
 
   Settings.prototype.notification = (api, type) => {
     let notification = document.getElementById("noti");
-    notification.innerHTML =
-      "Imported " + api.data.slates + " slates from " + api.data.name;
+    notification.innerHTML = `Imported ${api.data.slates} slates from ${api.data.name}`;
     notification.className = "show";
     if (type == "error") {
       notification.classList.add("noti-error");
@@ -209,19 +210,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   let showSlate = document.getElementsByClassName("existing-slate");
   Array.from(showSlate).forEach(function (element) {
     element.addEventListener("click", function (e) {
-      let apiKeyTxt = document.getElementById(
-        "textbox-" + e.target.attributes[0].value
-      ).value;
-
+      let apiKeyTxt = document.getElementById(`textbox-${e.target.attributes[0].value}`).value;
       if (apiKeyTxt.startsWith("X")) {
         //console.log(e.target.attributes[0].value);
-        document.getElementById(
-          "textbox-" + e.target.attributes[0].value
-        ).value = e.target.attributes[0].value;
+        document.getElementById(`textbox-${e.target.attributes[0].value}`)
+          .value = e.target.attributes[0].value;
       } else {
-        document.getElementById(
-          "textbox-" + e.target.attributes[0].value
-        ).value = "XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX";
+        document.getElementById(`textbox-${e.target.attributes[0].value}`)
+          .value = "XXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXX";
       }
     });
   });
