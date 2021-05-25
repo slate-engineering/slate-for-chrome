@@ -40,6 +40,7 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid, slateUrl) => {
     let pathname = slateUrl.split("/");
     username = pathname[3];
   }
+
   popOver.innerHTML =
     '<div class="slate-popover"><div class="slate-popover-item slate-no-link">Account: ' +
     username +
@@ -55,6 +56,12 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid, slateUrl) => {
     fileTypeIcon.innerHTML =
       '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/image.svg"></object>';
   }
+
+  if (filetype.startsWith("text/")) {
+    fileTypeIcon.innerHTML =
+      '<object class="slate-icon-large" type="image/svg+xml" data="../common/svg/text.svg"></object>';
+  }
+
   uploadEntries.className = "slate-table-row";
 
   uploadEntries.innerHTML =
@@ -87,7 +94,7 @@ Uploads.prototype.showUploads = (upload, filetype, status, cid, slateUrl) => {
 Uploads.prototype.toggleDropdownDisplay = () => {
   let dropdownBtns = document.getElementsByClassName("slate-dropdown");
   for (let dropdownBtn of dropdownBtns) {
-    dropdownBtn.onclick = () => {
+    dropdownBtn.onclick = (e) => {
       if (dropdownBtn.nextElementSibling.style.display === "block") {
         dropdownBtn.nextElementSibling.style.display = "none";
       } else {
