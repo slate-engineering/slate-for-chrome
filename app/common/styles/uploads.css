@@ -87,6 +87,10 @@
   cursor: pointer;
 }
 
+.slate-reminder {
+  color: var(--color-textGrayLight);
+}
+
 .slate-table-container .slate-icon {
   width: 16px;
   height: 16px;
